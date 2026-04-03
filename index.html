@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PITERSNACKS - Premium Snacks & Brand Ambassador</title>
+    <title>PITERSNACKS - Premium Snacks Galore</title>
     <style>
         /* --- CSS STYLING --- */
         :root {
             --primary-color: #f7941d; /* Oranye khas snack */
-            --brand-pink: #c95c8c; /* Pink dari baju BA */
+            --brand-pink: #c95c8c; /* Pink BA */
             --dark-color: #2c2c2c;
             --light-color: #ffffff;
-            --bg-color: #fdfdfd;
+            --bg-color: #ffffff;
         }
 
         * {
@@ -25,9 +25,9 @@
             background-color: var(--bg-color);
             color: var(--dark-color);
             line-height: 1.6;
+            overflow-x: hidden; /* Mencegah scroll horizontal akibat hujan kacang */
         }
 
-        /* Container agar konten rapi di tengah */
         .container {
             width: 85%;
             margin: auto;
@@ -56,103 +56,58 @@
             font-weight: bold;
             color: var(--primary-color);
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        /* --- HERO SECTION - Menampilkan BA --- */
+        /* --- HERO BA SECTION --- */
         .hero {
-            background-color: var(--bg-color);
-            color: var(--dark-color);
-            padding: 180px 0 100px 0; /* Tambah padding atas karena header fixed */
+            padding: 180px 0 100px 0;
+            background-color: #fdfdfd;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .hero-text {
-            flex: 1;
-            padding-right: 50px;
-        }
+        .hero-text { flex: 1; padding-right: 50px; }
+        .hero h1 { font-size: 50px; line-height: 1.1; margin-bottom: 20px; }
+        .hero h1 span { color: var(--primary-color); }
+        .hero p { font-size: 18px; margin-bottom: 40px; color: #555; }
+        .hero-image { flex: 1; text-align: right; }
+        .hero-image img { max-width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 
-        .hero h1 {
-            font-size: 54px;
-            margin-bottom: 20px;
-            line-height: 1.1;
-        }
+        .btn { display: inline-block; padding: 14px 35px; background-color: var(--primary-color); color: var(--light-color); text-decoration: none; border-radius: 30px; font-weight: bold; transition: transform 0.2s; }
+        .btn:hover { transform: translateY(-3px); }
 
-        .hero h1 span {
-            color: var(--primary-color);
-        }
-
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 40px;
-            color: #555;
-        }
-
-        .hero-image {
-            flex: 1;
-            text-align: right;
-        }
-
-        /* Menampilkan FOTO UTAMA BA */
-        .hero-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 14px 35px;
-            background-color: var(--primary-color);
-            color: var(--light-color);
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(247, 148, 29, 0.3);
-        }
-
-        /* --- PRODUCT SECTION --- */
+        /* --- SNACK GRID SECTION --- */
         .products {
             padding: 100px 0;
             background-color: #f9f9f9;
+            position: relative; /* Container untuk hujan kacang */
+            overflow: hidden;
         }
 
         .section-title {
             text-align: center;
             font-size: 38px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
             margin-bottom: 60px;
-            color: var(--dark-color);
+            position: relative;
+            z-index: 10;
         }
 
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            position: relative;
+            z-index: 10;
         }
 
         .product-card {
@@ -163,79 +118,55 @@
             transition: transform 0.3s;
         }
 
-        .product-card:hover {
-            transform: translateY(-8px);
-        }
+        .product-card:hover { transform: translateY(-8px); }
 
-        /* Placeholder untuk gambar produk asli */
+        /* Mangkuk Estetik Produk */
         .product-image {
-            height: 250px;
+            height: 280px;
             background-color: #eee;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 14px;
+            background-size: cover;
+            background-position: center;
         }
 
-        .product-info {
-            padding: 25px;
-        }
+        .product-info { padding: 25px; text-align: center; }
+        .product-name { font-size: 20px; margin-bottom: 8px; font-weight: 600; }
+        .product-price { font-size: 18px; font-weight: bold; color: var(--primary-color); }
 
-        .product-name {
-            font-size: 22px;
-            margin-bottom: 10px;
-            color: var(--dark-color);
-        }
-
-        .product-desc {
-            font-size: 15px;
-            color: #666;
-            margin-bottom: 20px;
-            height: 60px; /* Jaga agar deskripsi rata */
-            overflow: hidden;
-        }
-
-        .product-price {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        .buy-btn {
-            display: block;
+        /* --- HUJAN KACANG-KACANGAN (ANIMASI) --- */
+        .peanut-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            text-align: center;
-            padding: 12px;
-            background-color: var(--brand-pink); /* Menggunakan warna pink BA */
-            color: var(--light-color);
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: background 0.3s;
+            height: 100%;
+            z-index: 1; /* Di bawah grid, di atas background */
+            pointer-events: none; /* Agar tidak menghalangi klik */
         }
 
-        .buy-btn:hover {
-            background-color: #b0507a;
+        .peanut {
+            position: absolute;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.8;
+            filter: blur(0px); /* Bisa diatur blur di mobile */
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(120vh) rotate(360deg); opacity: 0.2; }
         }
 
         /* --- FOOTER --- */
-        footer {
-            background-color: var(--dark-color);
-            color: rgba(255,255,255,0.7);
-            padding: 40px 0;
-            text-align: center;
-            font-size: 14px;
-        }
+        footer { background-color: var(--dark-color); color: rgba(255,255,255,0.7); padding: 40px 0; text-align: center; font-size: 14px; }
 
         /* Responsive Mobile */
         @media (max-width: 992px) {
             .hero { flex-direction: column; text-align: center; padding: 150px 0 80px 0; }
             .hero-text { padding-right: 0; margin-bottom: 50px; }
-            .hero-image { text-align: center; }
-            .hero h1 { font-size: 40px; }
-            .nav-links { display: none; } /* Sembunyikan menu di mobile */
+            .hero h1 { font-size: 36px; }
+            .product-grid { grid-template-columns: 1fr; gap: 20px; }
         }
     </style>
 </head>
@@ -245,11 +176,6 @@
         <div class="container">
             <nav>
                 <div class="logo">Pitersnacks</div>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#products">Varian Menu</a></li>
-                    <li><a href="https://wa.me/628123456789">Pesan</a></li>
-                </ul>
             </nav>
         </div>
     </header>
@@ -257,8 +183,8 @@
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-text">
-                <h1>Gaya Maksimal, Gurihnya <span>Total!</span></h1>
-                <p>Cobain snack home-made premium pilihan langsung dari Brand Ambassador kece kita.</p>
+                <h1>Ngempuk Maksimal, Gurihnya <span>Pitersnacks!</span></h1>
+                <p>Cobain premium varian menu pilihan langsung dari Brand Ambassador kece kita.</p>
                 <a href="#products" class="btn">Lihat Koleksi Snack</a>
             </div>
             <div class="hero-image">
@@ -268,56 +194,85 @@
     </section>
 
     <section id="products" class="products">
+        
+        <div class="peanut-rain" id="peanutRain">
+            </div>
+
         <div class="container">
-            <h2 class="section-title">Menu Utama Pitersnacks</h2>
+            <h2 class="section-title">Semua Varian Dalam Mangkuk Estetik</h2>
+            <p class="section-subtitle">Premium, Crispy, dan Nagih Parah!</p>
             
             <div class="product-grid">
                 
                 <div class="product-card">
-                    <div class="product-image">
-                        [Foto Basreng Premium]
+                    <div class="product-image" style="background-image: url('https://i.postimg.cc/d04V7fS5/b7b9b00e-4340-47b2-bd7d-f4356616422f.jpg');"></div>
+                    <div class="product-info">
+                        <h3 class="product-name">Kacang Tojin Kupas</h3>
+                        <p class="product-price">Rp 20.000 / pcs</p>
                     </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://i.postimg.cc/g04X6fN9/00b50302-39f5-47e2-89b5-f4838384f501.jpg');"></div>
+                    <div class="product-info">
+                        <h3 class="product-name">Onde Tawa Krispy</h3>
+                        <p class="product-price">Rp 18.000 / pcs</p>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://i.postimg.cc/qvpzC4h3/2d075f12-0761-4547-b765-f45207722741.jpg');"></div>
+                    <div class="product-info">
+                        <h3 class="product-name">Kacang Ting Ting Madu</h3>
+                        <p class="product-price">Rp 22.000 / pcs</p>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://i.postimg.cc/7YZyX93x/83e6014e-9840-466c-bd48-e866e408544c.jpg');"></div>
+                    <div class="product-info">
+                        <h3 class="product-name">Mie Lidi Pedas Jeruk</h3>
+                        <p class="product-price">Rp 15.000 / pcs</p>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://i.postimg.cc/T3YtF3gD/15b5e40e-7440-42f1-bd12-f0766289659b.jpg');"></div>
+                    <div class="product-info">
+                        <h3 class="product-name">Makaroni Spiral Balado</h3>
+                        <p class="product-price">Rp 17.000 / pcs</p>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://i.postimg.cc/8P2h44s9/17f6b95c-3430-466f-b8b8-f8641473212c.jpg');"></div>
                     <div class="product-info">
                         <h3 class="product-name">Basreng Pedas Jeruk</h3>
-                        <p class="product-desc">Bakso goreng renyah bumbu pedas nampol & aroma daun jeruk segar.</p>
                         <p class="product-price">Rp 18.000 / pcs</p>
-                        <a href="https://wa.me/628123456789" class="buy-btn">Pesan Lewat WA</a>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="product-image">
-                        [Foto Kacang Arab]
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Kacang Arab Panggang</h3>
-                        <p class="product-desc">Kacang arab oven dengan bumbu rempah otentik.</p>
-                        <p class="product-price">Rp 25.000 / pcs</p>
-                        <a href="https://wa.me/628123456789" class="buy-btn">Pesan Lewat WA</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        [Foto Kacang Mete]
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Kacang Mete Madu</h3>
-                        <p class="product-desc">Kacang mete pilihan dengan lapisan madu yang manis.</p>
-                        <p class="product-price">Rp 35.000 / pcs</p>
-                        <a href="https://wa.me/628123456789" class="buy-btn">Pesan Lewat WA</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        [Foto Lumpia Mini]
-                    </div>
+                    <div class="product-image" style="background-image: url('https://i.postimg.cc/gj4V5t1f/4d55b0a3-4330-4740-96f3-f2203309623e.jpg');"></div>
                     <div class="product-info">
                         <h3 class="product-name">Lumpia Mini Udang</h3>
-                        <p class="product-desc">Lumpia kering mini isi udang yang gurih.</p>
+                        <p class="product-price">Rp 25.000 / pcs</p>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://i.postimg.cc/gJ0z6F9S/278f6966-2240-4742-b8f2-d023192244a0.jpg');"></div>
+                    <div class="product-info">
+                        <h3 class="product-name">Kacang Arab Panggang</h3>
                         <p class="product-price">Rp 22.000 / pcs</p>
-                        <a href="https://wa.me/628123456789" class="buy-btn">Pesan Lewat WA</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://i.postimg.cc/k47Z2v7s/97e9b05c-1530-42f1-bd12-f0181585255a.jpg');"></div>
+                    <div class="product-info">
+                        <h3 class="product-name">Kacang Telur Madu</h3>
+                        <p class="product-price">Rp 20.000 / pcs</p>
                     </div>
                 </div>
 
@@ -328,9 +283,48 @@
     <footer>
         <div class="container">
             <p>&copy; 2023 Pitersnacks. All rights reserved.</p>
-            <p>Dibuat dengan ❤️ untuk teman Piter.</p>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const peanutRain = document.getElementById('peanutRain');
+            
+            // List foto partikel kacang (mete, arab, telur, kupas)
+            const peanutTypes = [
+                'https://i.postimg.cc/Jnd4x9bH/cashew-single.png', // Mete
+                'https://i.postimg.cc/8P2h44s9/basreng-single.png', // Contoh basreng
+                'https://i.postimg.cc/GJ0z6F9S/kacangarab-single.png' // Arab
+            ];
+
+            const numberOfPeanuts = 20; // Jumlah partikel kacang jatuh sekaligus
+
+            for (let i = 0; i < numberOfPeanuts; i++) {
+                const peanut = document.createElement('div');
+                peanut.classList.add('peanut');
+                
+                // Acak jenis kacang
+                const typeIndex = Math.floor(Math.random() * peanutTypes.length);
+                peanut.style.backgroundImage = `url('${peanutTypes[typeIndex]}')`;
+                
+                // Acak posisi horizontal (left)
+                peanut.style.left = `${Math.random() * 100}%`;
+                
+                // Acak ukuran kacang
+                const size = Math.random() * 30 + 15; // Ukuran 15px - 45px
+                peanut.style.width = `${size}px`;
+                peanut.style.height = `${size}px`;
+                
+                // Acak durasi jatuh (kecepatan)
+                peanut.style.animationDuration = `${Math.random() * 5 + 3}s`; // 3s - 8s
+                
+                // Acak delay start agar tidak jatuh bersamaan
+                peanut.style.animationDelay = `${Math.random() * 5}s`;
+
+                peanutRain.appendChild(peanut);
+            }
+        });
+    </script>
 
 </body>
 </html>
