@@ -3,102 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PITERSNACKS - Shopping Mode</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>PITERSNACKS - Order Mudah</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #f7941d;
-            --secondary: #c95c8c;
-            --dark: #2c2c2c;
-            --price: #e74c3c;
-        }
-
+        :root { --primary: #f7941d; --price: #e74c3c; --dark: #222; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: #f4f4f4; color: var(--dark); overflow-x: hidden; }
-        .container { width: 90%; margin: auto; max-width: 1100px; }
-
-        /* HEADER */
-        header {
-            background: white; padding: 15px 0; position: fixed; width: 100%; top: 0; z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 22px; font-weight: 800; color: var(--primary); text-transform: uppercase; }
-        .cart-btn { cursor: pointer; font-size: 20px; position: relative; background: #eee; padding: 8px 15px; border-radius: 20px; }
-        #cart-count { position: absolute; top: -5px; right: -5px; background: var(--price); color: white; font-size: 12px; padding: 2px 7px; border-radius: 50%; }
-
-        /* HERO */
-        .hero { padding: 120px 0 40px 0; display: flex; align-items: center; flex-wrap: wrap; background: white; }
-        .hero-text { flex: 1; min-width: 300px; }
-        .hero-text h1 { font-size: 40px; line-height: 1.1; margin-bottom: 10px; }
-        .hero-text span { color: var(--primary); }
-        .hero-img { flex: 1; text-align: right; }
-        .hero-img img { width: 100%; max-width: 350px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-
-        /* GRID PRODUK */
-        .products { padding: 40px 0; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .product-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; padding-bottom: 20px; transition: 0.3s; }
-        .product-card:hover { transform: translateY(-5px); }
-        .p-img { height: 250px; background-size: cover; background-position: center; }
-        .p-info { padding: 15px; }
-        .p-name { font-weight: 600; font-size: 18px; margin-bottom: 5px; }
-        .p-price { color: var(--price); font-weight: 700; font-size: 22px; display: block; margin-bottom: 15px; }
-        .add-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; }
-
-        /* KERANJANG SIDEBAR */
-        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 350px; height: 100%; background: white; z-index: 2000; transition: 0.4s; padding: 25px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
-        .cart-sidebar.active { right: 0; }
-        .cart-items { flex: 1; overflow-y: auto; margin: 20px 0; }
-        .item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .total-box { border-top: 2px solid #eee; padding-top: 15px; }
-        .checkout-btn { width: 100%; background: #27ae60; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+        body { background: #f8f8f8; padding-top: 70px; }
         
-        footer { text-align: center; padding: 30px; background: var(--dark); color: white; margin-top: 40px; }
+        header { background: white; padding: 15px; position: fixed; top: 0; width: 100%; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; color: var(--primary); font-size: 20px; }
+        .cart-toggle { background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: 600; }
 
-        @media (max-width: 768px) { .hero { text-align: center; } .hero-img { display: none; } }
+        .hero { background: white; padding: 30px 15px; text-align: center; border-bottom: 2px solid #eee; }
+        .hero h1 { font-size: 28px; margin-bottom: 5px; }
+        .hero p { color: #666; font-size: 14px; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; padding: 15px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.05); text-align: center; padding-bottom: 15px; }
+        .img { height: 180px; background-size: cover; background-position: center; margin-bottom: 10px; }
+        .name { font-size: 14px; font-weight: 600; height: 40px; padding: 0 5px; }
+        .price { color: var(--price); font-weight: 800; margin: 5px 0; display: block; }
+        .btn-add { background: var(--primary); color: white; border: none; padding: 8px 20px; border-radius: 15px; cursor: pointer; font-size: 12px; }
+
+        .sidebar { position: fixed; right: -100%; top: 0; width: 100%; max-width: 350px; height: 100%; background: white; z-index: 200; transition: 0.3s; padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .sidebar.active { right: 0; }
+        .items { flex: 1; overflow-y: auto; margin: 20px 0; }
+        .item { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .total { font-weight: 800; font-size: 18px; border-top: 2px solid #eee; padding-top: 10px; }
+        .btn-checkout { background: #27ae60; color: white; border: none; width: 100%; padding: 15px; border-radius: 10px; font-weight: 800; margin-top: 15px; cursor: pointer; }
+
+        @media (min-width: 768px) { .grid { grid-template-columns: repeat(3, 1fr); } }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="container">
-            <nav>
-                <div class="logo">Pitersnacks</div>
-                <div class="cart-btn" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
-            </nav>
-        </div>
+        <div class="logo">PITERSNACKS</div>
+        <div class="cart-toggle" onclick="toggle()">🛒 <span id="count">0</span></div>
     </header>
 
     <section class="hero">
-        <div class="container">
-            <div class="hero-text">
-                <h1>Pilih Snack <span>Pitersnacks</span> Favoritmu!</h1>
-                <p>Harga Flat 2.5$ (10,000 Riel) Per Bungkus.</p>
-            </div>
-            <div class="hero-img">
-                <img src="https://i.postimg.cc/8cGHkfpz/ef1aa9fc-c7cd-455e-851e-bd0764a3dadc.jpg" alt="BA">
-            </div>
-        </div>
+        <h1>Menu Premium</h1>
+        <p>Flat Price: $2.5 (10,000 Riel)</p>
     </section>
 
-    <section class="products">
-        <div class="container">
-            <div class="product-grid" id="grid"></div>
-        </div>
-    </section>
+    <div class="grid" id="grid"></div>
 
-    <div class="cart-sidebar" id="sidebar">
-        <h2 onclick="toggleCart()" style="cursor:pointer"> &times; Close</h2>
-        <div class="cart-items" id="items"></div>
-        <div class="total-box">
-            <h3>Total: <span id="t-usd">$0</span></h3>
-            <p id="t-riel">0 Riel</p>
-            <button class="checkout-btn" onclick="checkout()">Checkout ke Google Form</button>
+    <div class="sidebar" id="sidebar">
+        <h2 onclick="toggle()" style="cursor:pointer">← Kembali</h2>
+        <div class="items" id="items"></div>
+        <div class="total">
+            Total: <span id="usd">$0</span><br>
+            <small id="riel" style="color:#666">0 Riel</small>
         </div>
+        <button class="btn-checkout" onclick="checkout()">Kirim Pesanan</button>
     </div>
-
-    <footer><p>&copy; 2026 Pitersnacks Cambodia</p></footer>
 
     <script>
         const products = [
@@ -115,15 +74,13 @@
 
         let cart = [];
 
-        function render() {
+        function init() {
             document.getElementById('grid').innerHTML = products.map(p => `
-                <div class="product-card">
-                    <div class="p-img" style="background-image:url('${p.img}')"></div>
-                    <div class="p-info">
-                        <div class="p-name">${p.n}</div>
-                        <span class="p-price">$2.5</span>
-                        <button class="add-btn" onclick="add(${p.id})">Beli</button>
-                    </div>
+                <div class="card">
+                    <div class="img" style="background-image:url('${p.img}')"></div>
+                    <div class="name">${p.n}</div>
+                    <span class="price">$2.5</span>
+                    <button class="btn-add" onclick="add(${p.id})">+ Keranjang</button>
                 </div>
             `).join('');
         }
@@ -134,32 +91,32 @@
         }
 
         function update() {
-            document.getElementById('cart-count').innerText = cart.length;
-            document.getElementById('items').innerHTML = cart.map((item, i) => `
-                <div class="item"><span>${item.n}</span> <span>$2.5 <small onclick="remove(${i})" style="color:red;cursor:pointer">X</small></span></div>
+            document.getElementById('count').innerText = cart.length;
+            document.getElementById('items').innerHTML = cart.map((it, i) => `
+                <div class="item"><span>${it.n}</span> <span>$2.5 <b onclick="del(${i})" style="color:red;cursor:pointer">X</b></span></div>
             `).join('');
             const total = cart.length * 2.5;
-            document.getElementById('t-usd').innerText = `$${total.toFixed(2)}`;
-            document.getElementById('t-riel').innerText = `${(total * 4000).toLocaleString()} Riel`;
+            document.getElementById('usd').innerText = `$${total.toFixed(2)}`;
+            document.getElementById('riel').innerText = `${(total * 4000).toLocaleString()} Riel`;
         }
 
-        function remove(i) { cart.splice(i, 1); update(); }
-        function toggleCart() { document.getElementById('sidebar').classList.toggle('active'); }
+        function del(i) { cart.splice(i, 1); update(); }
+        function toggle() { document.getElementById('sidebar').classList.toggle('active'); }
 
         function checkout() {
             if(cart.length === 0) return alert("Pilih snack dulu bos!");
-            const list = cart.map(item => item.n).join(", ");
-            const total = document.getElementById('t-usd').innerText + " / " + document.getElementById('t-riel').innerText;
+            const list = cart.map(it => it.n).join(", ");
+            const total = document.getElementById('usd').innerText + " (" + document.getElementById('riel').innerText + ")";
             
-            // PESAN UNTUK MEMBANTU USER
-            alert("Silakan isi data diri di Google Form berikut.\n\nDetail Belanjaan Anda:\n" + list + "\nTotal: " + total);
+            const textToCopy = "Daftar Pesanan: " + list + " | Total Bayar: " + total;
             
-            // GANTI LINK DI BAWAH INI
-            const formURL = "MASUKKAN_LINK_GOOGLE_FORM_DISINI";
-            window.open(formURL, "_blank");
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Detail pesanan BERHASIL DISALIN!\n\nSilakan isi Nama dan tinggal PASTE di kolom 'Pesanan' pada form yang akan terbuka.");
+                window.open("https://docs.google.com/forms/d/1b4YLtNZ-Pk8feMkONE_OeI2fjYgCbR5acGsywUn-WFU/viewform", "_blank");
+            });
         }
 
-        render();
+        init();
     </script>
 </body>
 </html>
