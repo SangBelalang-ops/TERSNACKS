@@ -10,7 +10,8 @@
         
         header { padding: 40px 20px; }
         .logo-box { width: 70px; height: 70px; border: 3px solid var(--primary); border-radius: 18px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 35px; font-weight: 900; color: var(--primary); box-shadow: 0 4px 10px rgba(247, 148, 29, 0.2); }
-        h1 { margin: 0; letter-spacing: 3px; font-size: 1.6em; text-transform: uppercase; }
+        h1 { margin: 0; letter-spacing: 3px; font-size: 1.6em; text-transform: uppercase; font-weight: 800; }
+        header p { margin: 5px 0 0; opacity: 0.6; font-size: 0.8em; font-weight: bold; }
 
         #countdown-container { background: var(--primary); color: white; padding: 20px 10px; }
         .timer-grid { display: flex; justify-content: center; gap: 12px; margin-top: 10px; }
@@ -19,24 +20,24 @@
 
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px; max-width: 800px; margin: 0 auto; }
         .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; position: relative; cursor: pointer; transition: 0.3s; }
-        .card:hover { transform: scale(1.03); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
         .card img { width: 100%; height: 180px; object-fit: cover; display: block; }
         .price { position: absolute; top: 8px; right: 8px; background: var(--primary); color: white; padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 0.75em; }
+        .card-info { padding: 10px; font-size: 0.8em; font-weight: bold; letter-spacing: 1px; }
 
-        /* PAYMENT AREA */
         #payment-area { display:none; padding: 60px 20px; background: #f4f7f9; border-top: 1px solid #ddd; margin-top: 20px; }
         .currency-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        .pay-btn { padding: 10px 20px; border: 2px solid var(--aba); background: white; color: var(--aba); border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .pay-btn { padding: 12px 20px; border: 2px solid var(--aba); background: white; color: var(--aba); border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .pay-btn.active { background: var(--aba); color: white; }
         
         .qr-display { display: none; margin-top: 20px; animation: fadeIn 0.5s; }
         .qr-display img { width: 280px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 8px solid white; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .order-confirm-btn { display: inline-block; background: #27ae60; color: white; padding: 18px 45px; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 30px; box-shadow: 0 8px 20px rgba(39,174,96,0.3); }
+        .order-confirm-btn { display: inline-block; background: #27ae60; color: white; padding: 18px 45px; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 30px; box-shadow: 0 8px 20px rgba(39,174,96,0.3); font-size: 1.1em; }
 
-        footer { padding: 50px 20px; font-size: 0.75em; opacity: 0.4; }
-        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        footer { padding: 50px 20px; font-size: 0.75em; opacity: 0.4; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } .card img { height: 150px; } }
     </style>
 </head>
 <body>
@@ -58,36 +59,36 @@
     </div>
 
     <div class="grid">
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg"><span class="price">$2.5</span><div style="padding:10px">KACANG TOJIN</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg"><span class="price">$2.5</span><div style="padding:10px">KETAWA</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/hP2trF7k/ab4902a9-b072-4159-8ebb-3fbf45c8fc0b.jpg"><span class="price">$2.5</span><div style="padding:10px">TING TING</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/K84vp9Pc/5bb5bc5e-cf70-47c1-86c5-dbd05e0cc616.jpg"><span class="price">$2.5</span><div style="padding:10px">MIE LIDI</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/9f7XCrgJ/9c04e078-ee93-4550-8310-851e9a34d691.jpg"><span class="price">$2.5</span><div style="padding:10px">MAKARONI</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/gjYGV4z5/601de701-a9b5-4bbf-8aa6-87b171349a64.jpg"><span class="price">$2.5</span><div style="padding:10px">BASRENG</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/ZYcbbkj9/38611567-5f9f-4899-9d33-cffa77b5e469.jpg"><span class="price">$2.5</span><div style="padding:10px">LUMPIA</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/sDgV1n09/16ad7cba-62a3-48d4-a52c-25fe2f379b5e.jpg"><span class="price">$2.5</span><div style="padding:10px">KACANG ARAB</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg"><span class="price">$2.5</span><div style="padding:10px">KACANG MADU</div></div>
+        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg"><span class="price">$2.5</span><div class="card-info">KACANG TOJIN</div></div>
+        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg"><span class="price">$2.5</span><div class="card-info">KETAWA</div></div>
+        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/hP2trF7k/ab4902a9-b072-4159-8ebb-3fbf45c8fc0b.jpg"><span class="price">$2.5</span><div class="card-info">TING TING</div></div>
+        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/K84vp9Pc/5bb5bc5e-cf70-47c1-86c5-dbd05e0cc616.jpg"><span class="price">$2.5</span><div class="card-info">MIE LIDI</div></div>
+        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/9f7XCrgJ/9c04e078-ee93-4550-8310-851e9a34d691.jpg"><span class="price">$2.5</span><div class="card-info">MAKARONI</div></div>
+        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/gjYGV4z5/601de701-a9b5-4bbf-8aa6-87b171349a64.jpg"><span class="price">$2.5</span><div class="card-info">BASRENG</div></div>
+        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/ZYcbbkj9/38611567-5f9f-4899-9d33-cffa77b5e469.jpg"><span class="price">$2.5</span><div class="card-info">LUMPIA</div></div>
+        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/sDgV1n09/16ad7cba-62a3-48d4-a52c-25fe2f379b5e.jpg"><span class="price">$2.5</span><div class="card-info">KACANG ARAB</div></div>
+        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg"><span class="price">$2.5</span><div class="card-info">KACANG MADU</div></div>
     </div>
 
     <div id="payment-area">
         <h3>CHOOSE CURRENCY / PILIH MATA UANG</h3>
         <div class="currency-selector">
-            <button class="pay-btn" onclick="showQR('usd')">USD ($2.5)</button>
-            <button class="pay-btn" onclick="showQR('riel')">RIEL (10,000៛)</button>
+            <button class="pay-btn" onclick="showQR('usd', this)">USD ($2.5)</button>
+            <button class="pay-btn" onclick="showQR('riel', this)">RIEL (10,000៛)</button>
         </div>
 
         <div id="qr-usd" class="qr-display">
-            <p>Scan ABA (USD):</p>
+            <p>Scan ABA (USD) - $2.5:</p>
             <img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg">
         </div>
 
         <div id="qr-riel" class="qr-display">
-            <p>Scan ABA (RIEL):</p>
+            <p>Scan ABA (RIEL) - 10,000៛:</p>
             <img src="https://i.postimg.cc/vZZrrQfY/riel-aba-asli.jpg">
         </div>
 
-        <p style="margin-top:20px; font-size:0.9em; opacity:0.7">After payment, click button below to confirm!</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfpGZ_sQQGpM5BlTaBT4eUBtDmTTVw4kMBCRnUGp3PjlM_vdw/viewform" class="order-confirm-btn">CONFIRM ORDER NOW</a>
+        <p style="margin-top:20px; font-size:0.9em; opacity:0.7">Setelah bayar, klik tombol di bawah untuk konfirmasi!</p>
+        <a href="https://docs.google.com/forms/d/1b4YLtNZ-Pk8feMkONE_OeI2fjYgCbR5acGsywUn-WFU" class="order-confirm-btn">KONFIRMASI PEMBAYARAN</a>
     </div>
 
     <footer>&copy; 2026 PITER SNACKS • MADE BY ALVIN PHANESTU</footer>
@@ -107,22 +108,22 @@
 
         function startOrder() {
             document.getElementById('bgMusic').play();
-            document.getElementById('payment-area').style.display = 'block';
-            document.getElementById('payment-area').scrollIntoView({ behavior: 'smooth' });
+            const payArea = document.getElementById('payment-area');
+            payArea.style.display = 'block';
+            payArea.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function showQR(type) {
+        function showQR(type, btn) {
             document.getElementById('qr-usd').style.display = 'none';
             document.getElementById('qr-riel').style.display = 'none';
             document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
             
             if(type === 'usd') {
                 document.getElementById('qr-usd').style.display = 'block';
-                event.target.classList.add('active');
             } else {
                 document.getElementById('qr-riel').style.display = 'block';
-                event.target.classList.add('active');
             }
+            btn.classList.add('active');
         }
     </script>
 </body>
