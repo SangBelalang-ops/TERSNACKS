@@ -3,180 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PITERSNACKS - Premium Snacks Cambodia</title>
+    <title>PITERSNACKS - Shopping Mode</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #f7941d;
-            --dark-color: #2c2c2c;
-            --price-color: #e74c3c;
+            --primary: #f7941d;
+            --secondary: #c95c8c;
+            --dark: #2c2c2c;
+            --price: #e74c3c;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: #fff; color: var(--dark-color); overflow-x: hidden; }
-        .container { width: 90%; margin: auto; max-width: 1200px; }
+        body { background-color: #f4f4f4; color: var(--dark); overflow-x: hidden; }
+        .container { width: 90%; margin: auto; max-width: 1100px; }
 
+        /* HEADER */
         header {
-            background: rgba(255,255,255,0.95);
-            padding: 15px 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+            background: white; padding: 15px 0; position: fixed; width: 100%; top: 0; z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .logo { font-size: 24px; font-weight: 800; color: var(--primary-color); text-transform: uppercase; text-align: center;}
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 22px; font-weight: 800; color: var(--primary); text-transform: uppercase; }
+        .cart-btn { cursor: pointer; font-size: 20px; position: relative; background: #eee; padding: 8px 15px; border-radius: 20px; }
+        #cart-count { position: absolute; top: -5px; right: -5px; background: var(--price); color: white; font-size: 12px; padding: 2px 7px; border-radius: 50%; }
 
-        .hero { padding: 140px 0 60px 0; display: flex; align-items: center; background: #fdfdfd; flex-wrap: wrap; }
-        .hero-text { flex: 1; min-width: 300px; padding-right: 30px; }
-        .hero h1 { font-size: 45px; margin-bottom: 20px; }
-        .hero-image { flex: 1; min-width: 300px; text-align: center; }
-        .hero-image img { width: 100%; max-width: 450px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        /* HERO */
+        .hero { padding: 120px 0 40px 0; display: flex; align-items: center; flex-wrap: wrap; background: white; }
+        .hero-text { flex: 1; min-width: 300px; }
+        .hero-text h1 { font-size: 40px; line-height: 1.1; margin-bottom: 10px; }
+        .hero-text span { color: var(--primary); }
+        .hero-img { flex: 1; text-align: right; }
+        .hero-img img { width: 100%; max-width: 350px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-        .products { padding: 80px 0; background: #f9f9f9; position: relative; overflow: hidden; }
-        .section-title { text-align: center; font-size: 32px; margin-bottom: 50px; position: relative; z-index: 10; }
+        /* GRID PRODUK */
+        .products { padding: 40px 0; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .product-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; padding-bottom: 20px; transition: 0.3s; }
+        .product-card:hover { transform: translateY(-5px); }
+        .p-img { height: 250px; background-size: cover; background-position: center; }
+        .p-info { padding: 15px; }
+        .p-name { font-weight: 600; font-size: 18px; margin-bottom: 5px; }
+        .p-price { color: var(--price); font-weight: 700; font-size: 22px; display: block; margin-bottom: 15px; }
+        .add-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; }
 
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; position: relative; z-index: 10; }
-        .product-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        /* KERANJANG SIDEBAR */
+        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 350px; height: 100%; background: white; z-index: 2000; transition: 0.4s; padding: 25px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .cart-sidebar.active { right: 0; }
+        .cart-items { flex: 1; overflow-y: auto; margin: 20px 0; }
+        .item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .total-box { border-top: 2px solid #eee; padding-top: 15px; }
+        .checkout-btn { width: 100%; background: #27ae60; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 10px; }
         
-        .product-img { height: 280px; background-size: cover; background-position: center; }
-        .product-info { padding: 20px; text-align: center; }
-        .product-name { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
-        
-        .price-tag { background: #fff5e6; display: inline-block; padding: 5px 15px; border-radius: 20px; border: 1px dashed var(--primary-color); }
-        .price-usd { font-size: 22px; font-weight: 800; color: var(--price-color); }
-        .price-riel { font-size: 14px; color: #666; font-weight: 600; margin-left: 5px; }
+        footer { text-align: center; padding: 30px; background: var(--dark); color: white; margin-top: 40px; }
 
-        /* HUJAN KACANG */
-        .peanut-rain { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .falling-nut { position: absolute; width: 30px; height: 30px; background-size: contain; background-repeat: no-repeat; animation: fall linear infinite; opacity: 0.7; }
-        @keyframes fall {
-            0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-
-        footer { background: #222; color: #fff; padding: 30px 0; text-align: center; margin-top: 50px;}
-
-        @media (max-width: 768px) {
-            .hero-text { text-align: center; padding-right: 0; }
-            .hero h1 { font-size: 32px; }
-        }
+        @media (max-width: 768px) { .hero { text-align: center; } .hero-img { display: none; } }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="container"><div class="logo">Pitersnacks</div></div>
+        <div class="container">
+            <nav>
+                <div class="logo">Pitersnacks</div>
+                <div class="cart-btn" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+            </nav>
+        </div>
     </header>
 
     <section class="hero">
         <div class="container">
             <div class="hero-text">
-                <h1>Ngempuk Maksimal, Gurihnya <span>Total!</span></h1>
-                <p>Snack premium kualitas ekspor, hadir di Kamboja dengan harga flat bersahabat.</p>
+                <h1>Pilih Snack <span>Pitersnacks</span> Favoritmu!</h1>
+                <p>Harga Flat 2.5$ (10,000 Riel) Per Bungkus.</p>
             </div>
-            <div class="hero-image">
-                <img src="https://i.postimg.cc/8cGHkfpz/ef1aa9fc-c7cd-455e-851e-bd0764a3dadc.jpg" alt="BA Pitersnacks">
+            <div class="hero-img">
+                <img src="https://i.postimg.cc/8cGHkfpz/ef1aa9fc-c7cd-455e-851e-bd0764a3dadc.jpg" alt="BA">
             </div>
         </div>
     </section>
 
     <section class="products">
-        <div class="peanut-rain" id="rain"></div>
         <div class="container">
-            <h2 class="section-title">Menu Pitersnacks - Flat Price</h2>
-            <div class="product-grid">
-                
-                <div class="product-card">
-                    <div class="product-img" style="background-image: url('https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg')"></div>
-                    <div class="product-info">
-                        <div class="product-name">Kacang Tojin</div>
-                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-img" style="background-image: url('https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg')"></div>
-                    <div class="product-info">
-                        <div class="product-name">Ketawa</div>
-                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-img" style="background-image: url('https://i.postimg.cc/hP2trF7k/ab4902a9-b072-4159-8ebb-3fbf45c8fc0b.jpg')"></div>
-                    <div class="product-info">
-                        <div class="product-name">Kacang Ting Ting</div>
-                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-img" style="background-image: url('https://i.postimg.cc/K84vp9Pc/5bb5bc5e-cf70-47c1-86c5-dbd05e0cc616.jpg')"></div>
-                    <div class="product-info">
-                        <div class="product-name">Mie Lidi</div>
-                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-img" style="background-image: url('https://i.postimg.cc/9f7XCrgJ/9c04e078-ee93-4550-8310-851e9a34d691.jpg')"></div>
-                    <div class="product-info">
-                        <div class="product-name">Makaroni</div>
-                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-img" style="background-image: url('https://i.postimg.cc/gjYGV4z5/601de701-a9b5-4bbf-8aa6-87b171349a64.jpg')"></div>
-                    <div class="product-info">
-                        <div class="product-name">Basreng</div>
-                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-img" style="background-image: url('https://i.postimg.cc/ZYcbbkj9/38611567-5f9f-4899-9d33-cffa77b5e469.jpg')"></div>
-                    <div class="product-info">
-                        <div class="product-name">Lumpia</div>
-                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-img" style="background-image: url('https://i.postimg.cc/sDgV1n09/16ad7cba-62a3-48d4-a52c-25fe2f379b5e.jpg')"></div>
-                    <div class="product-info">
-                        <div class="product-name">Kacang Arab</div>
-                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-img" style="background-image: url('https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg')"></div>
-                    <div class="product-info">
-                        <div class="product-name">Kacang Madu</div>
-                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
-                    </div>
-                </div>
-
-            </div>
+            <div class="product-grid" id="grid"></div>
         </div>
     </section>
+
+    <div class="cart-sidebar" id="sidebar">
+        <h2 onclick="toggleCart()" style="cursor:pointer"> &times; Close</h2>
+        <div class="cart-items" id="items"></div>
+        <div class="total-box">
+            <h3>Total: <span id="t-usd">$0</span></h3>
+            <p id="t-riel">0 Riel</p>
+            <button class="checkout-btn" onclick="checkout()">Checkout ke Google Form</button>
+        </div>
+    </div>
 
     <footer><p>&copy; 2026 Pitersnacks Cambodia</p></footer>
 
     <script>
-        const rain = document.getElementById('rain');
-        for(let i=0; i<30; i++) {
-            let nut = document.createElement('div');
-            nut.className = 'falling-nut';
-            nut.style.left = Math.random() * 100 + '%';
-            nut.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/811/811443.png')";
-            nut.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            nut.style.animationDelay = Math.random() * 5 + 's';
-            rain.appendChild(nut);
+        const products = [
+            { id: 1, n: "Kacang Tojin", img: "https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg" },
+            { id: 2, n: "Ketawa", img: "https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg" },
+            { id: 3, n: "Kacang Ting Ting", img: "https://i.postimg.cc/hP2trF7k/ab4902a9-b072-4159-8ebb-3fbf45c8fc0b.jpg" },
+            { id: 4, n: "Mie Lidi", img: "https://i.postimg.cc/K84vp9Pc/5bb5bc5e-cf70-47c1-86c5-dbd05e0cc616.jpg" },
+            { id: 5, n: "Makaroni", img: "https://i.postimg.cc/9f7XCrgJ/9c04e078-ee93-4550-8310-851e9a34d691.jpg" },
+            { id: 6, n: "Basreng", img: "https://i.postimg.cc/gjYGV4z5/601de701-a9b5-4bbf-8aa6-87b171349a64.jpg" },
+            { id: 7, n: "Lumpia", img: "https://i.postimg.cc/ZYcbbkj9/38611567-5f9f-4899-9d33-cffa77b5e469.jpg" },
+            { id: 8, n: "Kacang Arab", img: "https://i.postimg.cc/sDgV1n09/16ad7cba-62a3-48d4-a52c-25fe2f379b5e.jpg" },
+            { id: 9, n: "Kacang Madu", img: "https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg" }
+        ];
+
+        let cart = [];
+
+        function render() {
+            document.getElementById('grid').innerHTML = products.map(p => `
+                <div class="product-card">
+                    <div class="p-img" style="background-image:url('${p.img}')"></div>
+                    <div class="p-info">
+                        <div class="p-name">${p.n}</div>
+                        <span class="p-price">$2.5</span>
+                        <button class="add-btn" onclick="add(${p.id})">Beli</button>
+                    </div>
+                </div>
+            `).join('');
         }
+
+        function add(id) {
+            cart.push(products.find(p => p.id === id));
+            update();
+        }
+
+        function update() {
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('items').innerHTML = cart.map((item, i) => `
+                <div class="item"><span>${item.n}</span> <span>$2.5 <small onclick="remove(${i})" style="color:red;cursor:pointer">X</small></span></div>
+            `).join('');
+            const total = cart.length * 2.5;
+            document.getElementById('t-usd').innerText = `$${total.toFixed(2)}`;
+            document.getElementById('t-riel').innerText = `${(total * 4000).toLocaleString()} Riel`;
+        }
+
+        function remove(i) { cart.splice(i, 1); update(); }
+        function toggleCart() { document.getElementById('sidebar').classList.toggle('active'); }
+
+        function checkout() {
+            if(cart.length === 0) return alert("Pilih snack dulu bos!");
+            const list = cart.map(item => item.n).join(", ");
+            const total = document.getElementById('t-usd').innerText + " / " + document.getElementById('t-riel').innerText;
+            
+            // PESAN UNTUK MEMBANTU USER
+            alert("Silakan isi data diri di Google Form berikut.\n\nDetail Belanjaan Anda:\n" + list + "\nTotal: " + total);
+            
+            // GANTI LINK DI BAWAH INI
+            const formURL = "MASUKKAN_LINK_GOOGLE_FORM_DISINI";
+            window.open(formURL, "_blank");
+        }
+
+        render();
     </script>
 </body>
 </html>
