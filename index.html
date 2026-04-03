@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PITERSNACKS - Teman Ngemil Paling Asik</title>
+    <title>PITERSNACKS - Premium Snacks & Brand Ambassador</title>
     <style>
         /* --- CSS STYLING --- */
         :root {
             --primary-color: #f7941d; /* Oranye khas snack */
-            --dark-color: #333;
-            --light-color: #fff;
-            --bg-color: #f9f9f9;
+            --brand-pink: #c95c8c; /* Pink dari baju BA */
+            --dark-color: #2c2c2c;
+            --light-color: #ffffff;
+            --bg-color: #fdfdfd;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
@@ -33,7 +34,7 @@
             max-width: 1200px;
         }
 
-        /* --- HEADER & NAVIGASI --- */
+        /* --- HEADER --- */
         header {
             background: var(--light-color);
             padding: 20px 0;
@@ -41,7 +42,7 @@
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         nav {
@@ -75,74 +76,100 @@
             color: var(--primary-color);
         }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION - Menampilkan BA --- */
         .hero {
-            background-color: var(--primary-color);
-            color: var(--light-color);
-            padding: 150px 0 80px 0; /* Tambah padding atas karena header fixed */
-            text-align: center;
+            background-color: var(--bg-color);
+            color: var(--dark-color);
+            padding: 180px 0 100px 0; /* Tambah padding atas karena header fixed */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero-text {
+            flex: 1;
+            padding-right: 50px;
         }
 
         .hero h1 {
-            font-size: 48px;
-            margin-bottom: 15px;
+            font-size: 54px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero h1 span {
+            color: var(--primary-color);
         }
 
         .hero p {
             font-size: 18px;
-            margin-bottom: 30px;
-            opacity: 0.9;
+            margin-bottom: 40px;
+            color: #555;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: right;
+        }
+
+        /* Menampilkan FOTO UTAMA BA */
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--light-color);
-            color: var(--primary-color);
+            padding: 14px 35px;
+            background-color: var(--primary-color);
+            color: var(--light-color);
             text-decoration: none;
-            border-radius: 25px;
+            border-radius: 30px;
             font-weight: bold;
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(247, 148, 29, 0.3);
         }
 
         /* --- PRODUCT SECTION --- */
         .products {
-            padding: 80px 0;
+            padding: 100px 0;
+            background-color: #f9f9f9;
         }
 
         .section-title {
             text-align: center;
-            font-size: 36px;
-            margin-bottom: 50px;
+            font-size: 38px;
+            margin-bottom: 60px;
             color: var(--dark-color);
         }
 
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            gap: 40px;
         }
 
         .product-card {
             background: var(--light-color);
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
             transition: transform 0.3s;
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
         }
 
-        /* Placeholder untuk gambar */
+        /* Placeholder untuk gambar produk asli */
         .product-image {
-            height: 200px;
+            height: 250px;
             background-color: #eee;
             display: flex;
             align-items: center;
@@ -152,95 +179,63 @@
         }
 
         .product-info {
-            padding: 20px;
+            padding: 25px;
         }
 
         .product-name {
-            font-size: 20px;
-            margin-bottom: 8px;
+            font-size: 22px;
+            margin-bottom: 10px;
             color: var(--dark-color);
         }
 
         .product-desc {
-            font-size: 14px;
+            font-size: 15px;
             color: #666;
-            margin-bottom: 15px;
-            height: 40px; /* Jaga agar deskripsi rata */
+            margin-bottom: 20px;
+            height: 60px; /* Jaga agar deskripsi rata */
             overflow: hidden;
         }
 
         .product-price {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: var(--primary-color);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .buy-btn {
             display: block;
             width: 100%;
             text-align: center;
-            padding: 10px;
-            background-color: var(--primary-color);
+            padding: 12px;
+            background-color: var(--brand-pink); /* Menggunakan warna pink BA */
             color: var(--light-color);
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-weight: bold;
             transition: background 0.3s;
         }
 
         .buy-btn:hover {
-            background-color: #e68519;
-        }
-
-        /* --- CONTACT/ORDER SECTION --- */
-        .order {
-            background-color: var(--light-color);
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .order-options {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .order-method {
-            flex: 1;
-            max-width: 300px;
-            padding: 30px;
-            border: 2px solid #eee;
-            border-radius: 10px;
-            transition: border-color 0.3s;
-        }
-
-        .order-method:hover {
-            border-color: var(--primary-color);
-        }
-
-        .order-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-            color: var(--primary-color);
+            background-color: #b0507a;
         }
 
         /* --- FOOTER --- */
         footer {
             background-color: var(--dark-color);
             color: rgba(255,255,255,0.7);
-            padding: 30px 0;
+            padding: 40px 0;
             text-align: center;
             font-size: 14px;
         }
 
         /* Responsive Mobile */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 36px; }
-            .nav-links { display: none; } /* Sembunyikan menu di mobile untuk kesederhanaan */
-            .logo { font-size: 24px; }
+        @media (max-width: 992px) {
+            .hero { flex-direction: column; text-align: center; padding: 150px 0 80px 0; }
+            .hero-text { padding-right: 0; margin-bottom: 50px; }
+            .hero-image { text-align: center; }
+            .hero h1 { font-size: 40px; }
+            .nav-links { display: none; } /* Sembunyikan menu di mobile */
         }
     </style>
 </head>
@@ -252,8 +247,8 @@
                 <div class="logo">Pitersnacks</div>
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#products">Produk</a></li>
-                    <li><a href="#order">Cara Order</a></li>
+                    <li><a href="#products">Varian Menu</a></li>
+                    <li><a href="https://wa.me/628123456789">Pesan</a></li>
                 </ul>
             </nav>
         </div>
@@ -261,99 +256,71 @@
 
     <section id="home" class="hero">
         <div class="container">
-            <h1>Krispy. Gurih. Nagih!</h1>
-            <p>Cobain varian snack home-made terbaik dari Pitersnacks. Dijamin bikin lidah goyang.</p>
-            <a href="#products" class="btn">Lihat Menu</a>
+            <div class="hero-text">
+                <h1>Gaya Maksimal, Gurihnya <span>Total!</span></h1>
+                <p>Cobain snack home-made premium pilihan langsung dari Brand Ambassador kece kita.</p>
+                <a href="#products" class="btn">Lihat Koleksi Snack</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://i.postimg.cc/8cGHkfpz/ef1aa9fc-c7cd-455e-851e-bd0764a3dadc.jpg" alt="Pitersnacks Brand Ambassador">
+            </div>
         </div>
     </section>
 
     <section id="products" class="products">
         <div class="container">
-            <h2 class="section-title">Produk Terlaris Kami</h2>
+            <h2 class="section-title">Menu Utama Pitersnacks</h2>
             
             <div class="product-grid">
                 
                 <div class="product-card">
                     <div class="product-image">
-                        [Foto Basreng Pedas]
+                        [Foto Basreng Premium]
                     </div>
                     <div class="product-info">
-                        <h3 class="product-name">Basreng Pedas Daun Jeruk</h3>
-                        <p class="product-desc">Bakso goreng renyah dengan bumbu pedas nampol dan aroma daun jeruk segar.</p>
-                        <p class="product-price">Rp 15.000 / pcs</p>
-                        <a href="#order" class="buy-btn">Pesan Sekarang</a>
+                        <h3 class="product-name">Basreng Pedas Jeruk</h3>
+                        <p class="product-desc">Bakso goreng renyah bumbu pedas nampol & aroma daun jeruk segar.</p>
+                        <p class="product-price">Rp 18.000 / pcs</p>
+                        <a href="https://wa.me/628123456789" class="buy-btn">Pesan Lewat WA</a>
                     </div>
                 </div>
 
                 <div class="product-card">
                     <div class="product-image">
-                        [Foto Keripik Kaca]
+                        [Foto Kacang Arab]
                     </div>
                     <div class="product-info">
-                        <h3 class="product-name">Keripik Kaca Ekstra Pedas</h3>
-                        <p class="product-desc">Tipis, bening, krispy parah! Cocok buat tantangan lidah kamu.</p>
-                        <p class="product-price">Rp 12.500 / pcs</p>
-                        <a href="#order" class="buy-btn">Pesan Sekarang</a>
+                        <h3 class="product-name">Kacang Arab Panggang</h3>
+                        <p class="product-desc">Kacang arab oven dengan bumbu rempah otentik.</p>
+                        <p class="product-price">Rp 25.000 / pcs</p>
+                        <a href="https://wa.me/628123456789" class="buy-btn">Pesan Lewat WA</a>
                     </div>
                 </div>
 
                 <div class="product-card">
                     <div class="product-image">
-                        [Foto Makaroni Sosis]
+                        [Foto Kacang Mete]
                     </div>
                     <div class="product-info">
-                        <h3 class="product-name">Makaroni Sosis BBQ</h3>
-                        <p class="product-desc">Makaroni goreng bumbu BBQ gurih dengan potongan sosis kering.</p>
-                        <p class="product-price">Rp 10.000 / pcs</p>
-                        <a href="#order" class="buy-btn">Pesan Sekarang</a>
+                        <h3 class="product-name">Kacang Mete Madu</h3>
+                        <p class="product-desc">Kacang mete pilihan dengan lapisan madu yang manis.</p>
+                        <p class="product-price">Rp 35.000 / pcs</p>
+                        <a href="https://wa.me/628123456789" class="buy-btn">Pesan Lewat WA</a>
                     </div>
                 </div>
 
                 <div class="product-card">
                     <div class="product-image">
-                        [Foto Sus Kering]
+                        [Foto Lumpia Mini]
                     </div>
                     <div class="product-info">
-                        <h3 class="product-name">Sus Kering Cokelat</h3>
-                        <p class="product-desc">Kue sus mini renyah dengan isian cokelat lumer di dalam.</p>
-                        <p class="product-price">Rp 20.000 / pcs</p>
-                        <a href="#order" class="buy-btn">Pesan Sekarang</a>
+                        <h3 class="product-name">Lumpia Mini Udang</h3>
+                        <p class="product-desc">Lumpia kering mini isi udang yang gurih.</p>
+                        <p class="product-price">Rp 22.000 / pcs</p>
+                        <a href="https://wa.me/628123456789" class="buy-btn">Pesan Lewat WA</a>
                     </div>
                 </div>
 
-            </div>
-        </div>
-    </section>
-
-    <section id="order" class="order">
-        <div class="container">
-            <h2 class="section-title">Siap Ngemil? Order Disini</h2>
-            <p>Pitersnacks tersedia di berbagai platform kesayangan kamu.</p>
-            
-            <div class="order-options">
-                <div class="order-method">
-                    <div class="order-icon">📱</div>
-                    <h3>WhatsApp</h3>
-                    <p>Pesan langsung chat mimin. Fast respon!</p>
-                    <br>
-                    <a href="https://wa.me/628123456789" class="btn" style="background-color: #25D366; color: white;">Chat WA</a>
-                </div>
-
-                <div class="order-method">
-                    <div class="order-icon">🛍️</div>
-                    <h3>Shopee</h3>
-                    <p>Belanja aman dan dapatkan promo gratis ongkir.</p>
-                    <br>
-                    <a href="#" class="btn" style="background-color: #EE4D2D; color: white;">Buka Shopee</a>
-                </div>
-
-                <div class="order-method">
-                    <div class="order-icon">📸</div>
-                    <h3>Instagram</h3>
-                    <p>Follow kami untuk update varian baru dan promo.</p>
-                    <br>
-                    <a href="#" class="btn" style="background-color: #C13584; color: white;">@pitersnacks</a>
-                </div>
             </div>
         </div>
     </section>
