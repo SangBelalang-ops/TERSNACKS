@@ -3,315 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PITERSNACKS - Premium Snacks Galore Cambodia</title>
+    <title>PITERSNACKS - Premium Snacks Cambodia</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS STYLING --- */
         :root {
-            --primary-color: #f7941d; /* Oranye khas snack */
-            --brand-pink: #c95c8c; /* Pink BA */
+            --primary-color: #f7941d;
             --dark-color: #2c2c2c;
-            --light-color: #ffffff;
-            --bg-color: #ffffff;
             --price-color: #e74c3c;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #fff; color: var(--dark-color); overflow-x: hidden; }
+        .container { width: 90%; margin: auto; max-width: 1200px; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--dark-color);
-            line-height: 1.6;
-            overflow-x: hidden; /* Mencegah scroll horizontal akibat hujan kacang */
-        }
-
-        .container {
-            width: 85%;
-            margin: auto;
-            max-width: 1200px;
-        }
-
-        /* --- HEADER --- */
         header {
             background: rgba(255,255,255,0.95);
-            padding: 20px 0;
+            padding: 15px 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary-color); text-transform: uppercase; text-align: center;}
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .hero { padding: 140px 0 60px 0; display: flex; align-items: center; background: #fdfdfd; flex-wrap: wrap; }
+        .hero-text { flex: 1; min-width: 300px; padding-right: 30px; }
+        .hero h1 { font-size: 45px; margin-bottom: 20px; }
+        .hero-image { flex: 1; min-width: 300px; text-align: center; }
+        .hero-image img { width: 100%; max-width: 450px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
 
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-transform: uppercase;
-        }
+        .products { padding: 80px 0; background: #f9f9f9; position: relative; overflow: hidden; }
+        .section-title { text-align: center; font-size: 32px; margin-bottom: 50px; position: relative; z-index: 10; }
 
-        /* --- HERO BA SECTION --- */
-        .hero {
-            padding: 180px 0 100px 0;
-            background-color: #fdfdfd;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .hero-text { flex: 1; padding-right: 50px; }
-        .hero h1 { font-size: 50px; line-height: 1.1; margin-bottom: 20px; }
-        .hero h1 span { color: var(--primary-color); }
-        .hero p { font-size: 18px; margin-bottom: 40px; color: #555; }
-        .hero-image { flex: 1; text-align: right; }
-        .hero-image img { max-width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-
-        .btn { display: inline-block; padding: 14px 35px; background-color: var(--primary-color); color: var(--light-color); text-decoration: none; border-radius: 30px; font-weight: bold; transition: transform 0.2s; }
-        .btn:hover { transform: translateY(-3px); }
-
-        /* --- SNACK GRID SECTION --- */
-        .products {
-            padding: 100px 0;
-            background-color: #f9f9f9;
-            position: relative; /* Container untuk hujan kacang */
-            overflow: hidden;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 38px;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 60px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .product-card {
-            background: var(--light-color);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
-            transition: transform 0.3s;
-        }
-
-        .product-card:hover { transform: translateY(-8px); }
-
-        /* Mangkuk Estetik Produk */
-        .product-image {
-            height: 280px;
-            background-color: #eee;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .product-info { padding: 25px; text-align: center; }
-        .product-name { font-size: 20px; margin-bottom: 8px; font-weight: 600; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; position: relative; z-index: 10; }
+        .product-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         
-        /* HARGA KHUSUS FLAT $2.5 / 10K RIEL */
-        .price-tag {
-            background: #fff5e6;
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            border: 1px dashed var(--primary-color);
-        }
+        .product-img { height: 280px; background-size: cover; background-position: center; }
+        .product-info { padding: 20px; text-align: center; }
+        .product-name { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+        
+        .price-tag { background: #fff5e6; display: inline-block; padding: 5px 15px; border-radius: 20px; border: 1px dashed var(--primary-color); }
         .price-usd { font-size: 22px; font-weight: 800; color: var(--price-color); }
         .price-riel { font-size: 14px; color: #666; font-weight: 600; margin-left: 5px; }
 
-        /* --- HUJAN KACANG-KACANGAN (ANIMASI) --- */
-        .peanut-rain {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1; /* Di bawah grid, di atas background */
-            pointer-events: none; /* Agar tidak menghalangi klik */
-        }
-
-        .peanut {
-            position: absolute;
-            background-size: cover;
-            background-position: center;
-            opacity: 0.8;
-            filter: blur(0px); /* Bisa diatur blur di mobile */
-            animation: fall linear infinite;
-        }
-
+        /* HUJAN KACANG */
+        .peanut-rain { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .falling-nut { position: absolute; width: 30px; height: 30px; background-size: contain; background-repeat: no-repeat; animation: fall linear infinite; opacity: 0.7; }
         @keyframes fall {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            100% { transform: translateY(120vh) rotate(360deg); opacity: 0.2; }
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
 
-        /* --- FOOTER --- */
-        footer { background-color: var(--dark-color); color: rgba(255,255,255,0.7); padding: 40px 0; text-align: center; font-size: 14px; }
+        footer { background: #222; color: #fff; padding: 30px 0; text-align: center; margin-top: 50px;}
 
-        /* Responsive Mobile */
-        @media (max-width: 992px) {
-            .hero { flex-direction: column; text-align: center; padding: 150px 0 80px 0; }
-            .hero-text { padding-right: 0; margin-bottom: 50px; }
-            .hero h1 { font-size: 36px; }
-            .product-grid { grid-template-columns: 1fr; gap: 20px; }
+        @media (max-width: 768px) {
+            .hero-text { text-align: center; padding-right: 0; }
+            .hero h1 { font-size: 32px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="container">
-            <nav>
-                <div class="logo">Pitersnacks</div>
-            </nav>
-        </div>
+        <div class="container"><div class="logo">Pitersnacks</div></div>
     </header>
 
-    <section id="home" class="hero">
+    <section class="hero">
         <div class="container">
             <div class="hero-text">
-                <h1>Ngempuk Maksimal, Gurihnya <span>Pitersnacks!</span></h1>
-                <p>Cobain premium varian menu pilihan langsung dari Brand Ambassador kece kita.</p>
-                <a href="#products" class="btn">Lihat Koleksi Snack</a>
+                <h1>Ngempuk Maksimal, Gurihnya <span>Total!</span></h1>
+                <p>Snack premium kualitas ekspor, hadir di Kamboja dengan harga flat bersahabat.</p>
             </div>
             <div class="hero-image">
-                <img src="https://i.postimg.cc/8cGHkfpz/ef1aa9fc-c7cd-455e-851e-bd0764a3dadc.jpg" alt="Pitersnacks Brand Ambassador">
+                <img src="https://i.postimg.cc/8cGHkfpz/ef1aa9fc-c7cd-455e-851e-bd0764a3dadc.jpg" alt="BA Pitersnacks">
             </div>
         </div>
     </section>
 
-    <section id="products" class="products">
-        
-        <div class="peanut-rain" id="peanutRain">
-            </div>
-
+    <section class="products">
+        <div class="peanut-rain" id="rain"></div>
         <div class="container">
-            <h2 class="section-title">Semua Varian Cuma Satu Harga!</h2>
-            <p class="section-subtitle">Premium, Crispy, dan Nagih Parah!</p>
-            
+            <h2 class="section-title">Menu Pitersnacks - Flat Price</h2>
             <div class="product-grid">
                 
                 <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg');"></div>
+                    <div class="product-img" style="background-image: url('https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg')"></div>
                     <div class="product-info">
-                        <h3 class="product-name">Kacang Tojin Kupas</h3>
-                        <div class="price-tag">
-                            <span class="price-usd">$2.5</span>
-                            <span class="price-riel">(10,000 Riel)</span>
-                        </div>
+                        <div class="product-name">Kacang Tojin</div>
+                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg');"></div>
+                    <div class="product-img" style="background-image: url('https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg')"></div>
                     <div class="product-info">
-                        <h3 class="product-name">Onde Tawa Krispy</h3>
-                        <div class="price-tag">
-                            <span class="price-usd">$2.5</span>
-                            <span class="price-riel">(10,000 Riel)</span>
-                        </div>
+                        <div class="product-name">Ketawa</div>
+                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://i.postimg.cc/hP2trF7k/ab4902a9-b072-4159-8ebb-3fbf45c8fc0b.jpg');"></div>
+                    <div class="product-img" style="background-image: url('https://i.postimg.cc/hP2trF7k/ab4902a9-b072-4159-8ebb-3fbf45c8fc0b.jpg')"></div>
                     <div class="product-info">
-                        <h3 class="product-name">Kacang Ting Ting Madu</h3>
-                        <div class="price-tag">
-                            <span class="price-usd">$2.5</span>
-                            <span class="price-riel">(10,000 Riel)</span>
-                        </div>
+                        <div class="product-name">Kacang Ting Ting</div>
+                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://i.postimg.cc/K84vp9Pc/5bb5bc5e-cf70-47c1-86c5-dbd05e0cc616.jpg');"></div>
+                    <div class="product-img" style="background-image: url('https://i.postimg.cc/K84vp9Pc/5bb5bc5e-cf70-47c1-86c5-dbd05e0cc616.jpg')"></div>
                     <div class="product-info">
-                        <h3 class="product-name">Mie Lidi Pedas Jeruk</h3>
-                        <div class="price-tag">
-                            <span class="price-usd">$2.5</span>
-                            <span class="price-riel">(10,000 Riel)</span>
-                        </div>
+                        <div class="product-name">Mie Lidi</div>
+                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://i.postimg.cc/9f7XCrgJ/9c04e078-ee93-4550-8310-851e9a34d691.jpg');"></div>
+                    <div class="product-img" style="background-image: url('https://i.postimg.cc/9f7XCrgJ/9c04e078-ee93-4550-8310-851e9a34d691.jpg')"></div>
                     <div class="product-info">
-                        <h3 class="product-name">Makaroni Spiral Balado</h3>
-                        <div class="price-tag">
-                            <span class="price-usd">$2.5</span>
-                            <span class="price-riel">(10,000 Riel)</span>
-                        </div>
+                        <div class="product-name">Makaroni</div>
+                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://i.postimg.cc/gjYGV4z5/601de701-a9b5-4bbf-8aa6-87b171349a64.jpg');"></div>
+                    <div class="product-img" style="background-image: url('https://i.postimg.cc/gjYGV4z5/601de701-a9b5-4bbf-8aa6-87b171349a64.jpg')"></div>
                     <div class="product-info">
-                        <h3 class="product-name">Basreng Pedas Jeruk</h3>
-                        <div class="price-tag">
-                            <span class="price-usd">$2.5</span>
-                            <span class="price-riel">(10,000 Riel)</span>
-                        </div>
+                        <div class="product-name">Basreng</div>
+                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://i.postimg.cc/ZYcbbkj9/38611567-5f9f-4899-9d33-cffa77b5e469.jpg');"></div>
+                    <div class="product-img" style="background-image: url('https://i.postimg.cc/ZYcbbkj9/38611567-5f9f-4899-9d33-cffa77b5e469.jpg')"></div>
                     <div class="product-info">
-                        <h3 class="product-name">Lumpia Mini Udang</h3>
-                        <div class="price-tag">
-                            <span class="price-usd">$2.5</span>
-                            <span class="price-riel">(10,000 Riel)</span>
-                        </div>
+                        <div class="product-name">Lumpia</div>
+                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://i.postimg.cc/sDgV1n09/16ad7cba-62a3-48d4-a52c-25fe2f379b5e.jpg');"></div>
+                    <div class="product-img" style="background-image: url('https://i.postimg.cc/sDgV1n09/16ad7cba-62a3-48d4-a52c-25fe2f379b5e.jpg')"></div>
                     <div class="product-info">
-                        <h3 class="product-name">Kacang Arab Panggang</h3>
-                        <div class="price-tag">
-                            <span class="price-usd">$2.5</span>
-                            <span class="price-riel">(10,000 Riel)</span>
-                        </div>
+                        <div class="product-name">Kacang Arab</div>
+                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
                     </div>
                 </div>
 
                 <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg');"></div>
+                    <div class="product-img" style="background-image: url('https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg')"></div>
                     <div class="product-info">
-                        <h3 class="product-name">Kacang Telur Madu</h3>
-                        <div class="price-tag">
-                            <span class="price-usd">$2.5</span>
-                            <span class="price-riel">(10,000 Riel)</span>
-                        </div>
+                        <div class="product-name">Kacang Madu</div>
+                        <div class="price-tag"><span class="price-usd">$2.5</span><span class="price-riel">(10K RIEL)</span></div>
                     </div>
                 </div>
 
@@ -319,50 +164,19 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Pitersnacks Cambodia - All Snacks Premium Quality</p>
-        </div>
-    </footer>
+    <footer><p>&copy; 2026 Pitersnacks Cambodia</p></footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const peanutRain = document.getElementById('peanutRain');
-            
-            // List foto partikel kacang jatuh (mete, arab, telur madu, kupas)
-            const peanutTypes = [
-                'https://cdn-icons-png.flaticon.com/512/811/811443.png', // Icon Kacang
-                'https://cdn-icons-png.flaticon.com/512/2353/2353677.png' // Icon Snack
-            ];
-
-            const numberOfPeanuts = 25; // Jumlah partikel kacang jatuh sekaligus
-
-            for (let i = 0; i < numberOfPeanuts; i++) {
-                const peanut = document.createElement('div');
-                peanut.classList.add('peanut');
-                
-                // Acak jenis kacang
-                const typeIndex = Math.floor(Math.random() * peanutTypes.length);
-                peanut.style.backgroundImage = `url('${peanutTypes[typeIndex]}')`;
-                
-                // Acak posisi horizontal (left)
-                peanut.style.left = `${Math.random() * 100}%`;
-                
-                // Acak ukuran kacang
-                const size = Math.random() * 25 + 15; // Ukuran 15px - 40px
-                peanut.style.width = `${size}px`;
-                peanut.style.height = `${size}px`;
-                
-                // Acak durasi jatuh (kecepatan)
-                peanut.style.animationDuration = `${Math.random() * 3 + 2}s`; // 2s - 5s
-                
-                // Acak delay start agar tidak jatuh bersamaan
-                peanut.style.animationDelay = `${Math.random() * 5}s`;
-
-                peanutRain.appendChild(peanut);
-            }
-        });
+        const rain = document.getElementById('rain');
+        for(let i=0; i<30; i++) {
+            let nut = document.createElement('div');
+            nut.className = 'falling-nut';
+            nut.style.left = Math.random() * 100 + '%';
+            nut.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/811/811443.png')";
+            nut.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            nut.style.animationDelay = Math.random() * 5 + 's';
+            rain.appendChild(nut);
+        }
     </script>
-
 </body>
 </html>
