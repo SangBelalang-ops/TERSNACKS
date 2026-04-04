@@ -51,12 +51,44 @@
 </head>
 <body>
 
-   <header>
+   <style>
+    header { 
+        padding: 5px 15px !important; 
+        background-color: white !important; 
+        border-bottom: 1px solid #eee; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        gap: 15px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .logo-header { 
+        width: 60px !important; 
+        height: auto; 
+    }
+
+    .header-text h2 { 
+        font-size: 0.9em !important; 
+        margin: 0; 
+        color: #1a1a1a !important;
+    }
+
+    .header-text p { 
+        margin: 0; 
+        font-size: 0.6em !important; 
+        color: var(--primary) !important; 
+        font-weight: bold;
+    }
+</style>
+
+<header>
     <img src="https://i.postimg.cc/T3Dj51gC/download.png" class="logo-header" alt="Logo TERSNACKS">
-    
-    <div class="header-text">
-        <h2 style="margin:0; font-size: 1.2em; letter-spacing: 1px;">TERSNACKS</h2>
-        <p style="margin:0; font-size:0.7em; color:var(--primary); font-weight:bold;">PREMIUM QUALITY • $2.50</p>
+    <div class="header-text" style="text-align: left;">
+        <h2>TERSNACKS</h2>
+        <p>PREMIUM QUALITY • $2.50</p>
     </div>
 </header>
 
