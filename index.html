@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PITERSNACKS - Premium Checkout</title>
+    <title>TERSNACKS - Premium Checkout</title>
     <style>
         :root { --primary: #f7941d; --dark: #1a1a1a; --aba: #005a8d; --success: #27ae60; }
         body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #f9f9f9; color: var(--dark); text-align: center; padding-bottom: 120px; overflow-x: hidden; }
@@ -11,14 +11,24 @@
         /* Efek Hujan Makaroni */
         .macaroni {
             position: fixed; top: -50px; font-size: 24px; z-index: 9999;
-            pointer-events: none; animation: fall linear forwards;
+            pointer-events: none; animation: fall linear forwards; user-select: none;
         }
         @keyframes fall {
             to { transform: translateY(105vh) rotate(360deg); }
         }
 
         header { padding: 30px 20px; background: white; border-bottom: 1px solid #eee; position: relative; z-index: 10; }
-        .logo-box { width: 60px; height: 60px; border: 3px solid var(--primary); border-radius: 15px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: var(--primary); }
+        
+        /* Box Logo Baru */
+        .logo-img { 
+            width: 80px; height: 80px; 
+            border: 3px solid var(--primary); 
+            border-radius: 20px; 
+            margin: 0 auto 10px; 
+            display: block; 
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
         
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; max-width: 800px; margin: 0 auto; }
         .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
@@ -36,7 +46,7 @@
         .btn-order { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
 
         #payment-area { display:none; padding: 40px 20px; background: #fffbe6; border-top: 2px solid #f9eebc; margin-top: 30px; }
-        .input-nama { width: 80%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); margin-bottom: 20px; font-size: 1em; text-align: center; font-weight: bold; }
+        .input-nama { width: 80%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); margin-bottom: 20px; font-size: 1em; text-align: center; font-weight: bold; text-transform: uppercase; }
         
         .pay-options { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
         .pay-btn { padding: 12px 20px; border: 2px solid var(--aba); border-radius: 10px; background: white; color: var(--aba); font-weight: bold; cursor: pointer; }
@@ -52,8 +62,8 @@
 <body>
 
     <header>
-        <div class="logo-box">P</div>
-        <h2 style="margin:0; letter-spacing:2px;">PITER SNACKS</h2>
+        <img src="https://i.postimg.cc/bvQNX9PS/d86aa452-3ea3-4a45-8dd4-5fd3ba61f3b1.jpg" class="logo-img" alt="TERSNACKS Logo">
+        <h2 style="margin:0; letter-spacing:2px;">TERSNACKS</h2>
         <p style="margin:5px 0 0; opacity:0.6; font-size:0.8em; font-weight:bold;">PREMIUM QUALITY • $2.50 / PACK</p>
     </header>
 
@@ -108,11 +118,10 @@
 
         let cart = {};
 
-        // Fungsi Hujan Makaroni
         function createMacaroni() {
             const macaroni = document.createElement('div');
             macaroni.classList.add('macaroni');
-            macaroni.innerText = '🍤'; // Simbol makaroni/snack
+            macaroni.innerText = '🍤';
             macaroni.style.left = Math.random() * 100 + 'vw';
             macaroni.style.animationDuration = Math.random() * 2 + 3 + 's';
             document.body.appendChild(macaroni);
@@ -191,20 +200,21 @@
             const btn = document.getElementById('submit-btn');
             btn.innerText = "MENGIRIM..."; btn.disabled = true;
 
-            // URL APPS SCRIPT SAKTI BARU
+            // URL Script kamu
             const scriptURL = "https://script.google.com/macros/s/AKfycby-koR4z1YFZYSs3XPAkrGMdpBcN7tqx_1i1JAf4W5vo9Ka-0w8NjYrMFXHIytVZ6FY/exec";
             
             const params = new URLSearchParams();
-            params.append('pesanan', `Pembeli: ${nama} | Order: ${list.join(", ")}`);
+            params.append('pembeli', nama);
+            params.append('pesanan', list.join(", "));
             params.append('total', "$" + totalUSD.toFixed(2));
 
             fetch(`${scriptURL}?${params.toString()}`, { method: 'POST', mode: 'no-cors' })
             .then(() => {
-                alert(`MANTAP ${nama}! Pesanan sudah masuk ke Sheets.`);
+                alert(`MANTAP ${nama}! Pesanan TERSNACKS sudah masuk.`);
                 location.reload();
             })
             .catch(() => {
-                alert("Berhasil Terkirim!");
+                alert("Terkirim!");
                 location.reload();
             });
         }
