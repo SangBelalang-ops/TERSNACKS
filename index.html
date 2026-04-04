@@ -51,10 +51,38 @@
 </head>
 <body>
 
-   <header>
-    <img src="https://i.postimg.cc/T3Dj51gC/download.png" class="logo-header" alt="Logo TERSNACKS">
+   /* Styling Logo Header (Ukuran dikurangi 50%) */
+.logo-header {
+    width: 150px; /* Sesuaikan angka ini (misal dari 300px ke 150px) */
+    height: auto;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-</header>
+/* Animasi Kelap-Kelip (Glow & Fade) */
+.slogan-animasi {
+    font-size: 0.9em;
+    font-weight: 700;
+    font-style: italic;
+    color: #f7941d; /* Warna utama Pitersnacks */
+    margin-top: 5px;
+    letter-spacing: 1px;
+    animation: kelapKelip 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes kelapKelip {
+    from {
+        opacity: 0.4;
+        text-shadow: 0 0 0px #fff;
+    }
+    to {
+        opacity: 1;
+        text-shadow: 0 0 8px #f7941d, 0 0 15px #ffea00;
+        transform: scale(1.02);
+    }
+}
 
     <div class="grid" id="container-snack"></div>
 
