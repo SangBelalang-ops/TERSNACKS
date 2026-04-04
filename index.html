@@ -6,41 +6,47 @@
     <title>PITERSNACKS - Premium Checkout</title>
     <style>
         :root { --primary: #f7941d; --dark: #1a1a1a; --aba: #005a8d; --success: #27ae60; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #f9f9f9; color: var(--dark); text-align: center; padding-bottom: 120px; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #f9f9f9; color: var(--dark); text-align: center; padding-bottom: 120px; overflow-x: hidden; }
         
-        header { padding: 30px 20px; background: white; border-bottom: 1px solid #eee; }
+        /* Efek Hujan Makaroni */
+        .macaroni {
+            position: fixed; top: -50px; font-size: 24px; z-index: 9999;
+            pointer-events: none; animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
+        }
+
+        header { padding: 30px 20px; background: white; border-bottom: 1px solid #eee; position: relative; z-index: 10; }
         .logo-box { width: 60px; height: 60px; border: 3px solid var(--primary); border-radius: 15px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: var(--primary); }
         
-        /* Grid Snack */
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; max-width: 800px; margin: 0 auto; }
         .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
         .card img { width: 100%; height: 140px; object-fit: cover; }
         .card-info { padding: 10px; }
         .card-name { font-size: 0.7em; font-weight: 800; margin-bottom: 8px; height: 30px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
 
-        /* Counter QTY */
         .counter { display: flex; justify-content: center; align-items: center; gap: 8px; padding-bottom: 10px; }
-        .btn-qty { background: #f0f0f0; border: none; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.1em; }
+        .btn-qty { background: #f0f0f0; border: none; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-weight: bold; }
         .btn-qty:active { background: var(--primary); color: white; }
         .qty-val { font-weight: 800; font-size: 1em; min-width: 20px; }
 
-        /* Floating Total Bar */
         #total-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--dark); color: white; padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.3); border-radius: 20px 20px 0 0; }
-        .total-info { text-align: left; }
         .total-price { font-weight: 900; font-size: 1.2em; color: var(--primary); }
-        .btn-order { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.9em; }
+        .btn-order { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
 
-        /* Payment Area */
         #payment-area { display:none; padding: 40px 20px; background: #fffbe6; border-top: 2px solid #f9eebc; margin-top: 30px; }
+        .input-nama { width: 80%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); margin-bottom: 20px; font-size: 1em; text-align: center; font-weight: bold; }
+        
         .pay-options { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
         .pay-btn { padding: 12px 20px; border: 2px solid var(--aba); border-radius: 10px; background: white; color: var(--aba); font-weight: bold; cursor: pointer; }
         .pay-btn.active { background: var(--aba); color: white; }
         .qr-box { display: none; margin-top: 20px; }
-        .qr-box img { width: 260px; border: 8px solid white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .qr-box img { width: 260px; border: 8px solid white; border-radius: 15px; }
 
-        .final-btn { display: inline-block; background: var(--success); color: white; padding: 18px 40px; border: none; border-radius: 50px; font-weight: bold; margin-top: 30px; width: 85%; box-shadow: 0 10px 20px rgba(39,174,96,0.3); cursor: pointer; font-size: 1em; }
+        .final-btn { display: inline-block; background: var(--success); color: white; padding: 18px 40px; border: none; border-radius: 50px; font-weight: bold; margin-top: 30px; width: 85%; cursor: pointer; font-size: 1em; }
 
-        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } .card img { height: 120px; } }
+        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
@@ -54,7 +60,7 @@
     <div class="grid" id="container-snack"></div>
 
     <div id="total-bar">
-        <div class="total-info">
+        <div class="total-info" style="text-align:left;">
             <div id="summary" style="font-size: 0.65em; opacity: 0.7; margin-bottom: 2px;">Pilih snack...</div>
             <div class="total-price" id="display-total">$0.00</div>
         </div>
@@ -62,6 +68,9 @@
     </div>
 
     <div id="payment-area">
+        <h3>DATA PEMBELI</h3>
+        <input type="text" id="nama-pembeli" class="input-nama" placeholder="Masukkan Nama Anda..." required>
+        
         <h3>PILIH PEMBAYARAN ABA</h3>
         <div class="pay-options">
             <button class="pay-btn" onclick="showQR('usd', this)">USD ($)</button>
@@ -78,7 +87,7 @@
             <img src="https://i.postimg.cc/vZZrrQfY/riel-aba-asli.jpg">
         </div>
 
-        <p style="margin-top:20px; font-size:0.85em; opacity:0.8; font-weight:bold;">Sudah bayar? Klik konfirmasi di bawah!</p>
+        <p style="margin-top:20px; font-size:0.85em; opacity:0.8; font-weight:bold;">Sudah bayar? Klik konfirmasi!</p>
         <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI PESANAN</button>
     </div>
 
@@ -98,6 +107,18 @@
         ];
 
         let cart = {};
+
+        // Fungsi Hujan Makaroni
+        function createMacaroni() {
+            const macaroni = document.createElement('div');
+            macaroni.classList.add('macaroni');
+            macaroni.innerText = '🍤'; // Simbol makaroni/snack
+            macaroni.style.left = Math.random() * 100 + 'vw';
+            macaroni.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(macaroni);
+            setTimeout(() => { macaroni.remove(); }, 5000);
+        }
+        setInterval(createMacaroni, 500);
 
         function init() {
             const grid = document.getElementById('container-snack');
@@ -126,23 +147,19 @@
         }
 
         function updateTotal() {
-            let total = 0;
-            let list = [];
+            let total = 0; let list = [];
             Object.keys(cart).forEach(id => {
                 if(cart[id] > 0) {
                     total += cart[id] * 2.5;
                     list.push(`${cart[id]}x ${snackData[id].name}`);
                 }
             });
-
             const bar = document.getElementById('total-bar');
             if(total > 0) {
                 bar.style.display = 'flex';
                 document.getElementById('display-total').innerText = `$${total.toFixed(2)}`;
                 document.getElementById('summary').innerText = list.join(", ");
-            } else {
-                bar.style.display = 'none';
-            }
+            } else { bar.style.display = 'none'; }
         }
 
         function openPayment() {
@@ -160,8 +177,10 @@
         }
 
         function sendToSpreadsheet() {
-            let list = [];
-            let totalUSD = 0;
+            const nama = document.getElementById('nama-pembeli').value;
+            if(!nama) { alert("Nama jangan kosong dong, Bos!"); return; }
+
+            let list = []; let totalUSD = 0;
             Object.keys(cart).forEach(id => {
                 if(cart[id] > 0) {
                     totalUSD += cart[id] * 2.5;
@@ -169,41 +188,26 @@
                 }
             });
 
-            if (list.length === 0) {
-                alert("Pilih snack dulu dong, Bos!");
-                return;
-            }
-
             const btn = document.getElementById('submit-btn');
-            btn.innerText = "MENGIRIM...";
-            btn.disabled = true;
+            btn.innerText = "MENGIRIM..."; btn.disabled = true;
 
-            const detailOrder = list.join(", ");
-            const totalFinal = "$" + totalUSD.toFixed(2);
+            // URL APPS SCRIPT SAKTI BARU
+            const scriptURL = "https://script.google.com/macros/s/AKfycby-koR4z1YFZYSs3XPAkrGMdpBcN7tqx_1i1JAf4W5vo9Ka-0w8NjYrMFXHIytVZ6FY/exec";
             
-            // URL BARU KAMU
-            const scriptURL = "https://script.google.com/macros/s/AKfycbwlS5-diQi4gjbYm0KiGEJbAjwbVEYMtaimQ2BXf1m3-guAbynIu2Xz6IdxWXkGnVDW/exec";
-            
-            // Gunakan URLSearchParams untuk handle data agar lebih aman dari karakter aneh
             const params = new URLSearchParams();
-            params.append('pesanan', detailOrder);
-            params.append('total', totalFinal);
+            params.append('pesanan', `Pembeli: ${nama} | Order: ${list.join(", ")}`);
+            params.append('total', "$" + totalUSD.toFixed(2));
 
-            fetch(`${scriptURL}?${params.toString()}`, { 
-                method: 'POST', 
-                mode: 'no-cors' 
-            })
+            fetch(`${scriptURL}?${params.toString()}`, { method: 'POST', mode: 'no-cors' })
             .then(() => {
-                alert("MANTAP! Pesanan Bos Alvin sudah masuk ke Spreadsheet.\nAdmin kami akan segera proses!");
+                alert(`MANTAP ${nama}! Pesanan sudah masuk ke Sheets.`);
                 location.reload();
             })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Berhasil Terkirim (Abaikan jika ada error CORS)!");
+            .catch(() => {
+                alert("Berhasil Terkirim!");
                 location.reload();
             });
         }
-
         init();
     </script>
 </body>
