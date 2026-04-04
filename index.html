@@ -3,200 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TERSNACKS.ID - PREMIUM DARK</title>
+    <title>TERSNACKS.ID </title>
     <style>
-        :root { --primary: #f7941d; --dark: #121212; --card-bg: #1e1e1e; --text-main: #ffffff; --aba: #00a8ff; --success: #2ecc71; }
+        :root { --primary: #f7941d; --dark: #1a1a1a; --aba: #005a8d; --success: #27ae60; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #f9f9f9; color: var(--dark); text-align: center; padding-bottom: 120px; overflow-x: hidden; }
         
-        body { 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            margin: 0; padding: 0; 
-            background: var(--dark) !important; 
-            color: var(--text-main) !important; 
-            text-align: center; 
-            padding-bottom: 120px; 
-            overflow-x: hidden; 
+        /* Efek Hujan Makaroni */
+        .macaroni {
+            position: fixed; top: -50px; font-size: 24px; z-index: 9999;
+            pointer-events: none; animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
         }
 
-        header { 
-            height: 100px !important; 
-            background: #000000 !important; 
-            border-bottom: 1px solid #333; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 15px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-        }
-        .logo-header { height: 70px !important; width: auto !important; }
-
-        /* --- KODE ULAR NARIK TULISAN (FIXED POSISI) --- */
-        .snake-bar { 
-            width: 100%; height: 70px; 
-            background: #050505; 
-            position: relative; 
-            overflow: hidden; 
-            border-bottom: 2px solid #222; 
-            display: flex; 
-            align-items: center; 
-        }
-
-        .snake-body { 
-            position: absolute; 
-            display: flex; 
-            align-items: center;
-            gap: 2px;
-            animation: snakeRun 20s linear infinite; 
-        }
-
-        /* Kepala di Paling Depan */
-        .snake-bar { 
-            width: 100%; height: 70px; 
-            background: #050505; 
-            position: relative; 
-            overflow: hidden; 
-            border-bottom: 2px solid #222; 
-            display: flex; 
-            align-items: center; 
-        }
+        header { padding: 30px 20px; background: white; border-bottom: 1px solid #eee; position: relative; z-index: 10; }
+        .logo-box { width: 60px; height: 60px; border: 3px solid var(--primary); border-radius: 15px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: var(--primary); }
         
-        .head::after {
-            content: '';
-            position: absolute;
-            width: 5px; height: 5px;
-            background: black;
-            border-radius: 50%;
-            right: 7px; top: 5px;
-        }
-
-        /* Tulisan di Belakang Kepala */
-        .snake-text {
-            background: var(--primary);
-            color: black;
-            padding: 5px 15px;
-            border-radius: 10px;
-            font-weight: 900;
-            font-size: 0.8em;
-            white-space: nowrap;
-            margin: 0 10px;
-            box-shadow: 0 0 15px rgba(247, 148, 29, 0.5);
-            animation: snakeWave 1s ease-in-out infinite;
-            text-transform: uppercase;
-            order: 2; /* Urutan kedua */
-        }
-
-        /* Ruas Badan (Order 3) */
-        .dot { 
-            width: 14px; height: 14px; 
-            background: var(--primary); 
-            border-radius: 4px;
-            animation: snakeWave 1s ease-in-out infinite; 
-            order: 3;
-        }
-
-        @keyframes snakeRun { 0% { left: -1100px; } 100% { left: 115%; } }
-        @keyframes snakeWave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
-        
-        /* Delays Biar Meliuk Halus */
-        .head { animation-delay: 0s; }
-        .snake-text { animation-delay: 0.1s; }
-        .dot:nth-child(3) { animation-delay: 0.2s; }
-        .dot:nth-child(4) { animation-delay: 0.3s; }
-        .dot:nth-child(5) { animation-delay: 0.4s; }
-        .dot:nth-child(6) { animation-delay: 0.5s; }
-        .dot:nth-child(7) { animation-delay: 0.6s; }
-        .dot:nth-child(8) { animation-delay: 0.7s; }
-        .dot:nth-child(9) { animation-delay: 0.8s; }
-        .dot:nth-child(10) { animation-delay: 0.9s; }
-        .dot:nth-child(11) { animation-delay: 1.0s; }
-        .dot:nth-child(12) { animation-delay: 1.1s; }
-        .dot:nth-child(13) { animation-delay: 1.2s; }
-        .dot:nth-child(14) { animation-delay: 1.3s; }
-        .dot:nth-child(15) { animation-delay: 1.4s; }
-        .dot:nth-child(16) { animation-delay: 1.5s; }
-        .dot:nth-child(17) { animation-delay: 1.6s; }
-        .dot:nth-child(18) { animation-delay: 1.7s; }
-        .dot:nth-child(19) { animation-delay: 1.8s; }
-        .dot:nth-child(20) { animation-delay: 1.9s; }
-        .dot:nth-child(21) { animation-delay: 2.0s; }
-        .dot:nth-child(22) { animation-delay: 2.1s; }
-        .dot:nth-child(23) { animation-delay: 2.2s; }
-        .dot:nth-child(24) { animation-delay: 2.3s; }
-        .dot:nth-child(25) { animation-delay: 2.4s; width: 10px; height: 10px; }
-        .dot:nth-child(26) { animation-delay: 2.5s; width: 8px; height: 8px; opacity: 0.6; }
-
-        /* Grid, Card, Payment Area */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px; max-width: 800px; margin: 0 auto; }
-        .card { background: var(--card-bg) !important; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #333; }
-        .card img { width: 100%; height: 140px; object-fit: cover; opacity: 0.9; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; max-width: 800px; margin: 0 auto; }
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
+        .card img { width: 100%; height: 140px; object-fit: cover; }
         .card-info { padding: 10px; }
-        .card-name { font-size: 0.75em; font-weight: 800; margin-bottom: 8px; height: 30px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; color: #ddd; }
+        .card-name { font-size: 0.7em; font-weight: 800; margin-bottom: 8px; height: 30px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
+
         .counter { display: flex; justify-content: center; align-items: center; gap: 8px; padding-bottom: 10px; }
-        .btn-qty { background: #333; border: none; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; }
-        .qty-val { font-weight: 800; font-size: 1.1em; min-width: 20px; color: var(--primary); }
-        #total-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #1a1a1a; color: white; padding: 18px 25px; display: none; justify-content: space-between; align-items: center; z-index: 1000; border-top: 2px solid var(--primary); border-radius: 20px 20px 0 0; }
-        .total-price { font-weight: 900; font-size: 1.3em; color: var(--primary); }
+        .btn-qty { background: #f0f0f0; border: none; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-qty:active { background: var(--primary); color: white; }
+        .qty-val { font-weight: 800; font-size: 1em; min-width: 20px; }
+
+        #total-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--dark); color: white; padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.3); border-radius: 20px 20px 0 0; }
+        .total-price { font-weight: 900; font-size: 1.2em; color: var(--primary); }
         .btn-order { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        #payment-area { display:none; padding: 40px 20px; background: #1e1e1e !important; border-top: 2px solid #333; margin-top: 30px; }
-        .input-nama { width: 80%; padding: 15px; border-radius: 10px; border: 2px solid #444; background: #2c2c2c; color: white; margin-bottom: 20px; font-size: 1em; text-align: center; }
+
+        #payment-area { display:none; padding: 40px 20px; background: #fffbe6; border-top: 2px solid #f9eebc; margin-top: 30px; }
+        .input-nama { width: 80%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); margin-bottom: 20px; font-size: 1em; text-align: center; font-weight: bold; }
+        
         .pay-options { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
-        .pay-btn { padding: 12px 20px; border: 2px solid var(--aba); border-radius: 10px; background: transparent; color: var(--aba); font-weight: bold; cursor: pointer; }
+        .pay-btn { padding: 12px 20px; border: 2px solid var(--aba); border-radius: 10px; background: white; color: var(--aba); font-weight: bold; cursor: pointer; }
         .pay-btn.active { background: var(--aba); color: white; }
         .qr-box { display: none; margin-top: 20px; }
-        .qr-box img { width: 260px; border: 5px solid #333; border-radius: 15px; }
-        .final-btn { display: inline-block; background: var(--success); color: white; padding: 18px 40px; border: none; border-radius: 50px; font-weight: bold; margin-top: 30px; width: 85%; cursor: pointer; }
+        .qr-box img { width: 260px; border: 8px solid white; border-radius: 15px; }
+
+        .final-btn { display: inline-block; background: var(--success); color: white; padding: 18px 40px; border: none; border-radius: 50px; font-weight: bold; margin-top: 30px; width: 85%; cursor: pointer; font-size: 1em; }
 
         @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="#" style="display: flex; align-items: center; text-decoration: none; gap: 20px;">
-            <img src="https://i.postimg.cc/T3Dj51gC/download.png" class="logo-header" alt="Logo">
-            <div style="text-align: left;">
-                <h2 style="margin:0; font-size: 1.1em; color: white;">TERSNACKS</h2>
-                <p style="margin:0; font-size:0.6em; color:var(--primary); font-weight:bold;">PREMIUM QUALITY • $2.50</p>
-            </div>
-        </a>
-    </header>
-
-    <div class="snake-bar">
-        <div class="snake-body">
-            <div class="head"></div>
-
-            <div class="snake-text">SELAMAT DATANG SNACKERS</div>
-            
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        </div>
+   <header>
+    <img src="https://i.postimg.cc/T3Dj51gC/download.png" class="logo-header" alt="Logo TERSNACKS">
+    
+    <div class="header-text">
+        <h2 style="margin:0; font-size: 1.2em; letter-spacing: 1px;">TERSNACKS</h2>
+        <p style="margin:0; font-size:0.7em; color:var(--primary); font-weight:bold;">PREMIUM QUALITY • $2.50</p>
     </div>
+</header>
 
     <div class="grid" id="container-snack"></div>
 
     <div id="total-bar">
-        <div class="total-info">
-            <div id="summary" style="font-size: 0.7em; opacity: 0.6; margin-bottom: 2px;">Pilih snack...</div>
+        <div class="total-info" style="text-align:left;">
+            <div id="summary" style="font-size: 0.65em; opacity: 0.7; margin-bottom: 2px;">Pilih snack...</div>
             <div class="total-price" id="display-total">$0.00</div>
         </div>
         <button class="btn-order" onclick="openPayment()">ORDER SEKARANG</button>
     </div>
 
     <div id="payment-area">
-        <h3 style="color: var(--primary);">DATA PEMBELI</h3>
+        <h3>DATA PEMBELI</h3>
         <input type="text" id="nama-pembeli" class="input-nama" placeholder="Masukkan Nama Anda..." required>
-        <h3 style="color: var(--primary);">PILIH PEMBAYARAN ABA</h3>
+        
+        <h3>PILIH PEMBAYARAN ABA</h3>
         <div class="pay-options">
             <button class="pay-btn" onclick="showQR('usd', this)">USD ($)</button>
             <button class="pay-btn" onclick="showQR('riel', this)">RIEL (៛)</button>
         </div>
-        <div id="qr-usd" class="qr-box"><p>Scan ABA (USD):</p><img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg"></div>
-        <div id="qr-riel" class="qr-box"><p>Scan ABA (RIEL):</p><img src="https://i.postimg.cc/vZZrrQfY/riel-aba-asli.jpg"></div>
+
+        <div id="qr-usd" class="qr-box">
+            <p>Scan ABA (USD):</p>
+            <img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg">
+        </div>
+
+        <div id="qr-riel" class="qr-box">
+            <p>Scan ABA (RIEL):</p>
+            <img src="https://i.postimg.cc/vZZrrQfY/riel-aba-asli.jpg">
+        </div>
+
+        <p style="margin-top:20px; font-size:0.85em; opacity:0.8; font-weight:bold;">Sudah bayar? Klik konfirmasi!</p>
         <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI PESANAN</button>
     </div>
 
@@ -216,36 +110,106 @@
         ];
 
         let cart = {};
+
+        // Fungsi Hujan Makaroni
+        function createMacaroni() {
+            const macaroni = document.createElement('div');
+            macaroni.classList.add('macaroni');
+            macaroni.innerText = '🍤🍪'; // Simbol makaroni/snack
+            macaroni.style.left = Math.random() * 100 + 'vw';
+            macaroni.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(macaroni);
+            setTimeout(() => { macaroni.remove(); }, 5000);
+        }
+        setInterval(createMacaroni, 500);
+
         function init() {
             const grid = document.getElementById('container-snack');
             snackData.forEach(s => {
-                grid.innerHTML += `<div class="card"><img src="${s.img}"><div class="card-info"><div class="card-name">${s.name}</div><div class="counter"><button class="btn-qty" onclick="changeQty(${s.id}, -1)">-</button><span class="qty-val" id="qty-${s.id}">0</span><button class="btn-qty" onclick="changeQty(${s.id}, 1)">+</button></div></div></div>`;
+                grid.innerHTML += `
+                    <div class="card">
+                        <img src="${s.img}">
+                        <div class="card-info">
+                            <div class="card-name">${s.name}</div>
+                            <div class="counter">
+                                <button class="btn-qty" onclick="changeQty(${s.id}, -1)">-</button>
+                                <span class="qty-val" id="qty-${s.id}">0</span>
+                                <button class="btn-qty" onclick="changeQty(${s.id}, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
             });
         }
+
         function changeQty(id, delta) {
             cart[id] = (cart[id] || 0) + delta;
             if(cart[id] < 0) cart[id] = 0;
             document.getElementById(`qty-${id}`).innerText = cart[id];
             updateTotal();
         }
+
         function updateTotal() {
             let total = 0; let list = [];
-            Object.keys(cart).forEach(id => { if(cart[id] > 0) { total += cart[id] * 2.5; list.push(`${cart[id]}x ${snackData[id].name}`); } });
+            Object.keys(cart).forEach(id => {
+                if(cart[id] > 0) {
+                    total += cart[id] * 2.5;
+                    list.push(`${cart[id]}x ${snackData[id].name}`);
+                }
+            });
             const bar = document.getElementById('total-bar');
-            if(total > 0) { bar.style.display = 'flex'; document.getElementById('display-total').innerText = `$${total.toFixed(2)}`; document.getElementById('summary').innerText = list.join(", "); } else { bar.style.display = 'none'; }
+            if(total > 0) {
+                bar.style.display = 'flex';
+                document.getElementById('display-total').innerText = `$${total.toFixed(2)}`;
+                document.getElementById('summary').innerText = list.join(", ");
+            } else { bar.style.display = 'none'; }
         }
-        function openPayment() { document.getElementById('bgMusic').play(); const pay = document.getElementById('payment-area'); pay.style.display = 'block'; pay.scrollIntoView({ behavior: 'smooth' }); }
-        function showQR(type, btn) { document.getElementById('qr-usd').style.display = type === 'usd' ? 'block' : 'none'; document.getElementById('qr-riel').style.display = type === 'riel' ? 'block' : 'none'; document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+
+        function openPayment() {
+            document.getElementById('bgMusic').play();
+            const pay = document.getElementById('payment-area');
+            pay.style.display = 'block';
+            pay.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showQR(type, btn) {
+            document.getElementById('qr-usd').style.display = type === 'usd' ? 'block' : 'none';
+            document.getElementById('qr-riel').style.display = type === 'riel' ? 'block' : 'none';
+            document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
         function sendToSpreadsheet() {
             const nama = document.getElementById('nama-pembeli').value;
             if(!nama) { alert("Nama jangan kosong dong, Bos!"); return; }
+
             let list = []; let totalUSD = 0;
-            Object.keys(cart).forEach(id => { if(cart[id] > 0) { totalUSD += cart[id] * 2.5; list.push(`${cart[id]}x ${snackData[id].name}`); } });
-            const btn = document.getElementById('submit-btn'); btn.innerText = "MENGIRIM..."; btn.disabled = true;
+            Object.keys(cart).forEach(id => {
+                if(cart[id] > 0) {
+                    totalUSD += cart[id] * 2.5;
+                    list.push(`${cart[id]}x ${snackData[id].name}`);
+                }
+            });
+
+            const btn = document.getElementById('submit-btn');
+            btn.innerText = "MENGIRIM..."; btn.disabled = true;
+
+            // URL APPS SCRIPT SAKTI BARU
             const scriptURL = "https://script.google.com/macros/s/AKfycby-koR4z1YFZYSs3XPAkrGMdpBcN7tqx_1i1JAf4W5vo9Ka-0w8NjYrMFXHIytVZ6FY/exec";
+            
             const params = new URLSearchParams();
-            params.append('pesanan', `Pembeli: ${nama} | Order: ${list.join(", ")}`); params.append('total', "$" + totalUSD.toFixed(2));
-            fetch(`${scriptURL}?${params.toString()}`, { method: 'POST', mode: 'no-cors' }).then(() => { alert(`MANTAP ${nama}! Pesanan sudah masuk.`); location.reload(); }).catch(() => { alert("Berhasil Terkirim!"); location.reload(); });
+            params.append('pesanan', `Pembeli: ${nama} | Order: ${list.join(", ")}`);
+            params.append('total', "$" + totalUSD.toFixed(2));
+
+            fetch(`${scriptURL}?${params.toString()}`, { method: 'POST', mode: 'no-cors' })
+            .then(() => {
+                alert(`MANTAP ${nama}! Pesanan sudah masuk ke Sheets.`);
+                location.reload();
+            })
+            .catch(() => {
+                alert("Berhasil Terkirim!");
+                location.reload();
+            });
         }
         init();
     </script>
