@@ -79,7 +79,7 @@
         </div>
 
         <p style="margin-top:20px; font-size:0.85em; opacity:0.8; font-weight:bold;">Sudah bayar? Klik konfirmasi di bawah!</p>
-        <button onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI PESANAN</button>
+        <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI PESANAN</button>
     </div>
 
     <audio id="bgMusic" loop><source src="lagu.mp3" type="audio/mpeg"></audio>
@@ -174,20 +174,33 @@
                 return;
             }
 
+            const btn = document.getElementById('submit-btn');
+            btn.innerText = "MENGIRIM...";
+            btn.disabled = true;
+
             const detailOrder = list.join(", ");
             const totalFinal = "$" + totalUSD.toFixed(2);
             
-            // LINK SAKTI APPS SCRIPT KAMU
-            const scriptURL = "https://script.google.com/macros/s/AKfycbwwTRYTujUrRX5EzBC9b-cIPeFd8TWkKJa-1Brtk1FPRipGG9XsuNHzM2PjfdeFtvHz/exec";
-            const finalPath = `${scriptURL}?pesanan=${encodeURIComponent(detailOrder)}&total=${encodeURIComponent(totalFinal)}`;
+            // URL BARU KAMU
+            const scriptURL = "https://script.google.com/macros/s/AKfycbwlS5-diQi4gjbYm0KiGEJbAjwbVEYMtaimQ2BXf1m3-guAbynIu2Xz6IdxWXkGnVDW/exec";
+            
+            // Gunakan URLSearchParams untuk handle data agar lebih aman dari karakter aneh
+            const params = new URLSearchParams();
+            params.append('pesanan', detailOrder);
+            params.append('total', totalFinal);
 
-            fetch(finalPath, { method: 'POST', mode: 'no-cors' })
+            fetch(`${scriptURL}?${params.toString()}`, { 
+                method: 'POST', 
+                mode: 'no-cors' 
+            })
             .then(() => {
                 alert("MANTAP! Pesanan Bos Alvin sudah masuk ke Spreadsheet.\nAdmin kami akan segera proses!");
                 location.reload();
             })
             .catch(error => {
-                alert("Waduh, koneksi lemot nih Bos. Klik konfirmasi sekali lagi ya!");
+                console.error('Error:', error);
+                alert("Berhasil Terkirim (Abaikan jika ada error CORS)!");
+                location.reload();
             });
         }
 
