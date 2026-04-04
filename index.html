@@ -3,128 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PITERSNACKS - Premium Snacks Cambodia</title>
+    <title>PITERSNACKS - Premium Checkout</title>
     <style>
         :root { --primary: #f7941d; --dark: #1a1a1a; --aba: #005a8d; }
         body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #fff; color: var(--dark); text-align: center; }
+        header { padding: 30px 20px; }
+        .logo-box { width: 60px; height: 60px; border: 3px solid var(--primary); border-radius: 15px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: var(--primary); }
         
-        header { padding: 40px 20px; }
-        .logo-box { width: 70px; height: 70px; border: 3px solid var(--primary); border-radius: 18px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 35px; font-weight: 900; color: var(--primary); box-shadow: 0 4px 10px rgba(247, 148, 29, 0.2); }
-        h1 { margin: 0; letter-spacing: 3px; font-size: 1.6em; text-transform: uppercase; font-weight: 800; }
-        header p { margin: 5px 0 0; opacity: 0.6; font-size: 0.8em; font-weight: bold; }
-
-        #countdown-container { background: var(--primary); color: white; padding: 20px 10px; }
-        .timer-grid { display: flex; justify-content: center; gap: 12px; margin-top: 10px; }
-        .time-box { display: flex; flex-direction: column; min-width: 55px; background: rgba(0,0,0,0.1); padding: 8px; border-radius: 8px; }
-        .time-box span { font-size: 1.6em; font-weight: bold; }
-
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px; max-width: 800px; margin: 0 auto; }
-        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; position: relative; cursor: pointer; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .card img { width: 100%; height: 180px; object-fit: cover; display: block; }
-        .price { position: absolute; top: 8px; right: 8px; background: var(--primary); color: white; padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 0.75em; }
-        .card-info { padding: 10px; font-size: 0.8em; font-weight: bold; letter-spacing: 1px; }
-
-        #payment-area { display:none; padding: 60px 20px; background: #f4f7f9; border-top: 1px solid #ddd; margin-top: 20px; }
-        .currency-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        .pay-btn { padding: 12px 20px; border: 2px solid var(--aba); background: white; color: var(--aba); border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .pay-btn.active { background: var(--aba); color: white; }
+        /* Grid & Card */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px; max-width: 800px; margin: 0 auto; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; padding-bottom: 10px; }
+        .card img { width: 100%; height: 140px; object-fit: cover; }
+        .card-name { font-size: 0.75em; font-weight: bold; margin: 8px 0; height: 35px; display: flex; align-items: center; justify-content: center; padding: 0 5px; }
         
-        .qr-display { display: none; margin-top: 20px; animation: fadeIn 0.5s; }
-        .qr-display img { width: 280px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 8px solid white; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Counter */
+        .counter { display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-qty { background: #eee; border: none; width: 25px; height: 25px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .qty-val { font-weight: bold; font-size: 0.9em; min-width: 20px; }
 
-        .order-confirm-btn { display: inline-block; background: #27ae60; color: white; padding: 18px 45px; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 30px; box-shadow: 0 8px 20px rgba(39,174,96,0.3); font-size: 1.1em; }
+        /* Floating Total */
+        #total-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--dark); color: white; padding: 15px; display: none; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); }
+        .btn-checkout { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        footer { padding: 50px 20px; font-size: 0.75em; opacity: 0.4; border-top: 1px solid #eee; }
-        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } .card img { height: 150px; } }
+        /* Payment */
+        #payment-area { display:none; padding: 50px 20px 100px; background: #f4f7f9; margin-top: 20px; }
+        .qr-display { display: none; margin: 20px 0; }
+        .qr-display img { width: 250px; border-radius: 15px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo-box">P</div>
-        <h1>PITER SNACKS</h1>
-        <p>PREMIUM SNACKS • CAMBODIA</p>
+        <h2 style="margin:0; letter-spacing:2px;">PITER SNACKS</h2>
     </header>
 
-    <div id="countdown-container">
-        <p>LAUNCHING IN:</p>
-        <div class="timer-grid">
-            <div class="time-box"><span id="days">00</span><small>Days</small></div>
-            <div class="time-box"><span id="hours">00</span><small>Hrs</small></div>
-            <div class="time-box"><span id="mins">00</span><small>Min</small></div>
-            <div class="time-box"><span id="secs">00</span><small>Sec</small></div>
-        </div>
-    </div>
+    <div class="grid" id="snack-list"></div>
 
-    <div class="grid">
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg"><span class="price">$2.5</span><div class="card-info">KACANG TOJIN</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg"><span class="price">$2.5</span><div class="card-info">KETAWA</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/hP2trF7k/ab4902a9-b072-4159-8ebb-3fbf45c8fc0b.jpg"><span class="price">$2.5</span><div class="card-info">TING TING</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/K84vp9Pc/5bb5bc5e-cf70-47c1-86c5-dbd05e0cc616.jpg"><span class="price">$2.5</span><div class="card-info">MIE LIDI</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/9f7XCrgJ/9c04e078-ee93-4550-8310-851e9a34d691.jpg"><span class="price">$2.5</span><div class="card-info">MAKARONI</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/gjYGV4z5/601de701-a9b5-4bbf-8aa6-87b171349a64.jpg"><span class="price">$2.5</span><div class="card-info">BASRENG</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/ZYcbbkj9/38611567-5f9f-4899-9d33-cffa77b5e469.jpg"><span class="price">$2.5</span><div class="card-info">LUMPIA</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/sDgV1n09/16ad7cba-62a3-48d4-a52c-25fe2f379b5e.jpg"><span class="price">$2.5</span><div class="card-info">KACANG ARAB</div></div>
-        <div class="card" onclick="startOrder()"><img src="https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg"><span class="price">$2.5</span><div class="card-info">KACANG MADU</div></div>
+    <div id="total-bar">
+        <div style="text-align: left;">
+            <div id="summary-text" style="font-size: 0.7em; opacity: 0.8;">Pilih snack kamu...</div>
+            <div id="total-price" style="font-weight: bold; font-size: 1.1em;">Total: $0</div>
+        </div>
+        <button class="btn-checkout" onclick="openPayment()">ORDER SEKARANG</button>
     </div>
 
     <div id="payment-area">
-        <h3>CHOOSE CURRENCY / PILIH MATA UANG</h3>
-        <div class="currency-selector">
-            <button class="pay-btn" onclick="showQR('usd', this)">USD ($2.5)</button>
-            <button class="pay-btn" onclick="showQR('riel', this)">RIEL (10,000៛)</button>
-        </div>
+        <h3>PILIH PEMBAYARAN</h3>
+        <button onclick="showQR('usd')" style="padding:10px; margin:5px;">USD ($)</button>
+        <button onclick="showQR('riel')" style="padding:10px; margin:5px;">RIEL (៛)</button>
 
-        <div id="qr-usd" class="qr-display">
-            <p>Scan ABA (USD) - $2.5:</p>
-            <img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg">
-        </div>
+        <div id="qr-usd" class="qr-display"><img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg"></div>
+        <div id="qr-riel" class="qr-display"><img src="https://i.postimg.cc/vZZrrQfY/riel-aba-asli.jpg"></div>
 
-        <div id="qr-riel" class="qr-display">
-            <p>Scan ABA (RIEL) - 10,000៛:</p>
-            <img src="https://i.postimg.cc/vZZrrQfY/riel-aba-asli.jpg">
-        </div>
-
-        <p style="margin-top:20px; font-size:0.9em; opacity:0.7">Setelah bayar, klik tombol di bawah untuk konfirmasi!</p>
-        <a href="https://docs.google.com/forms/d/1b4YLtNZ-Pk8feMkONE_OeI2fjYgCbR5acGsywUn-WFU" class="order-confirm-btn">KONFIRMASI PEMBAYARAN</a>
+        <p id="final-msg" style="margin:20px 0; font-weight:bold; color:var(--aba);"></p>
+        <button onclick="sendToForm()" class="btn-checkout" style="background:#27ae60; width:100%;">KONFIRMASI KE GOOGLE FORM</button>
     </div>
-
-    <footer>&copy; 2026 PITER SNACKS • MADE BY ALVIN PHANESTU</footer>
 
     <audio id="bgMusic" loop><source src="lagu.mp3" type="audio/mpeg"></audio>
 
     <script>
-        const target = new Date("April 9, 2026 00:00:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const d = target - now;
-            document.getElementById('days').innerText = Math.max(0, Math.floor(d / 86400000));
-            document.getElementById('hours').innerText = Math.max(0, Math.floor((d % 86400000) / 3600000));
-            document.getElementById('mins').innerText = Math.max(0, Math.floor((d % 3600000) / 60000));
-            document.getElementById('secs').innerText = Math.max(0, Math.floor((d % 60000) / 1000));
-        }, 1000);
+        const snacks = [
+            { id: 0, name: "KACANG TOJIN", img: "https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg" },
+            { id: 1, name: "KETAWA", img: "https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg" },
+            { id: 2, name: "KACANG TING TING", img: "https://i.postimg.cc/hP2trF7k/ab4902a9-b072-4159-8ebb-3fbf45c8fc0b.jpg" },
+            { id: 3, name: "MIE LIDI", img: "https://i.postimg.cc/K84vp9Pc/5bb5bc5e-cf70-47c1-86c5-dbd05e0cc616.jpg" },
+            { id: 4, name: "MAKARONI", img: "https://i.postimg.cc/9f7XCrgJ/9c04e078-ee93-4550-8310-851e9a34d691.jpg" },
+            { id: 5, name: "BASRENG", img: "https://i.postimg.cc/gjYGV4z5/601de701-a9b5-4bbf-8aa6-87b171349a64.jpg" },
+            { id: 6, name: "LUMPIA", img: "https://i.postimg.cc/ZYcbbkj9/38611567-5f9f-4899-9d33-cffa77b5e469.jpg" },
+            { id: 7, name: "KACANG ARAB", img: "https://i.postimg.cc/sDgV1n09/16ad7cba-62a3-48d4-a52c-25fe2f379b5e.jpg" },
+            { id: 8, name: "KACANG MADU", img: "https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg" }
+        ];
 
-        function startOrder() {
-            document.getElementById('bgMusic').play();
-            const payArea = document.getElementById('payment-area');
-            payArea.style.display = 'block';
-            payArea.scrollIntoView({ behavior: 'smooth' });
+        let cart = {};
+
+        function renderSnacks() {
+            const container = document.getElementById('snack-list');
+            snacks.forEach(s => {
+                container.innerHTML += `
+                    <div class="card">
+                        <img src="${s.img}">
+                        <div class="card-name">${s.name}</div>
+                        <div class="counter">
+                            <button class="btn-qty" onclick="updateQty(${s.id}, -1)">-</button>
+                            <span class="qty-val" id="qty-${s.id}">0</span>
+                            <button class="btn-qty" onclick="updateQty(${s.id}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            });
         }
 
-        function showQR(type, btn) {
-            document.getElementById('qr-usd').style.display = 'none';
-            document.getElementById('qr-riel').style.display = 'none';
-            document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
+        function updateQty(id, change) {
+            cart[id] = (cart[id] || 0) + change;
+            if (cart[id] < 0) cart[id] = 0;
+            document.getElementById(`qty-${id}`).innerText = cart[id];
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            let totalUSD = 0;
+            let summary = [];
             
-            if(type === 'usd') {
-                document.getElementById('qr-usd').style.display = 'block';
+            Object.keys(cart).forEach(id => {
+                if (cart[id] > 0) {
+                    totalUSD += cart[id] * 2.5;
+                    summary.push(`${cart[id]}x ${snacks[id].name}`);
+                }
+            });
+
+            const bar = document.getElementById('total-bar');
+            if (totalUSD > 0) {
+                bar.style.display = 'flex';
+                document.getElementById('total-price').innerText = `Total: $${totalUSD.toFixed(2)}`;
+                document.getElementById('summary-text').innerText = summary.join(", ");
             } else {
-                document.getElementById('qr-riel').style.display = 'block';
+                bar.style.display = 'none';
             }
-            btn.classList.add('active');
         }
+
+        function openPayment() {
+            document.getElementById('bgMusic').play();
+            document.getElementById('payment-area').style.display = 'block';
+            document.getElementById('payment-area').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showQR(type) {
+            document.getElementById('qr-usd').style.display = type === 'usd' ? 'block' : 'none';
+            document.getElementById('qr-riel').style.display = type === 'riel' ? 'block' : 'none';
+        }
+
+        function sendToForm() {
+            let summary = [];
+            let totalUSD = 0;
+            Object.keys(cart).forEach(id => {
+                if (cart[id] > 0) {
+                    totalUSD += cart[id] * 2.5;
+                    summary.push(`${cart[id]}x ${snacks[id].name}`);
+                }
+            });
+
+            const finalOrder = `PESANAN: ${summary.join(" | ")} | TOTAL: $${totalUSD.toFixed(2)}`;
+            
+            // GANTI entry.123456789 DI BAWAH INI DENGAN ID KOLOM KAMU!
+            const formURL = `https://docs.google.com/forms/d/e/1FAIpQLSfpGZ_sQQGpM5BlTaBT4eUBtDmTTVw4kMBCRnUGp3PjlM_vdw/viewform?usp=pp_url&entry.123456789=${encodeURIComponent(finalOrder)}`;
+            
+            window.location.href = formURL;
+        }
+
+        renderSnacks();
     </script>
 </body>
 </html>
