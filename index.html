@@ -3,97 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TERSNACKS.ID - PREMIUM DARK</title>
+    <title>TERSNACKS.ID </title>
     <style>
-        :root { 
-            --primary: #f7941d; 
-            --dark: #1a1a1a; 
-            --aba: #005a8d; 
-            --success: #27ae60; 
-            --bg-body: #121212; 
-            --bg-card: #1e1e1e; 
-            --text-color: #f1f1f1; 
-            --border-color: #333; 
-            --header-bg: #1a1a1a; 
-            --payment-bg: #1e1b10; 
-        }
-
-        body { 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            margin: 0; padding: 0; 
-            background: var(--bg-body); 
-            color: var(--text-color); 
-            text-align: center; 
-            padding-bottom: 120px; 
-            overflow-x: hidden; 
-        }
+        :root { --primary: #f7941d; --dark: #1a1a1a; --aba: #005a8d; --success: #27ae60; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #f9f9f9; color: var(--dark); text-align: center; padding-bottom: 120px; overflow-x: hidden; }
         
-        header { 
-            padding: 30px 20px; 
-            background: var(--header-bg); 
-            border-bottom: 3px solid var(--primary); 
-            position: relative; 
-            z-index: 10;
+        /* Efek Hujan Makaroni */
+        .macaroni {
+            position: fixed; top: -50px; font-size: 24px; z-index: 9999;
+            pointer-events: none; animation: fall linear forwards;
         }
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
+        }
+
+        header { padding: 30px 20px; background: white; border-bottom: 1px solid #eee; position: relative; z-index: 10; }
+        .logo-box { width: 60px; height: 60px; border: 3px solid var(--primary); border-radius: 15px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: var(--primary); }
         
-        /* LOGO SEGEDE TADI (120PX) */
-        .logo-header { 
-            width: 120px !important; 
-            height: auto !important; 
-            margin-bottom: 15px; 
-        }
-
-        /* Efek Kilap Premium */
-        .premium-text {
-            font-size: 1.8em;
-            font-weight: 900;
-            font-style: italic;
-            text-transform: uppercase;
-            background: linear-gradient(110deg, #f7941d 20%, #000 45%, #fff 50%, #000 55%, #f7941d 80%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
-            display: inline-block;
-        }
-
-        @keyframes shine {
-            to { background-position: 200% center; }
-        }
-
-        .slogan-italic {
-            margin: 10px 0 0;
-            font-size: 1.1em;
-            color: var(--primary);
-            font-weight: bold;
-            font-style: italic;
-            letter-spacing: 0.5px;
-        }
-
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; max-width: 800px; margin: 0 auto; }
-        .card { background: var(--bg-card); border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.4); border: 1px solid var(--border-color); transition: 0.3s; }
-        .card img { width: 100%; height: 140px; object-fit: cover; filter: brightness(0.8); }
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
+        .card img { width: 100%; height: 140px; object-fit: cover; }
         .card-info { padding: 10px; }
-        .card-name { font-size: 0.7em; font-weight: 800; margin-bottom: 8px; height: 30px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; color: var(--text-color); }
+        .card-name { font-size: 0.7em; font-weight: 800; margin-bottom: 8px; height: 30px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
 
         .counter { display: flex; justify-content: center; align-items: center; gap: 8px; padding-bottom: 10px; }
-        .btn-qty { background: #333; border: none; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; }
-        .qty-val { font-weight: 800; font-size: 1em; min-width: 20px; color: var(--primary); }
+        .btn-qty { background: #f0f0f0; border: none; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-qty:active { background: var(--primary); color: white; }
+        .qty-val { font-weight: 800; font-size: 1em; min-width: 20px; }
 
-        #total-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #000; color: white; padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 1000; border-radius: 20px 20px 0 0; border-top: 2px solid var(--primary); }
+        #total-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--dark); color: white; padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.3); border-radius: 20px 20px 0 0; }
         .total-price { font-weight: 900; font-size: 1.2em; color: var(--primary); }
         .btn-order { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
 
-        #payment-area { display:none; padding: 40px 20px; background: var(--payment-bg); border-top: 2px solid var(--border-color); margin-top: 30px; }
-        .input-nama { width: 80%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); margin-bottom: 20px; font-size: 1em; text-align: center; font-weight: bold; background: #222; color: white; }
+        #payment-area { display:none; padding: 40px 20px; background: #fffbe6; border-top: 2px solid #f9eebc; margin-top: 30px; }
+        .input-nama { width: 80%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); margin-bottom: 20px; font-size: 1em; text-align: center; font-weight: bold; }
         
         .pay-options { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
-        .pay-btn { padding: 12px 20px; border: 2px solid var(--aba); border-radius: 10px; background: #222; color: #5dade2; font-weight: bold; cursor: pointer; }
+        .pay-btn { padding: 12px 20px; border: 2px solid var(--aba); border-radius: 10px; background: white; color: var(--aba); font-weight: bold; cursor: pointer; }
         .pay-btn.active { background: var(--aba); color: white; }
-        .qr-box { margin-top: 20px; display: none; }
+        .qr-box { display: none; margin-top: 20px; }
         .qr-box img { width: 260px; border: 8px solid white; border-radius: 15px; }
 
-        .final-btn { display: inline-block; background: var(--success); color: white; padding: 18px 40px; border: none; border-radius: 50px; font-weight: bold; margin-top: 30px; width: 85%; cursor: pointer; font-size: 1.1em; }
+        .final-btn { display: inline-block; background: var(--success); color: white; padding: 18px 40px; border: none; border-radius: 50px; font-weight: bold; margin-top: 30px; width: 85%; cursor: pointer; font-size: 1em; }
 
         @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
@@ -102,9 +53,10 @@
 
    <header>
     <img src="https://i.postimg.cc/T3Dj51gC/download.png" class="logo-header" alt="Logo TERSNACKS">
+    
     <div class="header-text">
-        <div class="premium-text">PREMIUM QUALITY</div>
-        <p class="slogan-italic">"Temanin suntukmu dikala jari mengetik"</p>
+        <h2 style="margin:0; font-size: 1.2em; letter-spacing: 1px;">TERSNACKS</h2>
+        <p style="margin:0; font-size:0.7em; color:var(--primary); font-weight:bold;">PREMIUM QUALITY • $2.50</p>
     </div>
 </header>
 
@@ -119,10 +71,10 @@
     </div>
 
     <div id="payment-area">
-        <h3 style="color: var(--primary);">DATA PEMBELI</h3>
+        <h3>DATA PEMBELI</h3>
         <input type="text" id="nama-pembeli" class="input-nama" placeholder="Masukkan Nama Anda..." required>
         
-        <h3 style="color: var(--primary);">PILIH PEMBAYARAN ABA</h3>
+        <h3>PILIH PEMBAYARAN ABA</h3>
         <div class="pay-options">
             <button class="pay-btn" onclick="showQR('usd', this)">USD ($)</button>
             <button class="pay-btn" onclick="showQR('riel', this)">RIEL (៛)</button>
@@ -138,7 +90,7 @@
             <img src="https://i.postimg.cc/vZZrrQfY/riel-aba-asli.jpg">
         </div>
 
-        <p style="margin-top:20px; font-size:0.85em; opacity:0.8; font-weight:bold; color: white;">Sudah bayar? Klik konfirmasi!</p>
+        <p style="margin-top:20px; font-size:0.85em; opacity:0.8; font-weight:bold;">Sudah bayar? Klik konfirmasi!</p>
         <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI PESANAN</button>
     </div>
 
@@ -158,6 +110,18 @@
         ];
 
         let cart = {};
+
+        // Fungsi Hujan Makaroni
+        function createMacaroni() {
+            const macaroni = document.createElement('div');
+            macaroni.classList.add('macaroni');
+            macaroni.innerText = '🍤'; // Simbol makaroni/snack
+            macaroni.style.left = Math.random() * 100 + 'vw';
+            macaroni.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(macaroni);
+            setTimeout(() => { macaroni.remove(); }, 5000);
+        }
+        setInterval(createMacaroni, 500);
 
         function init() {
             const grid = document.getElementById('container-snack');
@@ -218,6 +182,7 @@
         function sendToSpreadsheet() {
             const nama = document.getElementById('nama-pembeli').value;
             if(!nama) { alert("Nama jangan kosong dong, Bos!"); return; }
+
             let list = []; let totalUSD = 0;
             Object.keys(cart).forEach(id => {
                 if(cart[id] > 0) {
@@ -225,15 +190,26 @@
                     list.push(`${cart[id]}x ${snackData[id].name}`);
                 }
             });
+
             const btn = document.getElementById('submit-btn');
             btn.innerText = "MENGIRIM..."; btn.disabled = true;
+
+            // URL APPS SCRIPT SAKTI BARU
             const scriptURL = "https://script.google.com/macros/s/AKfycby-koR4z1YFZYSs3XPAkrGMdpBcN7tqx_1i1JAf4W5vo9Ka-0w8NjYrMFXHIytVZ6FY/exec";
+            
             const params = new URLSearchParams();
             params.append('pesanan', `Pembeli: ${nama} | Order: ${list.join(", ")}`);
             params.append('total', "$" + totalUSD.toFixed(2));
+
             fetch(`${scriptURL}?${params.toString()}`, { method: 'POST', mode: 'no-cors' })
-            .then(() => { alert(`MANTAP ${nama}! Pesanan sudah masuk ke Sheets.`); location.reload(); })
-            .catch(() => { alert("Berhasil Terkirim!"); location.reload(); });
+            .then(() => {
+                alert(`MANTAP ${nama}! Pesanan sudah masuk ke Sheets.`);
+                location.reload();
+            })
+            .catch(() => {
+                alert("Berhasil Terkirim!");
+                location.reload();
+            });
         }
         init();
     </script>
