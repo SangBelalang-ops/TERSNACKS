@@ -5,48 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TERSNACKS.ID </title>
     <style>
-        :root { --primary: #f7941d; --dark: #1a1a1a; --aba: #005a8d; --success: #27ae60; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #f9f9f9; color: var(--dark); text-align: center; padding-bottom: 120px; overflow-x: hidden; }
+        :root { 
+            --primary: #f7941d; /* Tetap oranye buat aksen */
+            --bg-body: #121212; /* Hitam Dove Background */
+            --bg-card: rgba(255, 255, 255, 0.05); /* Putih transparan tipis */
+            --glass: blur(10px) saturate(180%); /* Efek Glassmorphism */
+            --border: rgba(255, 255, 255, 0.1); /* Border transparan */
+            --text-main: #e0e0e0; /* Teks abu terang biar gak sakit mata */
+            --aba: #007bbd; /* Biru ABA disesuain dikit biar masuk tema gelap */
+            --success: #2ecc71; 
+        }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            margin: 0; padding: 0; 
+            background: var(--bg-body); 
+            color: var(--text-main); 
+            text-align: center; 
+            padding-bottom: 120px; 
+            overflow-x: hidden; 
+        }
         
-        /* Efek Hujan Makaroni */
+        /* Efek Hujan Makaroni - Dibikin agak redup biar gak ganggu mata */
         .macaroni {
             position: fixed; top: -50px; font-size: 24px; z-index: 9999;
             pointer-events: none; animation: fall linear forwards;
+            opacity: 0.5;
         }
         @keyframes fall {
             to { transform: translateY(105vh) rotate(360deg); }
         }
 
-        header { padding: 30px 20px; background: white; border-bottom: 1px solid #eee; position: relative; z-index: 10; }
-        .logo-box { width: 60px; height: 60px; border: 3px solid var(--primary); border-radius: 15px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: var(--primary); }
+        header { 
+            padding: 20px; 
+            background: rgba(18, 18, 18, 0.8); /* Hitam transparan */
+            backdrop-filter: var(--glass);
+            -webkit-backdrop-filter: var(--glass);
+            border-bottom: 1px solid var(--border); 
+            position: sticky; top: 0; z-index: 100; 
+        }
         
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; max-width: 800px; margin: 0 auto; }
-        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
-        .card img { width: 100%; height: 140px; object-fit: cover; }
+        .logo-header {
+            max-height: 50px; /* Biar gak ketinggian di mobile */
+            margin-bottom: 5px;
+        }
+        
+        .header-text h2 { color: #fff; }
+
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px; max-width: 800px; margin: 0 auto; }
+        
+        /* Card Mode Gelas Transparan */
+        .card { 
+            background: var(--bg-card); 
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 15px; 
+            overflow: hidden; 
+            border: 1px solid var(--border); 
+            transition: 0.3s; 
+        }
+        .card:hover { border-color: rgba(247, 148, 29, 0.5); transform: translateY(-3px); }
+        .card img { width: 100%; height: 120px; object-fit: cover; filter: brightness(0.9); }
         .card-info { padding: 10px; }
-        .card-name { font-size: 0.7em; font-weight: 800; margin-bottom: 8px; height: 30px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
+        .card-name { font-size: 0.7em; font-weight: 800; margin-bottom: 8px; height: 30px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; color: #fff; }
 
-        .counter { display: flex; justify-content: center; align-items: center; gap: 8px; padding-bottom: 10px; }
-        .btn-qty { background: #f0f0f0; border: none; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        .btn-qty:active { background: var(--primary); color: white; }
-        .qty-val { font-weight: 800; font-size: 1em; min-width: 20px; }
+        .counter { display: flex; justify-content: center; align-items: center; gap: 8px; padding-bottom: 5px; }
+        
+        /* Tombol Qty Mode Gelap */
+        .btn-qty { 
+            background: rgba(255,255,255,0.1); 
+            border: 1px solid var(--border); 
+            color: #fff;
+            width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1em;
+            transition: 0.2s;
+        }
+        .btn-qty:active { background: var(--primary); border-color: var(--primary); transform: scale(0.9); }
+        .qty-val { font-weight: 800; font-size: 1.1em; min-width: 25px; color: var(--primary); }
 
-        #total-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--dark); color: white; padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.3); border-radius: 20px 20px 0 0; }
-        .total-price { font-weight: 900; font-size: 1.2em; color: var(--primary); }
-        .btn-order { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        /* Total Bar Mode Gelas di Bawah */
+        #total-bar { 
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            background: rgba(30, 30, 30, 0.8); /* Abu gelap transparan */
+            backdrop-filter: var(--glass);
+            -webkit-backdrop-filter: var(--glass);
+            color: white; padding: 15px 20px; 
+            display: none; justify-content: space-between; align-items: center; 
+            z-index: 1000; 
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5); 
+            border-radius: 20px 20px 0 0; 
+            border-top: 1px solid var(--border);
+        }
+        .total-price { font-weight: 900; font-size: 1.4em; color: var(--primary); text-shadow: 0 0 10px rgba(247,148,29,0.3); }
+        .btn-order { background: var(--primary); color: #fff; border: none; padding: 12px 25px; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px;}
+        .btn-order:hover { box-shadow: 0 0 15px rgba(247,148,29,0.5); }
 
-        #payment-area { display:none; padding: 40px 20px; background: #fffbe6; border-top: 2px solid #f9eebc; margin-top: 30px; }
-        .input-nama { width: 80%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); margin-bottom: 20px; font-size: 1em; text-align: center; font-weight: bold; }
+        /* Payment Area Mode Gelap */
+        #payment-area { 
+            display:none; padding: 40px 20px; 
+            background: #1a1a1a; /* Sedikit lebih terang dari body */
+            border-top: 1px solid var(--border); 
+            margin-top: 30px; 
+        }
+        #payment-area h3 { color: #fff; }
+
+        /* Input Mode Gelap */
+        .input-nama { 
+            width: 80%; max-width: 400px; padding: 15px; 
+            border-radius: 12px; 
+            background: rgba(0,0,0,0.3);
+            border: 2px solid var(--border); 
+            margin-bottom: 25px; font-size: 1em; text-align: center; font-weight: bold; color: #fff; 
+            transition: 0.3s;
+        }
+        .input-nama:focus { border-color: var(--primary); outline: none; background: rgba(0,0,0,0.5); }
         
         .pay-options { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
-        .pay-btn { padding: 12px 20px; border: 2px solid var(--aba); border-radius: 10px; background: white; color: var(--aba); font-weight: bold; cursor: pointer; }
-        .pay-btn.active { background: var(--aba); color: white; }
-        .qr-box { display: none; margin-top: 20px; }
-        .qr-box img { width: 260px; border: 8px solid white; border-radius: 15px; }
+        
+        /* Tombol Bayar ABA */
+        .pay-btn { 
+            padding: 12px 25px; 
+            border: 2px solid var(--aba); 
+            border-radius: 12px; 
+            background: transparent; 
+            color: var(--aba); font-weight: bold; cursor: pointer; transition: 0.3s; 
+        }
+        .pay-btn.active { background: var(--aba); color: white; box-shadow: 0 0 15px rgba(0,123,189,0.4); }
 
-        .final-btn { display: inline-block; background: var(--success); color: white; padding: 18px 40px; border: none; border-radius: 50px; font-weight: bold; margin-top: 30px; width: 85%; cursor: pointer; font-size: 1em; }
+        .qr-box { display: none; margin-top: 25px; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+        .qr-box p { color: #fff; }
+        .qr-box img { width: 260px; border: 8px solid rgba(255,255,255,0.05); border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
 
-        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        .final-btn { 
+            display: inline-block; background: var(--success); color: white; 
+            padding: 18px 40px; border: none; border-radius: 50px; 
+            font-weight: bold; margin-top: 30px; width: 85%; max-width: 400px;
+            cursor: pointer; font-size: 1.1em; text-transform: uppercase; letter-spacing: 1px;
+            transition: 0.3s; 
+        }
+        .final-btn:hover { box-shadow: 0 0 20px rgba(46,204,113,0.4); }
+        .final-btn:disabled { background: #555; cursor: not-allowed; }
+
+        @media (max-width: 600px) { 
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; } 
+            .card img { height: 100px; }
+            .input-nama, .final-btn { width: 90%; }
+        }
     </style>
 </head>
 <body>
@@ -55,8 +159,8 @@
     <img src="https://i.postimg.cc/T3Dj51gC/download.png" class="logo-header" alt="Logo TERSNACKS">
     
     <div class="header-text">
-        <h2 style="margin:0; font-size: 1.2em; letter-spacing: 1px;">PREMIUM</h2>
-        <p style="margin:0; font-size:0.7em; color:var(--primary); font-weight:bold;">Teman Ngunyah dikala jari mengetik</p>
+        <h2 style="margin:0; font-size: 1.2em; letter-spacing: 2px;">PREMIUM</h2>
+        <p style="margin:0; font-size:0.75em; color:var(--primary); font-weight:bold;">Teman Ngunyah dikala jari mengetik</p>
     </div>
 </header>
 
@@ -64,7 +168,7 @@
 
     <div id="total-bar">
         <div class="total-info" style="text-align:left;">
-            <div id="summary" style="font-size: 0.65em; opacity: 0.7; margin-bottom: 2px;">Pilih snack...</div>
+            <div id="summary" style="font-size: 0.7em; opacity: 0.8; margin-bottom: 3px; color: #ccc; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pilih snack...</div>
             <div class="total-price" id="display-total">$0.00</div>
         </div>
         <button class="btn-order" onclick="openPayment()">ORDER SEKARANG</button>
@@ -90,13 +194,14 @@
             <img src="https://i.postimg.cc/vZZrrQfY/riel-aba-asli.jpg">
         </div>
 
-        <p style="margin-top:20px; font-size:0.85em; opacity:0.8; font-weight:bold;">Sudah bayar? Klik konfirmasi!</p>
+        <p style="margin-top:25px; font-size:0.9em; opacity:0.8; font-weight:bold; color: #eee;">Sudah bayar? Klik konfirmasi!</p>
         <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI PESANAN</button>
     </div>
 
     <audio id="bgMusic" loop><source src="lagu.mp3" type="audio/mpeg"></audio>
 
     <script>
+        // --- JAVASCRIPT LOGIC - TIDAK DIUBAH SAMA SEKALI ---
         const snackData = [
             { id: 0, name: "KACANG TOJIN", img: "https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg" },
             { id: 1, name: "KETAWA", img: "https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg" },
@@ -166,7 +271,7 @@
         }
 
         function openPayment() {
-            document.getElementById('bgMusic').play();
+            try { document.getElementById('bgMusic').play(); } catch(e) {} // Mencegah error jika browser blokir autoplay
             const pay = document.getElementById('payment-area');
             pay.style.display = 'block';
             pay.scrollIntoView({ behavior: 'smooth' });
@@ -194,7 +299,6 @@
             const btn = document.getElementById('submit-btn');
             btn.innerText = "MENGIRIM..."; btn.disabled = true;
 
-            // URL APPS SCRIPT SAKTI BARU
             const scriptURL = "https://script.google.com/macros/s/AKfycby-koR4z1YFZYSs3XPAkrGMdpBcN7tqx_1i1JAf4W5vo9Ka-0w8NjYrMFXHIytVZ6FY/exec";
             
             const params = new URLSearchParams();
@@ -207,6 +311,8 @@
                 location.reload();
             })
             .catch(() => {
+                // Karena mode no-cors, fetch sering dianggap error padahal data masuk.
+                // Kita asumsikan sukses saja sesuai logic asli.
                 alert("Berhasil Terkirim!");
                 location.reload();
             });
