@@ -6,12 +6,11 @@
     <title>TERSNACKS.ID - PREMIUM QUALITY</title>
     <style>
         :root { --primary: #f7941d; --glass: rgba(18, 18, 18, 0.9); --aba: #005a8d; --success: #27ae60; --danger: #e74c3c; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #000; color: white; text-align: center; padding-bottom: 120px; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #000; color: white; text-align: center; padding-bottom: 50px; overflow-x: hidden; }
         
         header { padding: 45px 10px; background: var(--glass); border-bottom: 2px solid var(--primary); }
         .logo-header { width: 170px; filter: drop-shadow(0 0 15px var(--primary)); margin-bottom: 10px; }
         
-        /* ANIMASI SLING PUTIH */
         header p {
             margin: 0; font-size: 0.85em; font-weight: 800; letter-spacing: 2px;
             background: linear-gradient(to right, #f7941d 0%, #f7941d 40%, #ffffff 50%, #f7941d 60%, #f7941d 100%);
@@ -80,8 +79,17 @@
     <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI & KIRIM</button>
 </div>
 
+<footer style="margin-top: 50px; padding: 40px 20px; border-top: 1px solid rgba(247, 148, 29, 0.2); background: rgba(10, 10, 10, 0.5);">
+    <h3 style="color: var(--primary); letter-spacing: 2px; margin-bottom: 10px; font-weight: 900; font-size: 1em;">THANK YOU FOR SHOPPING SNACKERS!</h3>
+    <p style="color: #888; font-size: 0.85em; max-width: 300px; margin: 0 auto; line-height: 1.6;">
+        Makasih sudah mampir dan belanja. Selamat menikmati jajanannya, Bosku!
+    </p>
+    <div style="margin-top: 20px; opacity: 0.3; font-size: 0.55em; letter-spacing: 5px;">
+        TERSNACKS.ID • 2026
+    </div>
+</footer>
+
 <script>
-    // LINK ASLI PUNYA KAMU
     const scriptURL = "https://script.google.com/macros/s/AKfycbwhUXfi13J6KCnDp4l9-WcpRyMGNJSD8GXWROqE1b_1voh_5kAoLBOPYVsoxXiLbC27/exec";
 
     let snackData = [
@@ -108,7 +116,6 @@
             document.getElementById('loading').style.display = 'none';
             render();
         } catch(e) { 
-            console.log("Error loading stocks. Retrying..."); 
             setTimeout(init, 3000); 
         }
     }
@@ -180,11 +187,10 @@
 
         fetch(`${scriptURL}?${params.toString()}`, { method: 'POST', mode: 'no-cors' })
         .then(() => { 
-            alert("MANTAP! Pesanan Berhasil, Stok Terpotong & Rekap Jualan Terupdate."); 
+            alert("MANTAP! Pesanan Berhasil dikirim."); 
             location.reload(); 
         })
         .catch(() => {
-            alert("Pesanan Terkirim!");
             location.reload();
         });
     }
