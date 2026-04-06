@@ -153,7 +153,7 @@
             let total = 0; let list = [];
             Object.keys(cart).forEach(id => {
                 if(cart[id] > 0) {
-                    total += cart[id] * 2.5;
+                    total += cart[id] * 3;
                     list.push(`${cart[id]}x ${snackData[id].name}`);
                 }
             });
@@ -186,7 +186,7 @@
             let list = []; let totalUSD = 0;
             Object.keys(cart).forEach(id => {
                 if(cart[id] > 0) {
-                    totalUSD += cart[id] * 2.5;
+                    totalUSD += cart[id] * 3;
                     list.push(`${cart[id]}x ${snackData[id].name}`);
                 }
             });
