@@ -94,8 +94,8 @@
     <h3 style="color: var(--primary); font-weight: 900;">DATA PEMBELI</h3>
     <input type="text" id="nama-pembeli" class="input-nama" placeholder="SIAPA NAMA ANDA?">
     <div style="margin: 20px 0;">
-        <button onclick="showQR('usd', this)" style="padding:10px 20px; border-radius:10px; border:1px solid var(--aba); background:none; color:white; cursor:pointer; margin: 5px; font-weight: 800;">USD ($)</button>
-        <button onclick="showQR('riel', this)" style="padding:10px 20px; border-radius:10px; border:1px solid var(--aba); background:none; color:white; cursor:pointer; margin: 5px; font-weight: 800;">RIEL (៛)</button>
+        <button onclick="showQR('usd')" style="padding:10px 20px; border-radius:10px; border:1px solid var(--aba); background:none; color:white; cursor:pointer; margin: 5px; font-weight: 800;">USD ($)</button>
+        <button onclick="showQR('riel')" style="padding:10px 20px; border-radius:10px; border:1px solid var(--aba); background:none; color:white; cursor:pointer; margin: 5px; font-weight: 800;">RIEL (៛)</button>
     </div>
     <div id="qr-usd" class="qr-box"><img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg"></div>
     <div id="qr-riel" class="qr-box"><img src="https://i.postimg.cc/vZZrrQfY/riel-aba-asli.jpg"></div>
@@ -113,8 +113,10 @@
 </footer>
 
 <script>
+    // URL SCRIPT BARU KAMU
     const scriptURL = "https://script.google.com/macros/s/AKfycbwO_eZStuITI5ZEUHIg9mkgheQRVuNMTqaOJuwt-Oxfx0KXQTZEBrQsX5cVA-KymVvE/exec";
 
+    // Animasi Songkran
     function createSnack() {
         const icons = ['🔫', '💦', '💧', '🌊', '🪣', '🐳']; 
         const spray = document.createElement('div');
@@ -129,6 +131,7 @@
     }
     setInterval(createSnack, 120);
 
+    // Data Snack (Sesuai JSON kamu)
     let snackData = [
         { id: 0, name: "KACANG TOJIN", stock: 0, img: "https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg" },
         { id: 1, name: "KETAWA", stock: 0, img: "https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg" },
@@ -139,9 +142,7 @@
         { id: 6, name: "LUMPIA", stock: 0, img: "https://i.postimg.cc/ZYcbbkj9/38611567-5f9f-4899-9d33-cffa77b5e469.jpg" },
         { id: 7, name: "KACANG ARAB", stock: 0, img: "https://i.postimg.cc/sDgV1n09/16ad7cba-62a3-48d4-a52c-25fe2f379b5e.jpg" },
         { id: 8, name: "KACANG MADU", stock: 0, img: "https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg" },
-        { id: 9, name: "COMING SOON", stock: 0, img: "https://i.postimg.cc/x1yD1PBH/e5f0873b-c76b-4312-88bc-3bd67981a550.gif" },
-        { id: 10, name: "COMING SOON", stock: 0, img: "https://i.postimg.cc/x1yD1PBH/e5f0873b-c76b-4312-88bc-3bd67981a550.gif" },
-        { id: 11, name: "COMING SOON", stock: 0, img: "https://i.postimg.cc/x1yD1PBH/e5f0873b-c76b-4312-88bc-3bd67981a550.gif" }
+        { id: 9, name: "COMING SOON", stock: 0, img: "https://i.postimg.cc/x1yD1PBH/e5f0873b-c76b-4312-88bc-3bd67981a550.gif" }
     ];
 
     let cart = {};
@@ -155,7 +156,12 @@
             });
             document.getElementById('loading').style.display = 'none';
             render();
-        } catch(e) { console.error(e); setTimeout(init, 3000); }
+        } catch(e) { 
+            console.error(e); 
+            // Tetap render meskipun fetch gagal agar tidak stuck loading
+            document.getElementById('loading').style.display = 'none';
+            render();
+        }
     }
 
     function render() {
@@ -167,7 +173,7 @@
             let overlayText = isComingSoon ? "SOON" : "SOLD OUT";
 
             grid.innerHTML += `
-                <div class="card ${empty ? 'is-empty' : ''}">
+                <div class="card ${empty && !isComingSoon ? 'is-empty' : ''}">
                     <div class="sold-out-overlay"><div class="sold-out-text">${overlayText}</div></div>
                     <img src="${s.img}">
                     <div class="card-info">
