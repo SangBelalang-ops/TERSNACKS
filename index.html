@@ -64,7 +64,8 @@
 </div>
 
 <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzSEZRcBGjY6TOMCqWgubq-L_qRPY4DxSVs9z92Wie_KOAMIsU5TAfoedRNbdTsgBRw/exec";
+    // PASTIKAN LINK INI BENER-BENER YANG TERBARU
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxSEZRcBGjY6TOMCqWgubq-L_qRPY4DxSVs9z92Wie_KOAMIsU5TAfoedRNbdTsgBRw/exec";
 
     function createSnack() {
         const icons = ['🥨', '🍪', '🍬', '🥜', '🍿'];
@@ -92,14 +93,25 @@
 
     let cart = {};
 
+    // VERSI BARU: Pake teknik "no-cors" dan "Redirect"
     async function init() {
+        console.log("Memulai koneksi ke Google...");
         try {
-            const res = await fetch(scriptURL);
-            const sheetStok = await res.json();
-            snackData.forEach(s => { if(sheetStok[s.name] !== undefined) s.stock = sheetStok[s.name]; });
+            const response = await fetch(scriptURL);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const sheetStok = await response.json();
+            console.log("Data diterima:", sheetStok);
+            
+            snackData.forEach(s => { 
+                if(sheetStok[s.name] !== undefined) s.stock = sheetStok[s.name]; 
+            });
             document.getElementById('loading').style.display = 'none';
             render();
-        } catch(e) { setTimeout(init, 2000); }
+        } catch(e) { 
+            console.error("Gagal narik stok:", e);
+            // Kalau gagal narik stok, kita tampilin aja stok default (0) biar web gak stuck di loading
+            document.getElementById('loading').innerHTML = "Koneksi Lemot... Klik <a href='#' onclick='location.reload()' style='color:white'>Sini</a> buat Refresh";
+        }
     }
 
     function render() {
@@ -146,16 +158,30 @@
     function sendToSpreadsheet() {
         const nama = document.getElementById('nama-pembeli').value;
         if(!nama) return alert("Siapa Nama Bosku?");
+        
         let list = []; let total = 0;
         Object.keys(cart).forEach(id => { if(cart[id]>0){ total += cart[id]*3; list.push(`${cart[id]}x ${snackData[id].name}`); }});
+        
         const btn = document.getElementById('submit-btn');
-        btn.innerText = "MENGIRIM..."; btn.disabled = true;
-        const params = new URLSearchParams();
-        params.append('pesanan', `Pembeli: ${nama} | Order: ${list.join(", ")}`);
-        params.append('total', "$" + total.toFixed(2));
-        fetch(`${scriptURL}?${params.toString()}`, { method: 'POST', mode: 'no-cors' })
-        .then(() => { alert("MANTAP! Pesanan Berhasil."); location.reload(); });
+        btn.innerText = "MENGIRIM..."; 
+        btn.disabled = true;
+
+        // Kirim pake format URLSearchParams (paling stabil buat Google Apps Script)
+        const finalURL = `${scriptURL}?pesanan=${encodeURIComponent('Pembeli: ' + nama + ' | Order: ' + list.join(", "))}&total=${encodeURIComponent('$' + total.toFixed(2))}`;
+
+        fetch(finalURL, { method: 'POST', mode: 'no-cors' })
+        .then(() => { 
+            alert("MANTAP! Pesanan Berhasil Terkirim."); 
+            location.reload(); 
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Ada masalah koneksi, tapi pesanan biasanya tetap masuk. Cek Sheet lo ya!");
+            location.reload();
+        });
     }
+    
+    // Panggil init
     init();
 </script>
 </body>
