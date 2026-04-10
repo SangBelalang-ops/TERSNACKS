@@ -3,128 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TERSNACKS.ID - PREMIUM QUALITY</title>
+    <title>TERSNACKS.ID - SONGKRAN EDITION</title>
     <style>
-        :root { --primary: #f7941d; --glass: rgba(18, 18, 18, 0.9); --aba: #005a8d; --success: #27ae60; --danger: #e74c3c; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #000; color: white; text-align: center; padding-bottom: 50px; overflow-x: hidden; }
-        
-        /* EFEK HUJAN MAKARONI - DIBIKIN LEBIH NYATA */
-        .falling-snack {
-            position: fixed; top: -50px; font-size: 28px; z-index: 100;
-            user-select: none; pointer-events: none; animation: fall linear forwards;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.8)); /* Biar putihnya terang */
-            color: #fff;
+        :root { 
+            --cyan: #00ffff; --red: #ff0000; --dark: #0a0a0a; 
+            --glass: rgba(10, 10, 10, 0.85); --neon-shadow: 0 0 15px var(--cyan); 
         }
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); }
+        body { 
+            font-family: 'Inter', sans-serif; margin: 0; background: var(--dark); color: white; 
+            text-align: center; padding-bottom: 70px; overflow-x: hidden;
         }
 
-        header { position: relative; z-index: 10; padding: 45px 10px; background: var(--glass); border-bottom: 2px solid var(--primary); }
-        .logo-header { width: 280px; filter: drop-shadow(0 0 15px var(--primary)); margin-bottom: 10px; }
-        
-        header p {
-            margin: 0; font-size: 0.85em; font-weight: 800; letter-spacing: 2px;
-            background: linear-gradient(to right, #f7941d 0%, #f7941d 40%, #ffffff 50%, #f7941d 60%, #f7941d 100%);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            background-size: 200% auto; animation: slingKilat 3s infinite linear;
+        /* EFEK WATER SPLASH (SONGKRAN) */
+        .splash {
+            position: fixed; pointer-events: none; z-index: 100;
+            border-radius: 50%; background: var(--cyan); opacity: 0.6;
+            animation: splashAnim 1.5s ease-out forwards;
         }
-        @keyframes slingKilat { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        .grid { position: relative; z-index: 10; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px; max-width: 800px; margin: 0 auto; }
-        .card { background: var(--glass); border-radius: 15px; overflow: hidden; border: 1px solid rgba(247,148,29,0.2); position: relative; }
-        .card img { width: 100%; height: 130px; object-fit: cover; }
-        
-        .sold-out-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 130px; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 5; }
-        .sold-out-text { color: white; background: var(--danger); padding: 5px 10px; font-weight: 900; transform: rotate(-15deg); border: 2px solid white; font-size: 0.7em; }
-        .is-empty .sold-out-overlay { display: flex; }
-        .is-empty img { filter: grayscale(1); }
-
-        .card-info { padding: 10px; }
-        .card-name { font-size: 0.75em; font-weight: 800; color: var(--primary); height: 35px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
-        
-        .stock-tag { 
-            font-size: 0.65em; color: var(--primary); background: rgba(247, 148, 29, 0.2);
-            border-radius: 5px; padding: 2px 8px; display: inline-block; margin-bottom: 10px;
-            font-weight: 900; border: 1px solid rgba(247, 148, 29, 0.4);
+        @keyframes splashAnim {
+            0% { transform: scale(0); opacity: 0.8; }
+            100% { transform: scale(3); opacity: 0; }
         }
 
-        .counter { display: flex; justify-content: center; align-items: center; gap: 8px; }
-        .btn-qty { background: rgba(255,255,255,0.1); border: 1px solid var(--primary); width: 30px; height: 30px; border-radius: 8px; color: white; cursor: pointer; transition: 0.2s; }
-        .btn-qty:active { background: var(--primary); color: black; }
-        .btn-qty:disabled { opacity: 0.1; }
+        header { 
+            padding: 50px 20px; background: linear-gradient(180deg, rgba(0,255,255,0.1), transparent);
+            border-bottom: 2px solid var(--cyan); position: relative;
+        }
+        .logo-header { width: 250px; filter: drop-shadow(var(--neon-shadow)); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
 
-        #total-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--glass); padding: 18px 25px; display: none; justify-content: space-between; align-items: center; border-top: 2px solid var(--primary); border-radius: 20px 20px 0 0; z-index: 1000; backdrop-filter: blur(10px); }
-        .btn-order { background: var(--primary); color: black; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 900; cursor: pointer; box-shadow: 0 0 15px rgba(247, 148, 29, 0.4); }
+        .songkran-title {
+            font-size: 2.5em; font-weight: 900; color: var(--cyan);
+            text-shadow: 2px 2px var(--red); letter-spacing: 5px; margin: 10px 0;
+        }
 
-        #payment-area { position: relative; z-index: 10; display:none; padding: 40px 20px; background: rgba(0,0,0,0.95); border-top: 2px solid var(--primary); }
-        .input-nama { width: 85%; padding: 15px; border-radius: 12px; border: 1px solid var(--primary); background: transparent; color: white; margin-bottom: 20px; text-align: center; font-weight: 800; }
-        .qr-box { display: none; margin: 25px 0; }
-        .qr-box img { width: 220px; border: 5px solid white; border-radius: 15px; }
-        .final-btn { background: var(--success); color: white; padding: 18px; border: none; border-radius: 50px; font-weight: 900; width: 90%; cursor: pointer; }
+        /* GRID & CARD UPGRADE */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; max-width: 900px; margin: 0 auto; }
+        .card { 
+            background: var(--glass); border-radius: 20px; overflow: hidden; 
+            border: 1px solid rgba(0, 255, 255, 0.2); transition: 0.3s; position: relative;
+        }
+        .card:hover { border-color: var(--cyan); transform: translateY(-5px); box-shadow: var(--neon-shadow); }
+        .card img { width: 100%; height: 150px; object-fit: cover; }
 
-        footer { position: relative; z-index: 10; margin-top: 50px; padding: 40px 20px; border-top: 1px solid rgba(247, 148, 29, 0.2); background: rgba(10, 10, 10, 0.5); }
+        /* COMING SOON OVERLAY */
+        .coming-soon-badge {
+            position: absolute; top: 10px; right: 10px; background: var(--red);
+            color: white; padding: 5px 12px; font-size: 0.6em; font-weight: 900;
+            border-radius: 50px; box-shadow: 0 0 10px var(--red); z-index: 10;
+        }
 
-        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        .card-name { font-weight: 800; color: var(--cyan); padding: 10px 5px; font-size: 0.9em; }
+        .stock-tag { font-size: 0.7em; color: #fff; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 5px; }
+
+        /* COUNTER STYLING */
+        .counter { display: flex; justify-content: center; align-items: center; gap: 15px; padding: 15px; }
+        .btn-qty { 
+            background: transparent; border: 2px solid var(--cyan); color: var(--cyan);
+            width: 35px; height: 35px; border-radius: 50%; font-weight: 900; cursor: pointer;
+        }
+        .btn-qty:hover { background: var(--cyan); color: black; }
+
+        /* FLOATING TOTAL BAR */
+        #total-bar { 
+            position: fixed; bottom: 15px; left: 15px; right: 15px; 
+            background: var(--cyan); color: black; padding: 15px 25px; 
+            border-radius: 50px; display: none; justify-content: space-between; 
+            align-items: center; z-index: 1000; box-shadow: var(--neon-shadow);
+        }
+
+        /* PAYMENT AREA */
+        #payment-area { 
+            display: none; padding: 40px 20px; background: #000; 
+            border-top: 3px solid var(--cyan); margin-top: 30px;
+        }
+        .input-custom { 
+            width: 90%; padding: 15px; background: transparent; 
+            border: 2px solid var(--cyan); border-radius: 15px; color: white;
+            font-weight: 700; text-align: center; margin-bottom: 20px;
+        }
+
+        @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } }
     </style>
 </head>
-<body>
+<body onclick="createSplash(event)">
 
 <header>
     <img src="https://i.postimg.cc/T3Dj51gC/download.png" class="logo-header">
-    <h2 style="margin:0; font-size: 1.4em; font-weight: 900;">TERSNACKS.ID</h2>
-    <p>PREMIUM QUALITY • $3.00</p>
+    <div class="songkran-title">SONGKRAN</div>
+    <p style="color: var(--cyan); letter-spacing: 2px; font-weight: 700;">PROMO BASAH-BASAHAN • $3.00</p>
 </header>
 
-<div id="loading" style="padding: 50px; color: var(--primary); font-weight: 800; letter-spacing: 2px;">MENYIAPKAN SNACK...</div>
+<div id="loading" style="padding: 100px; color: var(--cyan);">TUNGGU BENTAR, LAGI NGUMPULIN AIR...</div>
 <div class="grid" id="container-snack"></div>
 
 <div id="total-bar">
-    <div style="text-align:left">
-        <div id="summary" style="font-size: 0.65em; color: #ccc;"></div>
-        <div id="display-total" style="font-weight: 900; color: var(--primary); font-size: 1.4em;">$0.00</div>
-    </div>
-    <button class="btn-order" onclick="openPayment()">ORDER SEKARANG</button>
+    <div id="display-total" style="font-weight: 900; font-size: 1.2em;">$0.00</div>
+    <button onclick="openPayment()" style="background:black; color:white; border:none; padding:10px 20px; border-radius:30px; font-weight:900;">BELI SEKARANG</button>
 </div>
 
 <div id="payment-area">
-    <h3 style="color: var(--primary); font-weight: 900;">DATA PEMBELI</h3>
-    <input type="text" id="nama-pembeli" class="input-nama" placeholder="SIAPA NAMA ANDA?">
-    <div style="margin: 20px 0;">
-        <button onclick="showQR('usd', this)" style="padding:10px 20px; border-radius:10px; border:1px solid var(--aba); background:none; color:white; cursor:pointer; margin: 5px; font-weight: 800;">USD ($)</button>
-        <button onclick="showQR('riel', this)" style="padding:10px 20px; border-radius:10px; border:1px solid var(--aba); background:none; color:white; cursor:pointer; margin: 5px; font-weight: 800;">RIEL (៛)</button>
+    <h2 style="color: var(--cyan);">KONFIRMASI PESANAN</h2>
+    <input type="text" id="nama-pembeli" class="input-custom" placeholder="NAMA BOSKU SIAPA?">
+    <div id="qr-area" style="margin: 20px 0;">
+        <img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg" style="width:200px; border:4px solid var(--cyan); border-radius:15px;">
     </div>
-    <div id="qr-usd" class="qr-box"><img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg"></div>
-    <div id="qr-riel" class="qr-box"><img src="https://i.postimg.cc/vZZrrQfY/riel-aba-asli.jpg"></div>
-    <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI & KIRIM</button>
+    <button id="submit-btn" onclick="sendToSpreadsheet()" style="width:90%; padding:20px; border-radius:50px; background:var(--cyan); border:none; font-weight:900; cursor:pointer;">KIRIM PESANAN (WHATSAPP)</button>
 </div>
 
-<footer>
-    <h3 style="color: var(--primary); letter-spacing: 2px; margin-bottom: 10px; font-weight: 900; font-size: 1em;">THANK YOU FOR SHOPPING SNACKERS!</h3>
-    <p style="color: #888; font-size: 0.85em; max-width: 300px; margin: 0 auto; line-height: 1.6;">
-        Makasih sudah mampir dan belanja. Selamat menikmati jajanannya, Bosku!
-    </p>
-    <div style="margin-top: 20px; opacity: 0.3; font-size: 0.55em; letter-spacing: 5px;">
-        TERSNACKS.ID • 2026
-    </div>
-</footer>
-
 <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxBhW80smnGE9_RIj206zRJr2bdLM31RgMp5seLC0Q/dev";
+    const scriptURL = "LINK_APPS_SCRIPT_BARU_LO"; // GANTI PAKE LINK BARU NANTI
 
-    // KODE HUJAN SNACK - DIBIKIN LEBIH JELAS
-    function createSnack() {
-        const icons = ['🥨', '🍪', '🍬', '🥜', '🍿'];
-        const snack = document.createElement('div');
-        snack.className = 'falling-snack';
-        snack.innerText = icons[Math.floor(Math.random() * icons.length)];
-        snack.style.left = Math.random() * 100 + 'vw';
-        snack.style.animationDuration = Math.random() * 2 + 3 + 's';
-        snack.style.opacity = Math.random() * 0.5 + 0.5; // Minimal opacity 50% biar kelihatan
-        document.body.appendChild(snack);
-        setTimeout(() => snack.remove(), 5000);
+    function createSplash(e) {
+        const s = document.createElement('div');
+        s.className = 'splash';
+        s.style.left = e.clientX + 'px';
+        s.style.top = e.clientY + 'px';
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 1500);
     }
-    // Percepat frekuensi jatuh
-    setInterval(createSnack, 250);
 
     let snackData = [
         { id: 0, name: "KACANG TOJIN", stock: 0, img: "https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg" },
@@ -145,9 +142,7 @@
         try {
             const res = await fetch(scriptURL);
             const sheetStok = await res.json();
-            snackData.forEach(s => { 
-                if(sheetStok[s.name] !== undefined) s.stock = sheetStok[s.name]; 
-            });
+            snackData.forEach(s => { if(sheetStok[s.name] !== undefined) s.stock = sheetStok[s.name]; });
             document.getElementById('loading').style.display = 'none';
             render();
         } catch(e) { setTimeout(init, 3000); }
@@ -157,19 +152,18 @@
         const grid = document.getElementById('container-snack');
         grid.innerHTML = '';
         snackData.forEach(s => {
+            const isComing = s.name === "COMING SOON";
             const empty = s.stock <= 0;
             grid.innerHTML += `
                 <div class="card ${empty ? 'is-empty' : ''}">
-                    <div class="sold-out-overlay"><div class="sold-out-text">SOLD OUT</div></div>
-                    <img src="${s.img}">
-                    <div class="card-info">
-                        <div class="card-name">${s.name}</div>
-                        <div class="stock-tag">SISA: ${s.stock}</div>
-                        <div class="counter">
-                            <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${empty? 'disabled':''}>-</button>
-                            <span id="qty-${s.id}" style="font-weight:900; min-width:20px;">0</span>
-                            <button class="btn-qty" onclick="changeQty(${s.id},1)" ${empty? 'disabled':''}>+</button>
-                        </div>
+                    ${isComing ? '<div class="coming-soon-badge">NEW DROP</div>' : ''}
+                    <img src="${s.img}" style="${empty && !isComing ? 'filter:grayscale(1)' : ''}">
+                    <div class="card-name">${s.name}</div>
+                    <div class="stock-tag">${isComing ? 'STAY TUNED' : 'READY: ' + s.stock}</div>
+                    <div class="counter">
+                        <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${empty ? 'disabled' : ''}>-</button>
+                        <span id="qty-${s.id}" style="font-weight:900;">0</span>
+                        <button class="btn-qty" onclick="changeQty(${s.id},1)" ${empty ? 'disabled' : ''}>+</button>
                     </div>
                 </div>`;
         });
@@ -185,13 +179,10 @@
     }
 
     function updateTotal() {
-        let total = 0; let list = [];
-        Object.keys(cart).forEach(id => {
-            if(cart[id]>0) { total += cart[id]*3; list.push(`${cart[id]}x ${snackData[id].name}`); }
-        });
+        let total = 0;
+        Object.keys(cart).forEach(id => { if(cart[id]>0) total += cart[id]*3; });
         document.getElementById('total-bar').style.display = total > 0 ? 'flex' : 'none';
         document.getElementById('display-total').innerText = `$${total.toFixed(2)}`;
-        document.getElementById('summary').innerText = list.join(", ");
     }
 
     function openPayment() { 
@@ -199,27 +190,32 @@
         window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'}); 
     }
 
-    function showQR(t, b) {
-        document.getElementById('qr-usd').style.display = t=='usd'?'block':'none';
-        document.getElementById('qr-riel').style.display = t=='riel'?'block':'none';
-    }
-
     function sendToSpreadsheet() {
         const nama = document.getElementById('nama-pembeli').value;
-        if(!nama) return alert("Siapa Nama Bosku?");
+        if(!nama) return alert("Masukan nama dulu, Bos!");
         
         let list = []; let total = 0;
-        Object.keys(cart).forEach(id => { if(cart[id]>0){ total += cart[id]*3; list.push(`${cart[id]}x ${snackData[id].name}`); }});
+        Object.keys(cart).forEach(id => { 
+            if(cart[id]>0){ 
+                total += cart[id]*3; 
+                list.push(`${cart[id]}x ${snackData[id].name}`); 
+            }
+        });
 
         const btn = document.getElementById('submit-btn');
-        btn.innerText = "MENGIRIM..."; btn.disabled = true;
+        btn.innerText = "SEDANG MENGIRIM..."; btn.disabled = true;
 
         const params = new URLSearchParams();
         params.append('pesanan', `Pembeli: ${nama} | Order: ${list.join(", ")}`);
         params.append('total', "$" + total.toFixed(2));
 
         fetch(`${scriptURL}?${params.toString()}`, { method: 'POST', mode: 'no-cors' })
-        .then(() => { alert("MANTAP! Pesanan Berhasil."); location.reload(); });
+        .then(() => { 
+            alert("PESANAN BERHASIL DICATAT!"); 
+            // AUTOMATIC WHATSAPP REDIRECT (CANGGIH!)
+            const waMsg = `Halo Admin, Saya ${nama} mau order:\n${list.join("\n")}\nTotal: $${total.toFixed(2)}`;
+            window.location.href = `https://wa.me/6281234567890?text=${encodeURIComponent(waMsg)}`; // GANTI NO WA LO
+        });
     }
 
     init();
