@@ -1,137 +1,20 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TERSNACKS.ID - PREMIUM QUALITY</title>
-    <style>
-        :root { 
-            --primary: #00d4ff; 
-            --glass: rgba(10, 25, 41, 0.9); 
-            --aba: #005a8d; 
-            --success: #00f2ff; 
-            --danger: #ff4d4d; 
-        }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #000; color: white; text-align: center; padding-bottom: 50px; overflow-x: hidden; }
-        
-        .falling-snack {
-            position: fixed; top: -50px; font-size: 28px; z-index: 100;
-            user-select: none; pointer-events: none; animation: fall linear forwards;
-            color: #fff;
-        }
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); }
-        }
-
-        header { position: relative; z-index: 10; padding: 45px 10px; background: var(--glass); border-bottom: 2px solid var(--primary); }
-        .logo-header { width: 280px; filter: drop-shadow(0 0 15px var(--primary)); margin-bottom: 10px; }
-        
-        header p {
-            margin: 0; font-size: 0.85em; font-weight: 800; letter-spacing: 2px;
-            background: linear-gradient(to right, #00d4ff 0%, #00d4ff 40%, #ffffff 50%, #00d4ff 60%, #00d4ff 100%);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            background-size: 200% auto; animation: slingKilat 3s infinite linear;
-        }
-        @keyframes slingKilat { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        .grid { position: relative; z-index: 10; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 15px; max-width: 1000px; margin: 0 auto; }
-        .card { background: var(--glass); border-radius: 15px; overflow: hidden; border: 1px solid rgba(0, 212, 255, 0.2); position: relative; }
-        .card img { width: 100%; height: 130px; object-fit: cover; }
-        
-        .sold-out-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 130px; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 5; }
-        .sold-out-text { color: white; background: var(--danger); padding: 5px 10px; font-weight: 900; transform: rotate(-15deg); border: 2px solid white; font-size: 0.7em; }
-        .is-empty .sold-out-overlay { display: flex; }
-        .is-empty img { filter: grayscale(1); }
-
-        .card-info { padding: 10px; }
-        .card-name { font-size: 0.75em; font-weight: 800; color: var(--primary); height: 35px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
-        
-        .stock-tag { 
-            font-size: 0.65em; color: var(--primary); background: rgba(0, 212, 255, 0.1);
-            border-radius: 5px; padding: 2px 8px; display: inline-block; margin-bottom: 10px;
-            font-weight: 900; border: 1px solid rgba(0, 212, 255, 0.3);
-        }
-
-        .counter { display: flex; justify-content: center; align-items: center; gap: 8px; }
-        .btn-qty { background: rgba(255,255,255,0.1); border: 1px solid var(--primary); width: 30px; height: 30px; border-radius: 8px; color: white; cursor: pointer; transition: 0.2s; }
-        .btn-qty:active { background: var(--primary); color: black; }
-        .btn-qty:disabled { opacity: 0.1; }
-
-        #total-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--glass); padding: 18px 25px; display: none; justify-content: space-between; align-items: center; border-top: 2px solid var(--primary); border-radius: 20px 20px 0 0; z-index: 1000; backdrop-filter: blur(10px); }
-        .btn-order { background: var(--primary); color: black; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 900; cursor: pointer; box-shadow: 0 0 15px rgba(0, 212, 255, 0.4); }
-
-        #payment-area { position: relative; z-index: 10; display:none; padding: 40px 20px; background: rgba(0,0,0,0.95); border-top: 2px solid var(--primary); }
-        .input-nama { width: 85%; padding: 15px; border-radius: 12px; border: 1px solid var(--primary); background: transparent; color: white; margin-bottom: 20px; text-align: center; font-weight: 800; }
-        .qr-box { display: none; margin: 25px 0; }
-        .qr-box img { width: 220px; border: 5px solid white; border-radius: 15px; }
-        .final-btn { background: var(--success); color: white; padding: 18px; border: none; border-radius: 50px; font-weight: 900; width: 90%; cursor: pointer; }
-
-        footer { position: relative; z-index: 10; margin-top: 50px; padding: 40px 20px; border-top: 1px solid rgba(0, 212, 255, 0.2); background: rgba(10, 25, 41, 0.5); }
-
-        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-    </style>
-</head>
-<body>
-
-<header>
-    <img src="https://i.postimg.cc/T3Dj51gC/download.png" class="logo-header">
-    <h2 style="margin:0; font-size: 1.4em; font-weight: 900;">TERSNACKS.ID</h2>
-    <p>PREMIUM QUALITY • $3.00</p>
-</header>
-
-<div id="loading" style="padding: 50px; color: var(--primary); font-weight: 800; letter-spacing: 2px;">MENYIAPKAN SNACK...</div>
-<div class="grid" id="container-snack"></div>
-
-<div id="total-bar">
-    <div style="text-align:left">
-        <div id="summary" style="font-size: 0.65em; color: #ccc;"></div>
-        <div id="display-total" style="font-weight: 900; color: var(--primary); font-size: 1.4em;">$0.00</div>
-    </div>
-    <button class="btn-order" onclick="openPayment()">ORDER SEKARANG</button>
-</div>
-
-<div id="payment-area">
-    <h3 style="color: var(--primary); font-weight: 900;">DATA PEMBELI</h3>
-    <input type="text" id="nama-pembeli" class="input-nama" placeholder="SIAPA NAMA ANDA?">
-    <div style="margin: 20px 0;">
-        <button onclick="showQR('usd')" style="padding:10px 20px; border-radius:10px; border:1px solid var(--aba); background:none; color:white; cursor:pointer; margin: 5px; font-weight: 800;">USD ($)</button>
-        <button onclick="showQR('riel')" style="padding:10px 20px; border-radius:10px; border:1px solid var(--aba); background:none; color:white; cursor:pointer; margin: 5px; font-weight: 800;">RIEL (៛)</button>
-    </div>
-    <div id="qr-usd" class="qr-box"><img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg"></div>
-    <div id="qr-riel" class="qr-box"><img src="https://i.postimg.cc/vZZrrQfY/riel-aba-asli.jpg"></div>
-    <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI & KIRIM</button>
-</div>
-
-<footer>
-    <h3 style="color: var(--primary); letter-spacing: 2px; margin-bottom: 10px; font-weight: 900; font-size: 1em;">THANK YOU FOR SHOPPING SNACKERS!</h3>
-    <p style="color: #888; font-size: 0.85em; max-width: 300px; margin: 0 auto; line-height: 1.6;">
-        Makasih sudah mampir dan belanja. Selamat menikmati jajanannya, Bosku!
-    </p>
-    <div style="margin-top: 20px; opacity: 0.3; font-size: 0.55em; letter-spacing: 5px;">
-        TERSNACKS.ID • 2026
-    </div>
-</footer>
-
 <script>
-    // URL SCRIPT BARU KAMU
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwq2iNy_Sb61To21LH3EGZWSScKjwdyhxSkzmXc2NrH4Opjo4_kZqKCuBylKkKw25We/exec";
+    // Link Exec lo yang baru (Sudah gue update)
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzTbO6i-_AraS9GOFYntW63hRyB-0aP36l0PCp9EdnZvfiXciHGZQo3CMnc_uf0P3A2/exec";
 
-    // Animasi Songkran
+    // EFEK HUJAN KHAS SONGKRAN
     function createSnack() {
-        const icons = ['🔫', '💦', '💧', '🌊', '🪣', '🐳']; 
+        const icons = ['🔫', '💦', '💧', '🌊', '🥨', '🍪'];
         const spray = document.createElement('div');
         spray.className = 'falling-snack';
         spray.innerText = icons[Math.floor(Math.random() * icons.length)];
         spray.style.left = Math.random() * 100 + 'vw';
         spray.style.animationDuration = Math.random() * 2 + 1.2 + 's';
-        spray.style.opacity = Math.random() * 0.4 + 0.7; 
-        spray.style.filter = "drop-shadow(0 0 10px #00aaff)"; 
         document.body.appendChild(spray);
         setTimeout(() => spray.remove(), 3000);
     }
-    setInterval(createSnack, 120);
+    setInterval(createSnack, 150);
 
-    // Data Snack (Sesuai JSON kamu)
     let snackData = [
         { id: 0, name: "KACANG TOJIN", stock: 0, img: "https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg" },
         { id: 1, name: "KETAWA", stock: 0, img: "https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg" },
@@ -141,37 +24,36 @@
         { id: 5, name: "BASRENG", stock: 0, img: "https://i.postimg.cc/gjYGV4z5/601de701-a9b5-4bbf-8aa6-87b171349a64.jpg" },
         { id: 6, name: "LUMPIA", stock: 0, img: "https://i.postimg.cc/ZYcbbkj9/38611567-5f9f-4899-9d33-cffa77b5e469.jpg" },
         { id: 7, name: "KACANG ARAB", stock: 0, img: "https://i.postimg.cc/sDgV1n09/16ad7cba-62a3-48d4-a52c-25fe2f379b5e.jpg" },
-        { id: 8, name: "KACANG MADU", stock: 0, img: "https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg" },
-        { id: 9, name: "COMING SOON", stock: 0, img: "https://i.postimg.cc/T3Dj51gC/download.png" },
-        { id: 10, name: "COMING SOON", stock: 0, img: "https://i.postimg.cc/T3Dj51gC/download.png" },
-        { id: 11, name: "COMING SOON", stock: 0, img: "https://i.postimg.cc/T3Dj51gC/download.png" }
+        { id: 8, name: "KACANG MADU", stock: 0, img: "https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg" }
     ];
 
     let cart = {};
 
+    // FUNGSI INIT YANG SUDAH DI-UPGRADE (ANTI 0)
     async function init() {
         const loading = document.getElementById('loading');
-        // JURUS ANTI-BLOKIR: Pake Proxy AllOrigins
+        // Pake Proxy biar nembus blokir browser
         const proxyURL = "https://api.allorigins.win/get?url=" + encodeURIComponent(scriptURL);
 
         try {
-            const res = await fetch(proxyURL);
-            const json = await res.json();
+            const response = await fetch(proxyURL);
+            const data = await response.json();
             
-            // AllOrigins membungkus data asli di dalam properti .contents
-            const sheetStok = JSON.parse(json.contents);
+            // AllOrigins membungkus datanya di dalam 'contents'
+            const sheetStok = JSON.parse(data.contents);
             
-            console.log("Data Berhasil Tembus:", sheetStok);
+            console.log("DATA BERHASIL TEMBUS:", sheetStok);
 
             snackData.forEach(s => { 
-                if(sheetStok[s.name] !== undefined) s.stock = sheetStok[s.name]; 
+                if(sheetStok[s.name] !== undefined) {
+                    s.stock = parseInt(sheetStok[s.name]); 
+                }
             });
             
             loading.style.display = 'none';
             render();
         } catch(e) { 
-            console.error("Gagal sinkron:", e);
-            // Tetap render meskipun fetch gagal agar tidak stuck loading
+            console.error("Masih error nyedot data:", e);
             loading.innerHTML = "Koneksi Google Lemot, mencoba manual...";
             setTimeout(() => {
                 loading.style.display = 'none';
@@ -184,34 +66,28 @@
         const grid = document.getElementById('container-snack');
         grid.innerHTML = '';
         snackData.forEach(s => {
-            const isComingSoon = s.name.toUpperCase().includes("COMING SOON");
             const empty = s.stock <= 0;
-            let overlayText = isComingSoon ? "SOON" : "SOLD OUT";
-
             grid.innerHTML += `
-                <div class="card ${empty && !isComingSoon ? 'is-empty' : ''}">
-                    <div class="sold-out-overlay"><div class="sold-out-text">${overlayText}</div></div>
+                <div class="card ${empty ? 'is-empty' : ''}">
+                    <div class="sold-out-overlay"><div class="sold-out-text">SOLD OUT</div></div>
                     <img src="${s.img}">
                     <div class="card-info">
                         <div class="card-name">${s.name}</div>
-                        ${isComingSoon ? 
-                            `<div style="font-size: 0.7em; color: #888; margin: 10px 0; font-weight: 800; letter-spacing: 1px;">PRAY FOR US! 🙏</div>` : 
-                            `<div class="stock-tag">SISA: ${s.stock}</div>
-                             <div class="counter">
-                                <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${empty ? 'disabled' : ''}>-</button>
-                                <span id="qty-${s.id}" style="font-weight:900; min-width:20px;">0</span>
-                                <button class="btn-qty" onclick="changeQty(${s.id},1)" ${empty ? 'disabled' : ''}>+</button>
-                             </div>`
-                        }
+                        <div class="stock-tag">SISA: ${s.stock}</div>
+                        <div class="counter">
+                            <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${empty ? 'disabled' : ''}>-</button>
+                            <span id="qty-${s.id}" style="font-weight:900; min-width:20px;">0</span>
+                            <button class="btn-qty" onclick="changeQty(${s.id},1)" ${empty ? 'disabled' : ''}>+</button>
+                        </div>
                     </div>
                 </div>`;
         });
     }
 
     function changeQty(id, delta) {
-        let q = (cart[id] || 0) + delta;
-        if(q < 0) q = 0;
-        if(delta > 0 && q > snackData[id].stock) return;
+        let q = cart[id] || 0;
+        if(delta > 0 && q >= snackData[id].stock) return;
+        q += delta; if(q < 0) q = 0;
         cart[id] = q;
         document.getElementById(`qty-${id}`).innerText = q;
         updateTotal();
@@ -219,8 +95,8 @@
 
     function updateTotal() {
         let total = 0; let list = [];
-        Object.keys(cart).forEach(id => {
-            if(cart[id]>0) { total += cart[id]*3; list.push(`${cart[id]}x ${snackData[id].name}`); }
+        Object.keys(cart).forEach(id => { 
+            if(cart[id]>0){ total += cart[id]*3; list.push(`${cart[id]}x ${snackData[id].name}`); }
         });
         document.getElementById('total-bar').style.display = total > 0 ? 'flex' : 'none';
         document.getElementById('display-total').innerText = `$${total.toFixed(2)}`;
@@ -232,25 +108,28 @@
         window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'}); 
     }
 
-    function showQR(t) {
-        document.getElementById('qr-usd').style.display = t=='usd'?'block':'none';
-        document.getElementById('qr-riel').style.display = t=='riel'?'block':'none';
+    function showQR(t) { 
+        document.getElementById('qr-usd').style.display = t=='usd'?'block':'none'; 
+        document.getElementById('qr-riel').style.display = t=='riel'?'block':'none'; 
     }
 
     function sendToSpreadsheet() {
         const nama = document.getElementById('nama-pembeli').value;
-        if(!nama) return alert("Siapa Nama Bosku?");
+        if(!nama) return alert("MASUKKAN NAMA BOSKU!");
+        
         let list = []; let total = 0;
         Object.keys(cart).forEach(id => { if(cart[id]>0){ total += cart[id]*3; list.push(`${cart[id]}x ${snackData[id].name}`); }});
+        
         const btn = document.getElementById('submit-btn');
         btn.innerText = "MENGIRIM..."; btn.disabled = true;
+
         const params = new URLSearchParams();
         params.append('pesanan', `Pembeli: ${nama} | Order: ${list.join(", ")}`);
         params.append('total', "$" + total.toFixed(2));
+
         fetch(`${scriptURL}?${params.toString()}`, { method: 'POST', mode: 'no-cors' })
-        .then(() => { alert("MANTAP! Pesanan Berhasil."); location.reload(); });
+        .then(() => { alert("PESANAN TERKIRIM!"); location.reload(); });
     }
+
     init();
 </script>
-</body>
-</html>
