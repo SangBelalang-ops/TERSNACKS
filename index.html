@@ -9,7 +9,7 @@
             --primary: #00d4ff; 
             --glass: rgba(10, 25, 41, 0.9); 
             --success: #00f2ff; 
-            --danger: #ff0000; /* Warna Merah Sold Out */
+            --danger: #ff0000;
             --gold: #ffea00;
         }
         body { 
@@ -17,13 +17,17 @@
             margin: 0; background: #000; color: white; 
             text-align: center; padding-bottom: 50px; overflow-x: hidden; 
         }
-        
-        /* Animasi Air Jatuh */
-        .falling-snack {
-            position: fixed; top: -50px; font-size: 28px; z-index: 100;
-            user-select: none; pointer-events: none; animation: fall linear forwards;
+
+        /* CANVAS HUJAN REALISTIS */
+        #rainCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
         header { 
             position: relative; z-index: 10; padding: 45px 10px; 
@@ -54,7 +58,6 @@
         }
         .card img { width: 100%; height: 130px; object-fit: cover; }
         
-        /* OVERLAY SOLD OUT */
         .sold-out-overlay { 
             position: absolute; top: 0; left: 0; width: 100%; height: 130px; 
             background: rgba(0,0,0,0.8); display: none; align-items: center; 
@@ -139,6 +142,8 @@
 </head>
 <body>
 
+<canvas id="rainCanvas"></canvas>
+
 <header>
     <img src="https://i.postimg.cc/T3Dj51gC/download.png" class="logo-header">
     <h2 style="margin:0; font-size: 1.4em; font-weight: 900;">TERSNACKS.ID</h2>
@@ -192,18 +197,49 @@
 <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbykBwYZX2poPZx2-7gxtfnlrg0N5BW29lkdYOKeaelaGapyKi3NHQHUYDMoA1XTGTjO/exec";
 
-    function createSnack() {
-        if (document.hidden) return;
-        const spray = document.createElement('div');
-        spray.className = 'falling-snack';
-        spray.innerText = '💧';
-        spray.style.left = Math.random() * 100 + 'vw';
-        spray.style.animationDuration = Math.random() * 2 + 1.5 + 's';
-        document.body.appendChild(spray);
-        setTimeout(() => spray.remove(), 3000);
-    }
-    setInterval(createSnack, 300);
+    // ENGINE HUJAN AAA (Canvas Based)
+    const canvas = document.getElementById('rainCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
+    let drops = [];
+    for (let i = 0; i < 120; i++) {
+        drops.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            len: Math.random() * 25 + 10,
+            speed: Math.random() * 12 + 6
+        });
+    }
+
+    function drawRain() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = 'rgba(0, 212, 255, 0.4)'; // Warna biru air neon
+        ctx.lineWidth = 1.5;
+        ctx.lineCap = 'round';
+
+        drops.forEach(d => {
+            ctx.beginPath();
+            ctx.moveTo(d.x, d.y);
+            ctx.lineTo(d.x, d.y + d.len);
+            ctx.stroke();
+            d.y += d.speed;
+            if (d.y > canvas.height) {
+                d.y = -30;
+                d.x = Math.random() * canvas.width;
+            }
+        });
+        requestAnimationFrame(drawRain);
+    }
+    drawRain();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    // SISTEM SNACK & DATA
     let snackData = [
         { id: 0, name: "KACANG TOJIN", stock: 0, img: "https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg" },
         { id: 1, name: "KETAWA", stock: 0, img: "https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg" },
