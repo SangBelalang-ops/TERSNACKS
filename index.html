@@ -58,7 +58,17 @@
         }
 
         /* CSS KENTANG NETAP DI HEADER (GAK TERBANG) */
-        .kentang-header {
+        .kentang-left {
+            position: absolute;
+            bottom: -30px; /* Nongol dikit di bawah garis header */
+            left: 20px;    /* Di pojok kiri header */
+            width: 150px;
+            z-index: 11;    /* Di atas header dikit */
+            pointer-events: none;
+            filter: drop-shadow(0 0 10px var(--primary));
+        }
+        
+        .kentang-right {
             position: absolute;
             bottom: -30px; /* Nongol dikit di bawah garis header */
             right: 20px;   /* Di pojok kanan header */
@@ -169,7 +179,8 @@
 
         @media (max-width: 600px) { 
             .grid { grid-template-columns: repeat(2, 1fr); } 
-            .kentang-header { width: 90px; bottom: -15px; right: 10px; } 
+            .kentang-left { width: 90px; bottom: -15px; left: 10px; } 
+            .kentang-right { width: 90px; bottom: -15px; right: 10px; } 
         }
     </style>
 </head>
@@ -182,7 +193,8 @@
     <h2 style="margin:0; font-size: 1.4em; font-weight: 900;">TERSNACKS.ID</h2>
     <p>PREMIUM QUALITY • $3.00</p>
     
-    <img src="https://i.postimg.cc/wMKm57LB/output-onlinegiftools.gif" class="kentang-header">
+    <img src="https://i.postimg.cc/wMKm57LB/output-onlinegiftools.gif" class="kentang-left" alt="Kentang Payung Kiri">
+    <img src="https://i.postimg.cc/T1rdWcrD/output-onlinegiftools-(1).gif" class="kentang-right" alt="Kentang Outline Kanan">
 </header>
 
 <div id="loading" style="padding: 50px; color: var(--primary); font-weight: 800;">SYNCING STOCK...</div>
