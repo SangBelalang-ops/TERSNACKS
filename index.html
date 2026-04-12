@@ -86,7 +86,7 @@
 
 <div id="loading" style="padding: 100px 20px; color: var(--primary); font-weight: 800; letter-spacing: 2px; font-size: 1.2em;">
     <div style="margin-bottom: 10px;">💦 💦 💦</div>
-    SYNCING STOCK...
+    SEDANG MEMUAT STOCK...
 </div>
 
 <div class="grid" id="container-snack"></div>
@@ -130,7 +130,7 @@
 
 <script>
     // 1. GANTI LINK EXEC LO DI SINI
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzoyC0LSbE6iRSDLQp6aKBB3OBuwl183UPk3jNJTJ9GKFy5uH65aPJCJaMM32JPjUtS/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxBhW80smnGE9_RIj206zRJr2bdLM31RgMp5seLC0Q/dev";
 
     // Efek Animasi Air
     function createSnack() {
@@ -250,37 +250,42 @@
 
     // 3. KIRIM PESANAN KE SHEET PENJUALAN
     function sendToSpreadsheet() {
-        const nama = document.getElementById('nama-pembeli').value;
-        if(!nama) return alert("BOSKU, NAMA JANGAN KOSONG!");
-        
-        let list = []; let total = 0;
-        Object.keys(cart).forEach(id => { 
-            if(cart[id] > 0) {
-                total += cart[id] * 3;
-                list.push(`${cart[id]}x ${snackData[id].name}`);
-            }
-        });
-        
-        const btn = document.getElementById('submit-btn');
-        btn.innerText = "MENGIRIM..."; btn.disabled = true;
+    const nama = document.getElementById('nama-pembeli').value;
+    if(!nama) return alert("NAMA PEMBELI HARUS DIISI!");
+    
+    let list = []; 
+    let total = 0;
+    
+    Object.keys(cart).forEach(id => { 
+        if(cart[id] > 0) {
+            total += cart[id] * 3;
+            list.push(`${cart[id]}x ${snackData[id].name}`);
+        }
+    });
+    
+    const btn = document.getElementById('submit-btn');
+    btn.innerText = "MENGIRIM..."; btn.disabled = true;
 
-        const params = new URLSearchParams();
-        params.append('pesanan', `Pembeli: ${nama} | Order: ${list.join(", ")}`);
-        params.append('total', "$" + total.toFixed(2));
+    // Masukin data ke URLSearchParams biar Google nangkep 3 variabel beda
+    const params = new URLSearchParams();
+    params.append('nama', nama);         // Masuk ke Kolom B
+    params.append('pesanan', list.join(", ")); // Masuk ke Kolom C
+    params.append('total', "$" + total.toFixed(2)); // Masuk ke Kolom D
 
-        // Kirim via POST (mode: no-cors biar gak stuck)
-        fetch(`${scriptURL}?${params.toString()}`, { method: 'POST', mode: 'no-cors' })
-        .then(() => { 
-            alert("MANTAP! PESANAN TERKIRIM. SILAHKAN REFRESH HALAMAN."); 
-            location.reload(); 
-        })
-        .catch(e => {
-            console.error(e);
-            alert("Gagal kirim, tapi santai... refresh aja webnya.");
-            btn.disabled = false;
-            btn.innerText = "KONFIRMASI & KIRIM";
-        });
-    }
+    fetch(`${scriptURL}?${params.toString()}`, { 
+        method: 'POST', 
+        mode: 'no-cors' 
+    })
+    .then(() => { 
+        alert("PESANAN BERHASIL MASUK!"); 
+        location.reload(); 
+    })
+    .catch(e => {
+        alert("Cek Sheet PENJUALAN lo, biasanya udah masuk kok.");
+        btn.disabled = false;
+        btn.innerText = "KONFIRMASI & KIRIM";
+    });
+}
 
     // Jalankan pas web dibuka
     init();
