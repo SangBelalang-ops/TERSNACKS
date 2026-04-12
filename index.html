@@ -38,18 +38,22 @@
             width: 280px; margin-bottom: 10px; 
             filter: drop-shadow(0 0 10px var(--primary)); 
         }
-
-        /* ANIMASI PREMIUM QUALITY BERGERAK PUTIH */
-        @keyframes neon-glow {
-            0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff; opacity: 0.8; }
-            50% { text-shadow: 0 0 20px #fff, 0 0 30px var(--primary); opacity: 1; }
-            100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff; opacity: 0.8; }
-        }
         
+        /* PREMIUM QUALITY BERGERAK PUTIH LEWAT */
         header p { 
             margin: 0; font-size: 0.85em; font-weight: 900; 
-            letter-spacing: 2px; color: #fff; 
-            animation: neon-glow 2s infinite ease-in-out;
+            letter-spacing: 2px; color: var(--primary); 
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), #fff, var(--primary));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
 
         .grid { 
@@ -93,14 +97,9 @@
         }
 
         .counter { display: flex; justify-content: center; align-items: center; gap: 8px; }
-        
-        /* TOMBOL DISABLED JIKA SOLDOUT */
         .btn-qty { 
             background: rgba(255,255,255,0.1); border: 1px solid var(--primary); 
             width: 30px; height: 30px; border-radius: 8px; color: white; cursor: pointer; 
-        }
-        .btn-qty:disabled {
-            border-color: #444; color: #444; cursor: not-allowed; opacity: 0.5;
         }
 
         #total-bar { 
@@ -149,23 +148,7 @@
             background: rgba(10, 25, 41, 0.6); 
         }
 
-        /* KENTANG TRANSPARAN & GEDE */
-        .kentang-corner {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 150px;
-            z-index: 1001;
-            pointer-events: none;
-            mix-blend-mode: screen; 
-            opacity: 0.9;
-            filter: drop-shadow(0 0 10px var(--primary));
-        }
-
-        @media (max-width: 600px) { 
-            .grid { grid-template-columns: repeat(2, 1fr); } 
-            .kentang-corner { width: 90px; bottom: 80px; } 
-        }
+        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
@@ -221,8 +204,6 @@
     <div style="color: #fff; font-size: 0.9em; font-weight: 700; opacity: 0.8;">TERIMA KASIH SUDAH BERBELANJA DI TERSNACKS.ID</div>
     <div style="margin-top: 25px; opacity: 0.3; font-size: 0.6em; letter-spacing: 5px; font-weight: 900;">TERSNACKS.ID • 2026</div>
 </footer>
-
-<img src="https://i.postimg.cc/tg7Ft01L/potate-lil-potate.gif" class="kentang-corner">
 
 <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbykBwYZX2poPZx2-7gxtfnlrg0N5BW29lkdYOKeaelaGapyKi3NHQHUYDMoA1XTGTjO/exec";
@@ -309,9 +290,9 @@
                         <div class="card-name">${s.name}</div>
                         <div class="stock-tag">${s.isCS ? 'STAY TUNED' : 'SISA: ' + s.stock}</div>
                         <div class="counter" style="${s.isCS ? 'visibility:hidden' : ''}">
-                            <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${soldOut ? 'disabled' : ''}>-</button>
+                            <button class="btn-qty" onclick="changeQty(${s.id},-1)">-</button>
                             <span id="qty-${s.id}" style="font-weight:900; min-width:20px;">0</span>
-                            <button class="btn-qty" onclick="changeQty(${s.id},1)" ${soldOut ? 'disabled' : ''}>+</button>
+                            <button class="btn-qty" onclick="changeQty(${s.id},1)">+</button>
                         </div>
                     </div>
                 </div>`;
@@ -319,6 +300,9 @@
     }
 
     function changeQty(id, delta) {
+        // CEK SOLDOUT: Jika stok 0 dan bukan Coming Soon, fungsi langsung berhenti (gak bisa ditekan)
+        if (snackData[id].stock <= 0 && !snackData[id].isCS) return;
+
         let q = (cart[id] || 0) + delta;
         if(q < 0 || q > (snackData[id].stock || 0)) return;
         cart[id] = q;
@@ -363,6 +347,7 @@
         if(!nama) return alert("NAMA HARUS DIISI!");
         let list = []; let total = 0;
         Object.keys(cart).forEach(id => { if(cart[id] > 0) { total += cart[id] * 3; list.push(`${cart[id]}x ${snackData[id].name}`); } });
+        if(list.length === 0) return alert("PILIH SNACK DULU!");
         const btn = document.getElementById('submit-btn');
         btn.innerText = "MENGIRIM..."; btn.disabled = true;
         const params = new URLSearchParams();
