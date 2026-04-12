@@ -29,7 +29,9 @@
         }
 
         header { 
-            position: relative; z-index: 10; padding: 45px 10px; 
+            /* RELATIVE DISINI PENTING BUAT KENTANG */
+            position: relative; 
+            z-index: 10; padding: 45px 10px; 
             background: var(--glass); border-bottom: 2px solid var(--primary); 
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
         }
@@ -39,7 +41,6 @@
             filter: drop-shadow(0 0 10px var(--primary)); 
         }
         
-        /* PREMIUM QUALITY BERGERAK PUTIH LEWAT */
         header p { 
             margin: 0; font-size: 0.85em; font-weight: 900; 
             letter-spacing: 2px; color: var(--primary); 
@@ -54,6 +55,17 @@
 
         @keyframes shine {
             to { background-position: 200% center; }
+        }
+
+        /* CSS KENTANG NETAP DI HEADER (GAK TERBANG) */
+        .kentang-header {
+            position: absolute;
+            bottom: -30px; /* Nongol dikit di bawah garis header */
+            right: 20px;   /* Di pojok kanan header */
+            width: 150px;
+            z-index: 11;    /* Di atas header dikit */
+            pointer-events: none;
+            filter: drop-shadow(0 0 10px var(--primary));
         }
 
         .grid { 
@@ -102,7 +114,6 @@
             width: 30px; height: 30px; border-radius: 8px; color: white; cursor: pointer; 
         }
         
-        /* WARNA TOMBOL PAS MATI */
         .btn-qty:disabled {
             border-color: #444;
             color: #444;
@@ -156,23 +167,10 @@
             background: rgba(10, 25, 41, 0.6); 
         }
 
-     /* CSS KENTANG FIX ANTENG DI POJOK */
-.kentang-corner {
-    position: fixed;
-    bottom: 20px; /* Jarak dari bawah layar */
-    right: 20px;  /* Jarak dari kanan layar */
-    width: 150px;
-    z-index: 9999; /* Biar selalu di depan elemen apapun */
-    pointer-events: none;
-    filter: drop-shadow(0 0 10px var(--primary));
-}
-
-@media (max-width: 600px) { 
-    .kentang-corner { 
-        width: 100px; 
-        bottom: 90px; /* Naik dikit biar gak ketutup bar total pas muncul */
-    } 
-}
+        @media (max-width: 600px) { 
+            .grid { grid-template-columns: repeat(2, 1fr); } 
+            .kentang-header { width: 90px; bottom: -15px; right: 10px; } 
+        }
     </style>
 </head>
 <body>
@@ -183,6 +181,8 @@
     <img src="https://i.postimg.cc/T3Dj51gC/download.png" class="logo-header">
     <h2 style="margin:0; font-size: 1.4em; font-weight: 900;">TERSNACKS.ID</h2>
     <p>PREMIUM QUALITY • $3.00</p>
+    
+    <img src="https://i.postimg.cc/wMKm57LB/output-onlinegiftools.gif" class="kentang-header">
 </header>
 
 <div id="loading" style="padding: 50px; color: var(--primary); font-weight: 800;">SYNCING STOCK...</div>
@@ -229,8 +229,6 @@
     <div style="margin-top: 25px; opacity: 0.3; font-size: 0.6em; letter-spacing: 5px; font-weight: 900;">TERSNACKS.ID • 2026</div>
 </footer>
 
-<img src="https://i.postimg.cc/wMKm57LB/output-onlinegiftools.gif" class="kentang-corner">
-
 <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbykBwYZX2poPZx2-7gxtfnlrg0N5BW29lkdYOKeaelaGapyKi3NHQHUYDMoA1XTGTjO/exec";
 
@@ -275,7 +273,6 @@
         canvas.height = window.innerHeight;
     });
 
-    // SISTEM SNACK & DATA
     let snackData = [
         { id: 0, name: "KACANG TOJIN", stock: 0, img: "https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg" },
         { id: 1, name: "KETAWA", stock: 0, img: "https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg" },
@@ -312,7 +309,6 @@
         grid.innerHTML = '';
         snackData.forEach(s => {
             const soldOut = !s.isCS && s.stock <= 0;
-            // DI SINI LOGIKANYA: Kalau soldOut, tambahin atribut 'disabled'
             grid.innerHTML += `
                 <div class="card ${soldOut ? 'is-empty' : ''}">
                     <div class="sold-out-overlay">
