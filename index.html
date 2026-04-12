@@ -137,7 +137,18 @@
             background: rgba(10, 25, 41, 0.6); 
         }
 
-        @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        /* CSS KENTANG POJOK LAYAR */
+        .kentang-corner {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 150px; /* Ukuran gede sesuai request */
+            z-index: 1001;
+            pointer-events: none;
+            filter: drop-shadow(0 0 10px var(--primary));
+        }
+
+        @media (max-width: 600 { .grid { grid-template-columns: repeat(2, 1fr); } .kentang-corner { width: 80px; bottom: 80px; } }
     </style>
 </head>
 <body>
@@ -189,13 +200,12 @@
 </div>
 
 <footer>
-    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px;">
-        <h3 style="color: var(--primary); letter-spacing: 2px; margin: 0; font-weight: 900; font-size: 1.1em;">THANK YOU FOR SHOPPING!</h3>
-        <img src="https://i.postimg.cc/tg7Ft01L/potate-lil-potate.gif" style="width: 40px; height: 40px; border-radius: 5px;">
-    </div>
+    <h3 style="color: var(--primary); letter-spacing: 2px; margin-bottom: 10px; font-weight: 900; font-size: 1.1em;">THANK YOU FOR SHOPPING!</h3>
     <div style="color: #fff; font-size: 0.9em; font-weight: 700; opacity: 0.8;">TERIMA KASIH SUDAH BERBELANJA DI TERSNACKS.ID</div>
     <div style="margin-top: 25px; opacity: 0.3; font-size: 0.6em; letter-spacing: 5px; font-weight: 900;">TERSNACKS.ID • 2026</div>
 </footer>
+
+<img src="https://i.postimg.cc/tg7Ft01L/potate-lil-potate.gif" class="kentang-corner">
 
 <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbykBwYZX2poPZx2-7gxtfnlrg0N5BW29lkdYOKeaelaGapyKi3NHQHUYDMoA1XTGTjO/exec";
@@ -218,7 +228,7 @@
 
     function drawRain() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = 'rgba(0, 212, 255, 0.4)'; // Warna biru air neon
+        ctx.strokeStyle = 'rgba(0, 212, 255, 0.4)'; 
         ctx.lineWidth = 1.5;
         ctx.lineCap = 'round';
 
