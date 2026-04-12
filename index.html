@@ -101,6 +101,14 @@
             background: rgba(255,255,255,0.1); border: 1px solid var(--primary); 
             width: 30px; height: 30px; border-radius: 8px; color: white; cursor: pointer; 
         }
+        
+        /* WARNA TOMBOL PAS MATI */
+        .btn-qty:disabled {
+            border-color: #444;
+            color: #444;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
 
         #total-bar { 
             position: fixed; bottom: 0; left: 0; right: 0; 
@@ -280,6 +288,7 @@
         grid.innerHTML = '';
         snackData.forEach(s => {
             const soldOut = !s.isCS && s.stock <= 0;
+            // DI SINI LOGIKANYA: Kalau soldOut, tambahin atribut 'disabled'
             grid.innerHTML += `
                 <div class="card ${soldOut ? 'is-empty' : ''}">
                     <div class="sold-out-overlay">
@@ -290,9 +299,9 @@
                         <div class="card-name">${s.name}</div>
                         <div class="stock-tag">${s.isCS ? 'STAY TUNED' : 'SISA: ' + s.stock}</div>
                         <div class="counter" style="${s.isCS ? 'visibility:hidden' : ''}">
-                            <button class="btn-qty" onclick="changeQty(${s.id},-1)">-</button>
+                            <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${soldOut ? 'disabled' : ''}>-</button>
                             <span id="qty-${s.id}" style="font-weight:900; min-width:20px;">0</span>
-                            <button class="btn-qty" onclick="changeQty(${s.id},1)">+</button>
+                            <button class="btn-qty" onclick="changeQty(${s.id},1)" ${soldOut ? 'disabled' : ''}>+</button>
                         </div>
                     </div>
                 </div>`;
@@ -300,9 +309,6 @@
     }
 
     function changeQty(id, delta) {
-        // CEK SOLDOUT: Jika stok 0 dan bukan Coming Soon, fungsi langsung berhenti (gak bisa ditekan)
-        if (snackData[id].stock <= 0 && !snackData[id].isCS) return;
-
         let q = (cart[id] || 0) + delta;
         if(q < 0 || q > (snackData[id].stock || 0)) return;
         cart[id] = q;
