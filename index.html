@@ -18,7 +18,6 @@
             text-align: center; padding-bottom: 50px; overflow-x: hidden; 
         }
 
-        /* CANVAS HUJAN REALISTIS */
         #rainCanvas {
             position: fixed;
             top: 0;
@@ -39,10 +38,18 @@
             width: 280px; margin-bottom: 10px; 
             filter: drop-shadow(0 0 10px var(--primary)); 
         }
+
+        /* ANIMASI PREMIUM QUALITY BERGERAK PUTIH */
+        @keyframes neon-glow {
+            0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff; opacity: 0.8; }
+            50% { text-shadow: 0 0 20px #fff, 0 0 30px var(--primary); opacity: 1; }
+            100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff; opacity: 0.8; }
+        }
         
         header p { 
             margin: 0; font-size: 0.85em; font-weight: 900; 
-            letter-spacing: 2px; color: var(--primary); 
+            letter-spacing: 2px; color: #fff; 
+            animation: neon-glow 2s infinite ease-in-out;
         }
 
         .grid { 
@@ -86,9 +93,14 @@
         }
 
         .counter { display: flex; justify-content: center; align-items: center; gap: 8px; }
+        
+        /* TOMBOL DISABLED JIKA SOLDOUT */
         .btn-qty { 
             background: rgba(255,255,255,0.1); border: 1px solid var(--primary); 
             width: 30px; height: 30px; border-radius: 8px; color: white; cursor: pointer; 
+        }
+        .btn-qty:disabled {
+            border-color: #444; color: #444; cursor: not-allowed; opacity: 0.5;
         }
 
         #total-bar { 
@@ -137,18 +149,23 @@
             background: rgba(10, 25, 41, 0.6); 
         }
 
-        /* CSS KENTANG POJOK LAYAR */
+        /* KENTANG TRANSPARAN & GEDE */
         .kentang-corner {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 150px; /* Ukuran gede sesuai request */
+            width: 150px;
             z-index: 1001;
             pointer-events: none;
+            mix-blend-mode: screen; 
+            opacity: 0.9;
             filter: drop-shadow(0 0 10px var(--primary));
         }
 
-        @media (max-width: 600 { .grid { grid-template-columns: repeat(2, 1fr); } .kentang-corner { width: 80px; bottom: 80px; } }
+        @media (max-width: 600px) { 
+            .grid { grid-template-columns: repeat(2, 1fr); } 
+            .kentang-corner { width: 90px; bottom: 80px; } 
+        }
     </style>
 </head>
 <body>
@@ -210,7 +227,6 @@
 <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbykBwYZX2poPZx2-7gxtfnlrg0N5BW29lkdYOKeaelaGapyKi3NHQHUYDMoA1XTGTjO/exec";
 
-    // ENGINE HUJAN AAA (Canvas Based)
     const canvas = document.getElementById('rainCanvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -247,12 +263,6 @@
     }
     drawRain();
 
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
-
-    // SISTEM SNACK & DATA
     let snackData = [
         { id: 0, name: "KACANG TOJIN", stock: 0, img: "https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg" },
         { id: 1, name: "KETAWA", stock: 0, img: "https://i.postimg.cc/ncFLBVMD/b95988fe-979d-48c6-891c-900e8f3e42f1.jpg" },
@@ -288,9 +298,9 @@
         const grid = document.getElementById('container-snack');
         grid.innerHTML = '';
         snackData.forEach(s => {
-            const empty = !s.isCS && s.stock <= 0;
+            const soldOut = !s.isCS && s.stock <= 0;
             grid.innerHTML += `
-                <div class="card ${empty ? 'is-empty' : ''}">
+                <div class="card ${soldOut ? 'is-empty' : ''}">
                     <div class="sold-out-overlay">
                         <div class="so-text">${s.isCS ? 'COMING SOON' : 'SOLD OUT'}</div>
                     </div>
@@ -299,9 +309,9 @@
                         <div class="card-name">${s.name}</div>
                         <div class="stock-tag">${s.isCS ? 'STAY TUNED' : 'SISA: ' + s.stock}</div>
                         <div class="counter" style="${s.isCS ? 'visibility:hidden' : ''}">
-                            <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${empty ? 'disabled' : ''}>-</button>
+                            <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${soldOut ? 'disabled' : ''}>-</button>
                             <span id="qty-${s.id}" style="font-weight:900; min-width:20px;">0</span>
-                            <button class="btn-qty" onclick="changeQty(${s.id},1)" ${empty ? 'disabled' : ''}>+</button>
+                            <button class="btn-qty" onclick="changeQty(${s.id},1)" ${soldOut ? 'disabled' : ''}>+</button>
                         </div>
                     </div>
                 </div>`;
@@ -353,7 +363,6 @@
         if(!nama) return alert("NAMA HARUS DIISI!");
         let list = []; let total = 0;
         Object.keys(cart).forEach(id => { if(cart[id] > 0) { total += cart[id] * 3; list.push(`${cart[id]}x ${snackData[id].name}`); } });
-        if(list.length === 0) return alert("PILIH SNACK DULU!");
         const btn = document.getElementById('submit-btn');
         btn.innerText = "MENGIRIM..."; btn.disabled = true;
         const params = new URLSearchParams();
