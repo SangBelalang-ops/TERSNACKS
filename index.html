@@ -57,26 +57,34 @@
             to { background-position: 200% center; }
         }
 
-        /* CSS KENTANG NETAP DI HEADER (GAK TERBANG) */
-        .kentang-left {
-            position: absolute;
-            bottom: -30px; /* Nongol dikit di bawah garis header */
-            left: 20px;    /* Di pojok kiri header */
-            width: 150px;
-            z-index: 11;    /* Di atas header dikit */
-            pointer-events: none;
-            filter: drop-shadow(0 0 10px var(--primary));
-        }
-        
-        .kentang-right {
-            position: absolute;
-            bottom: -30px; /* Nongol dikit di bawah garis header */
-            right: 20px;   /* Di pojok kanan header */
-            width: 150px;
-            z-index: 11;    /* Di atas header dikit */
-            pointer-events: none;
-            filter: drop-shadow(0 0 10px var(--primary));
-        }
+       /* FIX POSISI BIAR GAK OFFSIDE */
+.kentang-left {
+    position: absolute;
+    bottom: 0;      /* Pas di atas garis biru */
+    left: 10px;     /* Kasih jarak dikit dari pinggir */
+    width: 130px;   /* Ukuran agak dikecilin biar proporsional */
+    z-index: 11;
+    pointer-events: none;
+    filter: drop-shadow(0 0 10px var(--primary));
+}
+
+.kentang-right {
+    position: absolute;
+    bottom: 0;      /* Pas di atas garis biru */
+    right: 10px;    /* Kasih jarak dikit dari pinggir */
+    width: 130px;   /* Samain ukurannya */
+    z-index: 11;
+    pointer-events: none;
+    filter: drop-shadow(0 0 10px var(--primary));
+}
+
+/* Biar pas di HP gak nutupin logo utama */
+@media (max-width: 600px) { 
+    .kentang-left, .kentang-right { 
+        width: 70px; 
+        bottom: 5px; 
+    } 
+}
 
         .grid { 
             display: grid; grid-template-columns: repeat(4, 1fr); 
