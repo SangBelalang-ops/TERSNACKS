@@ -5,26 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TERSNACKS.ID - PREMIUM QUALITY</title>
     <style>
-        :root { --primary: #00d4ff; --glass: rgba(10, 25, 41, 0.9); --success: #00f2ff; --danger: #ff4d4d; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #000; color: white; text-align: center; padding-bottom: 50px; overflow-x: hidden; }
-        .falling-snack { position: fixed; top: -50px; font-size: 28px; z-index: 100; user-select: none; pointer-events: none; animation: fall linear forwards; }
+        :root { 
+            --primary: #00d4ff; 
+            --glass: rgba(10, 25, 41, 0.9); 
+            --success: #00f2ff; 
+            --danger: #ff4d4d; 
+        }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            background: #000; 
+            color: white; 
+            text-align: center; 
+            padding-bottom: 80px; 
+            overflow-x: hidden; 
+        }
+        
+        /* Animasi Efek Air (Dibuat lebih ringan biar gak lag) */
+        .falling-snack {
+            position: fixed; top: -50px; font-size: 24px; z-index: 100;
+            user-select: none; pointer-events: none; animation: fall linear forwards;
+        }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        header { padding: 45px 10px; background: var(--glass); border-bottom: 2px solid var(--primary); }
-        .logo-header { width: 280px; filter: drop-shadow(0 0 15px var(--primary)); }
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 15px; max-width: 1000px; margin: 0 auto; }
-        .card { background: var(--glass); border-radius: 15px; overflow: hidden; border: 1px solid rgba(0, 212, 255, 0.2); position: relative; }
-        .card img { width: 100%; height: 130px; object-fit: cover; }
-        .sold-out-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 130px; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; }
+
+        header { 
+            position: relative; z-index: 10; padding: 40px 10px; 
+            background: var(--glass); border-bottom: 2px solid var(--primary); 
+            backdrop-filter: blur(10px);
+        }
+        .logo-header { width: 260px; filter: drop-shadow(0 0 15px var(--primary)); margin-bottom: 10px; }
+        
+        .grid { 
+            display: grid; grid-template-columns: repeat(4, 1fr); 
+            gap: 15px; padding: 20px; max-width: 1100px; margin: 0 auto; 
+        }
+        .card { 
+            background: var(--glass); border-radius: 18px; overflow: hidden; 
+            border: 1px solid rgba(0, 212, 255, 0.2); position: relative; 
+            transition: transform 0.2s;
+        }
+        .card:active { transform: scale(0.98); }
+        .card img { width: 100%; height: 140px; object-fit: cover; }
+        
+        /* Sold Out Style */
+        .sold-out-overlay { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 140px; 
+            background: rgba(0,0,0,0.8); display: none; align-items: center; 
+            justify-content: center; z-index: 5; 
+        }
+        .sold-out-text { 
+            color: white; background: var(--danger); padding: 5px 12px; 
+            font-weight: 900; transform: rotate(-15deg); border: 2px solid white; font-size: 0.8em; 
+        }
         .is-empty .sold-out-overlay { display: flex; }
-        .card-info { padding: 10px; }
-        .card-name { font-size: 0.75em; font-weight: 800; color: var(--primary); height: 35px; text-transform: uppercase; }
-        .stock-tag { font-size: 0.65em; color: var(--primary); background: rgba(0, 212, 255, 0.1); border-radius: 5px; padding: 2px 8px; margin-bottom: 10px; display: inline-block; }
-        .counter { display: flex; justify-content: center; align-items: center; gap: 8px; }
-        .btn-qty { background: rgba(255,255,255,0.1); border: 1px solid var(--primary); width: 30px; height: 30px; border-radius: 8px; color: white; cursor: pointer; }
-        #total-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--glass); padding: 18px 25px; display: none; justify-content: space-between; align-items: center; border-top: 2px solid var(--primary); z-index: 1000; backdrop-filter: blur(10px); }
-        #payment-area { display:none; padding: 40px 20px; background: rgba(0,0,0,0.95); border-top: 2px solid var(--primary); }
-        .input-nama { width: 85%; padding: 15px; border-radius: 12px; border: 1px solid var(--primary); background: transparent; color: white; margin-bottom: 20px; text-align: center; font-weight: 800; }
-        .final-btn { background: var(--success); color: #000; padding: 18px; border: none; border-radius: 50px; font-weight: 900; width: 90%; cursor: pointer; }
+        .is-empty img { filter: grayscale(1); }
+
+        .card-info { padding: 12px; }
+        .card-name { 
+            font-size: 0.8em; font-weight: 800; color: var(--primary); 
+            height: 40px; display: flex; align-items: center; justify-content: center; 
+            text-transform: uppercase; line-height: 1.2;
+        }
+        
+        .stock-tag { 
+            font-size: 0.65em; color: var(--primary); background: rgba(0, 212, 255, 0.1);
+            border-radius: 6px; padding: 3px 10px; display: inline-block; margin-bottom: 12px;
+            font-weight: 900; border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .counter { display: flex; justify-content: center; align-items: center; gap: 12px; }
+        .btn-qty { 
+            background: rgba(255,255,255,0.05); border: 1px solid var(--primary); 
+            width: 35px; height: 35px; border-radius: 10px; color: white; 
+            cursor: pointer; font-weight: bold; font-size: 1.2em;
+        }
+        .btn-qty:active { background: var(--primary); color: black; }
+
+        /* Floating Bar Total */
+        #total-bar { 
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            background: var(--glass); padding: 20px 30px; 
+            display: none; justify-content: space-between; align-items: center; 
+            border-top: 2px solid var(--primary); border-radius: 25px 25px 0 0; 
+            z-index: 1000; backdrop-filter: blur(15px); 
+        }
+        .btn-order { 
+            background: var(--primary); color: black; border: none; 
+            padding: 14px 28px; border-radius: 14px; font-weight: 900; 
+            cursor: pointer; box-shadow: 0 0 15px rgba(0, 212, 255, 0.4); 
+        }
+
+        /* Area Pembayaran */
+        #payment-area { 
+            position: relative; z-index: 10; display:none; 
+            padding: 40px 20px; background: rgba(0,0,0,0.98); 
+            border-top: 2px solid var(--primary); 
+        }
+        .input-nama { 
+            width: 85%; padding: 16px; border-radius: 15px; 
+            border: 1px solid var(--primary); background: transparent; 
+            color: white; margin-bottom: 25px; text-align: center; 
+            font-weight: 800; font-size: 1.1em; 
+        }
+        .final-btn { 
+            background: var(--success); color: black; padding: 20px; 
+            border: none; border-radius: 50px; font-weight: 900; 
+            width: 90%; cursor: pointer; font-size: 1.2em; 
+        }
+
         @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
@@ -32,28 +120,54 @@
 
 <header>
     <img src="https://i.postimg.cc/T3Dj51gC/download.png" class="logo-header">
-    <p>PREMIUM QUALITY • $3.00</p>
+    <h2 style="margin:0; font-size: 1.5em; font-weight: 900; letter-spacing: 1px;">TERSNACKS.ID</h2>
+    <p style="margin:5px 0 0; font-size:0.8em; letter-spacing:2px; color:var(--primary);">PREMIUM QUALITY • $3.00</p>
 </header>
 
-<div id="loading" style="padding: 50px; color: var(--primary);">SYNCING STOCK...</div>
+<div id="loading" style="padding: 100px 20px; color: var(--primary); font-weight: 800;">
+    SYNCING STOCK...
+</div>
+
 <div class="grid" id="container-snack"></div>
 
 <div id="total-bar">
     <div style="text-align:left">
-        <div id="summary" style="font-size: 0.65em; color: #ccc;"></div>
-        <div id="display-total" style="font-weight: 900; color: var(--primary); font-size: 1.4em;">$0.00</div>
+        <div id="summary" style="font-size: 0.7em; color: #ccc; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
+        <div id="display-total" style="font-weight: 900; color: var(--primary); font-size: 1.6em;">$0.00</div>
     </div>
-    <button onclick="openPayment()" style="background:var(--primary); border:none; padding:12px 20px; border-radius:10px; font-weight:900;">ORDER</button>
+    <button class="btn-order" onclick="openPayment()">BELI SEKARANG</button>
 </div>
 
 <div id="payment-area">
-    <input type="text" id="nama-pembeli" class="input-nama" placeholder="NAMA ANDA">
-    <div id="qr-usd" style="margin-bottom:20px;"><img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg" width="200"></div>
-    <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI & KIRIM</button>
+    <h2 style="color: var(--primary); font-weight: 900;">CHECKOUT</h2>
+    <input type="text" id="nama-pembeli" class="input-nama" placeholder="MASUKKAN NAMA ANDA">
+    
+    <div style="margin-bottom: 30px;">
+        <p style="font-size: 0.9em; color: #888;">PEMBAYARAN VIA ABA:</p>
+        <img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg" style="width: 250px; border-radius: 15px; border: 4px solid white;">
+    </div>
+
+    <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI PESANAN</button>
 </div>
 
 <script>
+    // 1. GANTI LINK EXEC LO DI SINI
     const scriptURL = "https://script.google.com/macros/s/AKfycbymsawZK3cr8cD8kyfxQQoML_GBjUO0EEBWvOnAAtiRsGQH4OL6rRElSwW7Al1bHMy6/exec";
+
+    // Efek Air (Dioptimalkan agar tidak lag)
+    function createSnack() {
+        if (document.hidden) return; 
+        const icons = ['💧', '💦']; 
+        const spray = document.createElement('div');
+        spray.className = 'falling-snack';
+        spray.innerText = icons[Math.floor(Math.random() * icons.length)];
+        spray.style.left = Math.random() * 100 + 'vw';
+        spray.style.opacity = Math.random();
+        spray.style.animationDuration = Math.random() * 2 + 2 + 's';
+        document.body.appendChild(spray);
+        setTimeout(() => spray.remove(), 4000);
+    }
+    setInterval(createSnack, 300);
 
     let snackData = [
         { id: 0, name: "KACANG TOJIN", stock: 0, img: "https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg" },
@@ -70,60 +184,98 @@
     let cart = {};
 
     function init() {
-        const s = document.createElement('script');
-        s.src = `${scriptURL}?callback=handleData`;
-        document.body.appendChild(s);
+        const script = document.createElement('script');
+        script.src = `${scriptURL}?callback=handleData`;
+        document.body.appendChild(script);
     }
 
-    function handleData(d) {
-        snackData.forEach(s => { if(d[s.name] !== undefined) s.stock = parseInt(d[s.name]); });
+    function handleData(data) {
+        snackData.forEach(s => { 
+            if(data[s.name.toUpperCase()] !== undefined) s.stock = parseInt(data[s.name.toUpperCase()]); 
+        });
         document.getElementById('loading').style.display = 'none';
         render();
     }
 
     function render() {
-        const g = document.getElementById('container-snack'); g.innerHTML = '';
+        const grid = document.getElementById('container-snack');
+        grid.innerHTML = '';
         snackData.forEach(s => {
-            const e = s.stock <= 0;
-            g.innerHTML += `<div class="card ${e?'is-empty':''}">
-                <div class="sold-out-overlay"><b style="background:red;padding:5px;font-size:0.6em">SOLD OUT</b></div>
-                <img src="${s.img}"><div class="card-info"><div class="card-name">${s.name}</div>
-                <div class="stock-tag">SISA: ${s.stock}</div>
-                <div class="counter">
-                <button class="btn-qty" onclick="changeQty(${s.id},-1)">-</button>
-                <span id="qty-${s.id}" style="margin:0 10px">0</span>
-                <button class="btn-qty" onclick="changeQty(${s.id},1)">+</button>
-                </div></div></div>`;
+            const empty = s.stock <= 0;
+            grid.innerHTML += `
+                <div class="card ${empty ? 'is-empty' : ''}">
+                    <div class="sold-out-overlay"><div class="sold-out-text">SOLD OUT</div></div>
+                    <img src="${s.img}">
+                    <div class="card-info">
+                        <div class="card-name">${s.name}</div>
+                        <div class="stock-tag">SISA: ${s.stock}</div>
+                        <div class="counter">
+                            <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${empty ? 'disabled' : ''}>-</button>
+                            <span id="qty-${s.id}" style="font-weight:900; min-width:25px;">0</span>
+                            <button class="btn-qty" onclick="changeQty(${s.id},1)" ${empty ? 'disabled' : ''}>+</button>
+                        </div>
+                    </div>
+                </div>`;
         });
     }
 
     function changeQty(id, delta) {
         let q = (cart[id] || 0) + delta;
         if(q < 0 || (delta > 0 && q > snackData[id].stock)) return;
-        cart[id] = q; document.getElementById(`qty-${id}`).innerText = q; updateTotal();
+        cart[id] = q;
+        document.getElementById(`qty-${id}`).innerText = q;
+        updateTotal();
     }
 
     function updateTotal() {
-        let t = 0; let l = [];
-        Object.keys(cart).forEach(id => { if(cart[id]>0){ t += cart[id]*3; l.push(`${cart[id]}x ${snackData[id].name}`); }});
-        document.getElementById('total-bar').style.display = t > 0 ? 'flex' : 'none';
-        document.getElementById('display-total').innerText = `$${t.toFixed(2)}`;
-        document.getElementById('summary').innerText = l.join(", ");
+        let total = 0; let list = [];
+        Object.keys(cart).forEach(id => {
+            if(cart[id] > 0) {
+                total += cart[id] * 3;
+                list.push(`${cart[id]}x ${snackData[id].name}`);
+            }
+        });
+        document.getElementById('total-bar').style.display = total > 0 ? 'flex' : 'none';
+        document.getElementById('display-total').innerText = `$${total.toFixed(2)}`;
+        document.getElementById('summary').innerText = list.join(", ");
     }
 
-    function openPayment() { document.getElementById('payment-area').style.display='block'; }
+    function openPayment() { 
+        document.getElementById('payment-area').style.display='block'; 
+        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'}); 
+    }
 
     function sendToSpreadsheet() {
-        const n = document.getElementById('nama-pembeli').value;
-        if(!n) return alert("NAMA!");
-        let l = []; let t = 0;
-        Object.keys(cart).forEach(id => { if(cart[id]>0){ t+=cart[id]*3; l.push(`${cart[id]}x ${snackData[id].name}`); }});
-        const btn = document.getElementById('submit-btn'); btn.innerText = "SENDING..."; btn.disabled = true;
+        const nama = document.getElementById('nama-pembeli').value;
+        if(!nama) return alert("BOSKU, NAMA JANGAN KOSONG!");
+        
+        let list = []; let total = 0;
+        Object.keys(cart).forEach(id => { 
+            if(cart[id] > 0) {
+                total += cart[id] * 3;
+                list.push(`${cart[id]}x ${snackData[id].name}`);
+            }
+        });
+        
+        const btn = document.getElementById('submit-btn');
+        btn.innerText = "MENGIRIM..."; btn.disabled = true;
 
-        // KIRIM SEBAGAI 3 PARAMETER AGAR DI SCRIPT BISA DIOLAH JADI 4 KOLOM
-        fetch(`${scriptURL}?nama=${encodeURIComponent(n)}&pesanan=${encodeURIComponent(l.join(", "))}&total=${encodeURIComponent("$"+t.toFixed(2))}`, { method: 'GET', mode: 'no-cors' })
-        .then(() => { alert("BERHASIL!"); location.reload(); });
+        const params = new URLSearchParams();
+        params.append('nama', nama);
+        params.append('pesanan', list.join(", "));
+        params.append('total', "$" + total.toFixed(2));
+
+        fetch(`${scriptURL}?${params.toString()}`, { method: 'GET', mode: 'no-cors' })
+        .then(() => { 
+            alert("PESANAN BERHASIL!\nData masuk ke PENJUALAN & Stok otomatis terpotong."); 
+            location.reload(); 
+        })
+        .catch(() => {
+            alert("Selesai! Cek sheet lo.");
+            location.reload();
+        });
     }
+
     init();
 </script>
 </body>
