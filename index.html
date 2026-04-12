@@ -32,23 +32,14 @@
         }
         
         .logo-header { 
-            width: 280px; 
-            margin-bottom: 10px;
+            width: 280px; margin-bottom: 10px;
             filter: drop-shadow(0 0 8px var(--primary)) drop-shadow(0 0 15px var(--primary));
-            animation: logoGlow 4s infinite alternate;
-        }
-        @keyframes logoGlow {
-            from { filter: drop-shadow(0 0 8px var(--primary)) drop-shadow(0 0 15px var(--primary)); }
-            to { filter: drop-shadow(0 0 12px var(--primary)) drop-shadow(0 0 25px var(--primary)); }
         }
         
         header p {
             margin: 0; font-size: 0.85em; font-weight: 900; letter-spacing: 2px;
-            background: linear-gradient(to right, #00d4ff 0%, #00d4ff 40%, #ffffff 50%, #00d4ff 60%, #00d4ff 100%);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            background-size: 200% auto; animation: slingKilat 3s infinite linear;
+            color: var(--primary);
         }
-        @keyframes slingKilat { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
         .grid { position: relative; z-index: 10; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 15px; max-width: 1000px; margin: 0 auto; }
         
@@ -57,36 +48,30 @@
             border: 1px solid rgba(0, 212, 255, 0.2); position: relative; 
             transition: 0.3s;
         }
-        .is-cs-card { border: 2px solid var(--cs-glow); box-shadow: 0 0 15px var(--cs-glow); }
         .card img { width: 100%; height: 130px; object-fit: cover; }
         
         .sold-out-overlay { 
             position: absolute; top: 0; left: 0; width: 100%; height: 130px; 
             background: rgba(0,0,0,0.85); display: none; align-items: center; 
-            justify-content: center; z-index: 5; backdrop-filter: blur(2px);
+            justify-content: center; z-index: 5;
         }
         .is-empty .sold-out-overlay { display: flex; }
-        .is-empty img { filter: grayscale(1); }
 
         .overlay-text { 
             color: white; padding: 5px 10px; font-weight: 900; 
             transform: rotate(-15deg); border: 2px solid white; font-size: 0.7em; 
         }
-        .cs-text { color: black; background: var(--gold); border-color: black; box-shadow: 0 0 10px var(--gold); }
-        .so-text { color: white; background: var(--danger); border-color: white; }
 
         .card-info { padding: 10px; }
         .card-name { font-size: 0.75em; font-weight: 800; color: var(--primary); height: 35px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
         
         .stock-tag { 
             font-size: 0.65em; color: var(--primary); background: rgba(0, 212, 255, 0.1);
-            border-radius: 5px; padding: 2px 8px; display: inline-block; margin-bottom: 10px;
-            font-weight: 900; border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 5px; padding: 2px 8px; display: inline-block; margin-bottom: 10px; font-weight: 900;
         }
 
         .counter { display: flex; justify-content: center; align-items: center; gap: 8px; }
         .btn-qty { background: rgba(255,255,255,0.1); border: 1px solid var(--primary); width: 30px; height: 30px; border-radius: 8px; color: white; cursor: pointer; }
-        .btn-qty:disabled { opacity: 0.2; cursor: not-allowed; }
 
         #total-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--glass); padding: 18px 25px; display: none; justify-content: space-between; align-items: center; border-top: 2px solid var(--primary); border-radius: 20px 20px 0 0; z-index: 1000; backdrop-filter: blur(10px); }
         .btn-order { background: var(--primary); color: black; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 900; cursor: pointer; }
@@ -94,15 +79,20 @@
         #payment-area { position: relative; z-index: 10; display:none; padding: 40px 20px; background: rgba(0,0,0,0.95); border-top: 2px solid var(--primary); }
         .input-nama { width: 85%; padding: 15px; border-radius: 12px; border: 1px solid var(--primary); background: transparent; color: white; margin-bottom: 20px; text-align: center; font-weight: 800; }
         
-        /* Barcode Grid - Dua Barcode Sejajar */
-        .qr-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
-        .qr-box { background: white; padding: 10px; border-radius: 15px; width: 140px; }
+        /* PAYMENT SELECTOR STYLING */
+        .pay-options { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .opt-btn { 
+            background: transparent; border: 2px solid var(--primary); color: white; 
+            padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: 900; transition: 0.3s;
+        }
+        .opt-btn.active { background: var(--primary); color: black; }
+
+        .qr-display { display: none; justify-content: center; margin-bottom: 25px; }
+        .qr-box { background: white; padding: 10px; border-radius: 15px; width: 180px; }
         .qr-box img { width: 100%; border-radius: 5px; }
-        .qr-label { color: black; font-size: 0.65em; font-weight: 900; margin-top: 5px; }
+        .qr-label { color: black; font-size: 0.8em; font-weight: 900; margin-top: 5px; }
 
         .final-btn { background: var(--success); color: #000; padding: 18px; border: none; border-radius: 50px; font-weight: 900; width: 90%; cursor: pointer; }
-
-        footer { position: relative; z-index: 10; margin-top: 50px; padding: 40px 20px; border-top: 1px solid rgba(0, 212, 255, 0.2); background: rgba(10, 25, 41, 0.5); }
 
         @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
@@ -115,7 +105,7 @@
     <p>PREMIUM QUALITY • $3.00</p>
 </header>
 
-<div id="loading" style="padding: 50px; color: var(--primary); font-weight: 800; letter-spacing: 2px;">SYNCING STOCK...</div>
+<div id="loading" style="padding: 50px; color: var(--primary); font-weight: 800;">SYNCING STOCK...</div>
 <div class="grid" id="container-snack"></div>
 
 <div id="total-bar">
@@ -128,31 +118,34 @@
 
 <div id="payment-area">
     <h3 style="color: var(--primary); font-weight: 900;">DATA PEMBELI</h3>
-    <input type="text" id="nama-pembeli" class="input-nama" placeholder="SIAPA NAMA ANDA?">
+    <input type="text" id="nama-pembeli" class="input-nama" placeholder="TULIS NAMA ANDA">
     
-    <div class="qr-container">
+    <p style="font-size: 0.8em; font-weight: 800; margin-bottom: 10px;">PILIH METODE PEMBAYARAN:</p>
+    <div class="pay-options">
+        <button class="opt-btn" id="btn-riel" onclick="showQR('riel')">RIEL</button>
+        <button class="opt-btn" id="btn-usd" onclick="showQR('usd')">USD</button>
+    </div>
+
+    <div id="qr-riel" class="qr-display">
         <div class="qr-box">
             <img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg">
-            <div class="qr-label">RIEL BARCODE</div>
-        </div>
-        <div class="qr-box">
-            <img src="https://i.postimg.cc/nrqkP0h8/aba-riel.jpg"> <div class="qr-label">USD BARCODE</div>
+            <div class="qr-label">BARCODE RIEL</div>
         </div>
     </div>
 
-    <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn">KONFIRMASI & KIRIM</button>
+    <div id="qr-usd" class="qr-display">
+        <div class="qr-box">
+            <img src="LINK_BARCODE_USD_LO"> <div class="qr-label">BARCODE USD</div>
+        </div>
+    </div>
+
+    <button id="submit-btn" onclick="sendToSpreadsheet()" class="final-btn" style="margin-top: 10px;">KONFIRMASI & KIRIM</button>
 </div>
 
-<footer>
-    <h3 style="color: var(--primary); letter-spacing: 2px; margin-bottom: 10px; font-weight: 900; font-size: 1em;">THANK YOU FOR SHOPPING!</h3>
-    <div style="color: #fff; font-size: 0.8em; font-weight: 700;">TERIMA KASIH SUDAH BERBELANJA DI TERSNACKS.ID</div>
-    <div style="margin-top: 20px; opacity: 0.3; font-size: 0.55em; letter-spacing: 5px;">TERSNACKS.ID • 2026</div>
-</footer>
-
 <script>
-    // MASUKKAN URL WEB APP GOOGLE SCRIPT LO DI SINI
-    const scriptURL = "https://script.google.com/macros/s/AKfycbykBwYZX2poPZx2-7gxtfnlrg0N5BW29lkdYOKeaelaGapyKi3NHQHUYDMoA1XTGTjO/exec";
+    const scriptURL = "GANTI_LINK_EXEC_LO";
 
+    // Animasi Snack Jatuh
     function createSnack() {
         if (document.hidden) return;
         const icons = ['💧', '💦']; 
@@ -202,23 +195,18 @@
         grid.innerHTML = '';
         snackData.forEach(s => {
             const empty = !s.isCS && s.stock <= 0;
-            const styleCSImg = s.isCS ? 'opacity: 0.5; filter: grayscale(1);' : '';
-            
             grid.innerHTML += `
-                <div class="card ${empty ? 'is-empty' : ''} ${s.isCS ? 'is-cs-card' : ''}">
+                <div class="card ${empty ? 'is-empty' : ''}">
                     <div class="sold-out-overlay">
-                        ${s.isCS ? 
-                            `<div class="overlay-text cs-text">COMING SOON</div>` : 
-                            `<div class="overlay-text so-text">SOLD OUT</div>`
-                        }
+                        ${s.isCS ? `<div class="overlay-text">COMING SOON</div>` : `<div class="overlay-text">SOLD OUT</div>`}
                     </div>
-                    <img src="${s.img}" style="${styleCSImg}">
+                    <img src="${s.img}">
                     <div class="card-info">
                         <div class="card-name">${s.name}</div>
-                        <div class="stock-tag">${s.isCS ? 'STAY TUNED' : 'SISA: ' + s.stock}</div>
+                        <div class="stock-tag">SISA: ${s.stock}</div>
                         <div class="counter" style="${s.isCS ? 'visibility:hidden' : ''}">
                             <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${empty ? 'disabled' : ''}>-</button>
-                            <span id="qty-${s.id}" style="font-weight:900; min-width:20px;">0</span>
+                            <span id="qty-${s.id}" style="font-weight:900;">0</span>
                             <button class="btn-qty" onclick="changeQty(${s.id},1)" ${empty ? 'disabled' : ''}>+</button>
                         </div>
                     </div>
@@ -227,9 +215,8 @@
     }
 
     function changeQty(id, delta) {
-        if(snackData[id].stock <= 0 && !snackData[id].isCS) return;
         let q = (cart[id] || 0) + delta;
-        if(q < 0 || (delta > 0 && q > snackData[id].stock)) return;
+        if(q < 0 || q > snackData[id].stock) return;
         cart[id] = q;
         document.getElementById(`qty-${id}`).innerText = q;
         updateTotal();
@@ -239,7 +226,7 @@
         let total = 0; let list = [];
         Object.keys(cart).forEach(id => {
             if(cart[id] > 0) {
-                total += cart[id] * 3; // Harga $3.00
+                total += cart[id] * 3;
                 list.push(`${cart[id]}x ${snackData[id].name}`);
             }
         });
@@ -253,10 +240,25 @@
         window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'}); 
     }
 
+    // FUNGSI UNTUK PILIH BARCODE
+    function showQR(type) {
+        document.getElementById('qr-riel').style.display = 'none';
+        document.getElementById('qr-usd').style.display = 'none';
+        document.getElementById('btn-riel').classList.remove('active');
+        document.getElementById('btn-usd').classList.remove('active');
+
+        if(type === 'riel') {
+            document.getElementById('qr-riel').style.display = 'flex';
+            document.getElementById('btn-riel').classList.add('active');
+        } else {
+            document.getElementById('qr-usd').style.display = 'flex';
+            document.getElementById('btn-usd').classList.add('active');
+        }
+    }
+
     function sendToSpreadsheet() {
         const nama = document.getElementById('nama-pembeli').value;
-        if(!nama || nama.trim() === "") return alert("NAMA PEMBELI HARUS DIISI!");
-        
+        if(!nama) return alert("NAMA PEMBELI HARUS DIISI!");
         let list = []; let total = 0;
         Object.keys(cart).forEach(id => { 
             if(cart[id] > 0) {
@@ -264,25 +266,13 @@
                 list.push(`${cart[id]}x ${snackData[id].name}`);
             }
         });
-
-        if(list.length === 0) return alert("PILIH SNACK DULU!");
-        
-        const btn = document.getElementById('submit-btn');
-        btn.innerText = "MENGIRIM..."; btn.disabled = true;
-
         const params = new URLSearchParams();
         params.append('nama', nama);
         params.append('pesanan', list.join(", "));
         params.append('total', "$" + total.toFixed(2));
-
         fetch(`${scriptURL}?${params.toString()}`, { method: 'GET', mode: 'no-cors' })
-        .then(() => { 
-            alert("PESANAN BERHASIL!"); 
-            location.reload(); 
-        })
-        .catch(() => { location.reload(); });
+        .then(() => { alert("PESANAN BERHASIL!"); location.reload(); });
     }
-
     init();
 </script>
 </body>
