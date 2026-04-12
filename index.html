@@ -17,7 +17,6 @@
             text-align: center; padding-bottom: 50px; overflow-x: hidden; 
         }
         
-        /* Animasi Air */
         .falling-snack {
             position: fixed; top: -50px; font-size: 28px; z-index: 100;
             user-select: none; pointer-events: none; animation: fall linear forwards;
@@ -27,7 +26,7 @@
         header { position: relative; z-index: 10; padding: 45px 10px; background: var(--glass); border-bottom: 2px solid var(--primary); }
         .logo-header { width: 280px; filter: drop-shadow(0 0 15px var(--primary)); margin-bottom: 10px; }
         
-        /* Teks Premium Quality dengan Animasi Kilat Putih */
+        /* Animasi Kilat Putih */
         header p {
             margin: 0; font-size: 0.85em; font-weight: 900; letter-spacing: 2px;
             background: linear-gradient(to right, #00d4ff 0%, #00d4ff 40%, #ffffff 50%, #00d4ff 60%, #00d4ff 100%);
@@ -64,7 +63,6 @@
         .input-nama { width: 85%; padding: 15px; border-radius: 12px; border: 1px solid var(--primary); background: transparent; color: white; margin-bottom: 20px; text-align: center; font-weight: 800; }
         .final-btn { background: var(--success); color: #000; padding: 18px; border: none; border-radius: 50px; font-weight: 900; width: 90%; cursor: pointer; }
 
-        /* Footer yang Dibalikin Lagi */
         footer { position: relative; z-index: 10; margin-top: 50px; padding: 40px 20px; border-top: 1px solid rgba(0, 212, 255, 0.2); background: rgba(10, 25, 41, 0.5); }
 
         @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
@@ -106,7 +104,7 @@
 
 <script>
     // GANTI LINK EXEC TERBARU LO DI SINI
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxBhW80smnGE9_RIj206zRJr2bdLM31RgMp5seLC0Q/dev";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbykBwYZX2poPZx2-7gxtfnlrg0N5BW29lkdYOKeaelaGapyKi3NHQHUYDMoA1XTGTjO/exec";
 
     function createSnack() {
         if (document.hidden) return;
@@ -119,7 +117,7 @@
         document.body.appendChild(spray);
         setTimeout(() => spray.remove(), 3000);
     }
-    setInterval(createSnack, 200);
+    setInterval(createSnack, 250);
 
     let snackData = [
         { id: 0, name: "KACANG TOJIN", stock: 0, img: "https://i.postimg.cc/MZbTnf6L/184f7bee-21ba-4477-81c6-c9f7acfb487a.jpg" },
@@ -130,7 +128,10 @@
         { id: 5, name: "BASRENG", stock: 0, img: "https://i.postimg.cc/gjYGV4z5/601de701-a9b5-4bbf-8aa6-87b171349a64.jpg" },
         { id: 6, name: "LUMPIA", stock: 0, img: "https://i.postimg.cc/ZYcbbkj9/38611567-5f9f-4899-9d33-cffa77b5e469.jpg" },
         { id: 7, name: "KACANG ARAB", stock: 0, img: "https://i.postimg.cc/sDgV1n09/16ad7cba-62a3-48d4-a52c-25fe2f379b5e.jpg" },
-        { id: 8, name: "KACANG MADU", stock: 0, img: "https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg" }
+        { id: 8, name: "KACANG MADU", stock: 0, img: "https://i.postimg.cc/sDH3Wpk1/129f1f36-b98b-4f99-bdde-93c543eb32e8.jpg" },
+        { id: 9, name: "COMING SOON", stock: 0, isCS: true, img: "https://i.postimg.cc/T3Dj51gC/download.png" },
+        { id: 10, name: "COMING SOON", stock: 0, isCS: true, img: "https://i.postimg.cc/T3Dj51gC/download.png" },
+        { id: 11, name: "COMING SOON", stock: 0, isCS: true, img: "https://i.postimg.cc/T3Dj51gC/download.png" }
     ];
 
     let cart = {};
@@ -142,7 +143,9 @@
     }
 
     function handleData(d) {
-        snackData.forEach(s => { if(d[s.name.toUpperCase()] !== undefined) s.stock = parseInt(d[s.name.toUpperCase()]); });
+        snackData.forEach(s => { 
+            if(!s.isCS && d[s.name.toUpperCase()] !== undefined) s.stock = parseInt(d[s.name.toUpperCase()]); 
+        });
         document.getElementById('loading').style.display = 'none';
         render();
     }
@@ -151,15 +154,19 @@
         const grid = document.getElementById('container-snack');
         grid.innerHTML = '';
         snackData.forEach(s => {
-            const empty = s.stock <= 0;
+            const empty = !s.isCS && s.stock <= 0;
+            const styleCS = s.isCS ? 'opacity: 0.5; filter: grayscale(1);' : '';
+            
             grid.innerHTML += `
-                <div class="card ${empty ? 'is-empty' : ''}">
-                    <div class="sold-out-overlay"><div class="sold-out-text">SOLD OUT</div></div>
+                <div class="card ${empty ? 'is-empty' : ''}" style="${styleCS}">
+                    <div class="sold-out-overlay">
+                        <div class="sold-out-text">${s.isCS ? 'COMING SOON' : 'SOLD OUT'}</div>
+                    </div>
                     <img src="${s.img}">
                     <div class="card-info">
                         <div class="card-name">${s.name}</div>
-                        <div class="stock-tag">SISA: ${s.stock}</div>
-                        <div class="counter">
+                        <div class="stock-tag">${s.isCS ? 'STAY TUNED' : 'SISA: ' + s.stock}</div>
+                        <div class="counter" style="${s.isCS ? 'visibility:hidden' : ''}">
                             <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${empty ? 'disabled' : ''}>-</button>
                             <span id="qty-${s.id}" style="font-weight:900; min-width:20px;">0</span>
                             <button class="btn-qty" onclick="changeQty(${s.id},1)" ${empty ? 'disabled' : ''}>+</button>
@@ -197,7 +204,7 @@
 
     function sendToSpreadsheet() {
         const nama = document.getElementById('nama-pembeli').value;
-        if(!nama) return alert("NAMA PEMBELI HARUS DIISI!");
+        if(!nama || nama.trim() === "") return alert("NAMA PEMBELI HARUS DIISI!");
         
         let list = []; let total = 0;
         Object.keys(cart).forEach(id => { 
@@ -206,6 +213,8 @@
                 list.push(`${cart[id]}x ${snackData[id].name}`);
             }
         });
+
+        if(list.length === 0) return alert("PILIH SNACK DULU BOSKU!");
         
         const btn = document.getElementById('submit-btn');
         btn.innerText = "MENGIRIM..."; btn.disabled = true;
@@ -217,12 +226,10 @@
 
         fetch(`${scriptURL}?${params.toString()}`, { method: 'GET', mode: 'no-cors' })
         .then(() => { 
-            alert("PESANAN BERHASIL!\nStok otomatis terpotong."); 
+            alert("PESANAN BERHASIL!\nStok otomatis diperbarui."); 
             location.reload(); 
         })
-        .catch(() => {
-            location.reload();
-        });
+        .catch(() => { location.reload(); });
     }
 
     init();
