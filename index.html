@@ -196,7 +196,24 @@
     </style>
 </head>
 <body>
+    <div id="maintenance-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
+    <img src="https://i.postimg.cc/T3Dj51gC/download.png" style="width: 150px; filter: drop-shadow(0 0 10px var(--primary)); margin-bottom: 20px;">
+    <h1 style="color: var(--primary); font-weight: 900; letter-spacing: 3px;">UNDER MAINTENANCE</h1>
+    <p style="color: white; font-weight: 700; opacity: 0.8; max-width: 80%; line-height: 1.6;">
+        Sabar ya, Vin lagi rapihin stok produk baru buat kalian.<br>
+        Stay tuned! 🥔🔥
+    </p>
+    <div style="margin-top: 20px; color: var(--primary); font-size: 0.8em; font-weight: 900; animation: blink 1.5s infinite;">
+        CHECKING INVENTORY...
+    </div>
+</div>
 
+<style>
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+</style>
 <canvas id="rainCanvas"></canvas>
 
 <header>
