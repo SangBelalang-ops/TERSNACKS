@@ -2,10 +2,12 @@
 <html ⚡ lang="id">
 <head>
   <meta charset="utf-8">
-  <title>Warisan Nusantara - 5 Rasa Baru</title>
-  <link rel="canonical" href="https://websitemu.com/amp-snack">
+  <title>Warisan Nusantara - 5 Musim Snack</title>
+  <link rel="canonical" href="https://websitemu.com/amp-snack-seasons">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  <meta name="theme-color" content="#212121"> <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+  <meta name="theme-color" content="#212121">
+
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
   <script async src="https://cdn.ampproject.org/v0.js"></script>
   
   <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
@@ -14,38 +16,40 @@
 
   <style amp-custom>
     /* Reset & Font */
-    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #212121; color: #fff; margin: 0; }
+    body { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; background: #111; color: #fff; margin: 0; overflow: hidden; }
     
-    /* Layout Utama */
-    .hero { position: relative; height: 100vh; width: 100%; display: flex; flex-direction: column; overflow: hidden; transition: background 0.5s ease; } /* Transisi Warna BG */
+    /* Layout Utama Atmosferik */
+    .hero { position: relative; height: 100vh; width: 100%; overflow: hidden; }
+
+    /* Background Dinamis (Layer paling belakang) */
+    .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #111; transition: background 0.8s ease; z-index: 1; }
+
+    /* Partikel Atmosfer (SVG Overlay) */
+    .particle-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; opacity: 0.5; pointer-events: none; }
+    #particle-group circle { fill: rgba(255,255,255,0.8); } /* Default particle color */
 
     /* Header & Logo */
-    header { padding: 20px; position: absolute; top: 0; width: 100%; z-index: 10; text-align: center; }
-    .brand-logo { font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #fff; }
+    header { padding: 30px; position: absolute; top: 0; width: 100%; z-index: 10; text-align: center; }
+    .brand-logo { font-size: 1rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: #fff; opacity: 0.7; }
 
-    /* Carousel Gambar (The Star) */
-    .product-carousel { flex: 1; display: flex; align-items: center; justify-content: center; }
-    .slide-item { display: flex; align-items: center; justify-content: center; position: relative; }
+    /* Carousel Gambar (The Atmosphere Star) */
+    .product-carousel { flex: 1; display: flex; align-items: center; justify-content: center; z-index: 3; height: 70vh; margin-top: 15vh; }
+    .slide-item { display: flex; align-items: center; justify-content: center; }
     
     /* Frame Gambar yang menonjol keluar */
-    .img-container { width: 80%; max-width: 400px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)); transform: scale(1); transition: transform 0.3s ease; }
+    .img-container { width: 85%; max-width: 380px; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6)); }
     
-    /* Animasi saat slide aktif (di-trigger CSS) */
-    [visible] .img-container { transform: scale(1.05); }
-
-    /* Detail Teks Rasa */
-    .product-details { padding: 20px; text-align: center; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); }
-    .rasa-name { font-size: 1.5rem; font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
-    .rasa-desc { font-size: 0.9rem; font-weight: 300; opacity: 0.8; margin: 5px 0 20px 0; }
-
+    /* Animasi Text-Reveal saat slide aktif */
+    .product-details { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; text-align: center; z-index: 5; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
+    .rasa-name { font-size: 1.8rem; font-weight: 900; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+    
     /* Tombol CTA MANTAP (Sticky & Pulse) */
-    .cta-container { position: fixed; bottom: 0; width: 100%; padding: 15px; box-sizing: border-box; display: flex; justify-content: center; z-index: 100; }
-    .btn-buy { background: #fff; color: #000; padding: 18px 40px; border-radius: 50px; text-decoration: none; font-weight: 800; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); animation: pulse 2s infinite; }
+    .cta-container { position: fixed; bottom: 0; width: 100%; padding: 20px; box-sizing: border-box; display: flex; justify-content: center; z-index: 100; }
+    .btn-buy { background: #fff; color: #000; padding: 20px 50px; border-radius: 50px; text-decoration: none; font-weight: 800; text-transform: uppercase; font-size: 0.95rem; letter-spacing: 2px; box-shadow: 0 15px 30px rgba(0,0,0,0.3); animation: pulse 2s infinite; }
 
-    /* Keyframes Animasi Pulse */
     @keyframes pulse {
       0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
-      70% { transform: scale(1.03); box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+      70% { transform: scale(1.04); box-shadow: 0 0 0 15px rgba(255,255,255,0); }
       100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0); }
     }
   </style>
@@ -55,29 +59,38 @@
   <amp-state id="productData">
     <script type="application/json">
       {
-        "currentRasa": "WARISAN NUSANTARA",
-        "currentDesc": "Koleksi 5 Rasa Baru yang Autentik",
-        "currentBg": "#212121",
         "currentIndex": 0,
         "items": [
-          { "name": "SUS KERING COKLAT", "desc": "Mewah & Creamy", "bg": "#3E2723" },
-          { "name": "BALADO PADANG", "desc": "Berani & Pedas Bold", "bg": "#831010" },
-          { "name": "KUE BAWANG", "desc": "Klasik & Gurih Warm", "bg": "#B38F00" },
-          { "name": "UNTIR UNTIR", "desc": "Tradisional & Bertekstur", "bg": "#5D4037" },
-          { "name": "BASRENG ORIGINAL", "desc": "Bersih & Nagih", "bg": "#607D8B" }
+          { "name": "SUS KERING COKLAT", "bg": "#3E2723", "pCol": "rgba(62, 39, 35, 0.8)", "pScale": 1.2, "pSpeed": 1.5, "anim": "animChocoRain" },
+          { "name": "BALADO PADANG", "bg": "#831010", "pCol": "rgba(131, 16, 16, 0.9)", "pScale": 2.0, "pSpeed": 0.8, "anim": "animSpicyAutumn" },
+          { "name": "KUE BAWANG", "bg": "#B38F00", "pCol": "rgba(179, 143, 0, 0.7)", "pScale": 1.0, "pSpeed": 2.0, "anim": "animGoldenHour" },
+          { "name": "UNTIR UNTIR", "bg": "#5D4037", "pCol": "rgba(93, 64, 55, 0.8)", "pScale": 1.5, "pSpeed": 1.2, "anim": "animUntirFall" },
+          { "name": "BASRENG ORIGINAL", "bg": "#607D8B", "pCol": "rgba(96, 125, 139, 0.9)", "pScale": 0.8, "pSpeed": 0.5, "anim": "animBasrengBlizzard" }
         ]
       }
     </script>
   </amp-state>
 
-  <div class="hero" [style]="'background:' + productData.items[productData.currentIndex].bg">
+  <div class="hero">
     
+    <div class="hero-bg" [style]="'background:' + productData.items[productData.currentIndex].bg"></div>
+    
+    <svg class="particle-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <g id="particle-group">
+            <circle cx="10" cy="-10" r="1.5" />
+            <circle cx="30" cy="-20" r="1.5" />
+            <circle cx="50" cy="-30" r="2.0" />
+            <circle cx="70" cy="-40" r="1.2" />
+            <circle cx="90" cy="-50" r="1.8" />
+            </g>
+    </svg>
+
     <header>
-      <div class="brand-logo">WARISAN</div>
+      <div class="brand-logo">WARISAN NUSANTARA</div>
     </header>
 
-    <amp-carousel class="product-carousel" width="100" height="100" layout="responsive" type="slides" autoplay delay="3000"
-      on="slideChange:AMP.setState({ productData: {currentIndex: event.index}})">
+    <amp-carousel class="product-carousel" width="100" height="100" layout="responsive" type="slides" autoplay delay="4000"
+      on="slideChange:AMP.setState({ productData: {currentIndex: event.index}}); animGroup.start()">
       
       <div class="slide-item">
         <div class="img-container">
@@ -92,8 +105,7 @@
       </amp-carousel>
 
     <div class="product-details">
-      <h1 class="rasa-name" [text]="productData.items[productData.currentIndex].name">WARISAN NUSANTARA</h1>
-      <p class="rasa-desc" [text]="productData.items[productData.currentIndex].desc">Koleksi 5 Rasa Baru yang Autentik</p>
+      <h1 class="rasa-name" [text]="productData.items[productData.currentIndex].name">WARISAN</h1>
     </div>
 
   </div>
@@ -101,6 +113,36 @@
   <div class="cta-container">
     <a href="https://websitemu.com/keranjang" class="btn-buy">Beli Sekarang</a>
   </div>
+
+  <amp-animation id="animGroup" layout="nodisplay">
+    <script type="application/json">
+        {
+          "duration": "1s",
+          "fill": "both",
+          "animations": [
+            {
+              "selector": "#particle-group circle",
+              "duration": "productData.items[productData.currentIndex].pSpeed",
+              "keyframes": [
+                { "transform": "translateY(0) scale(productData.items[productData.currentIndex].pScale)", "opacity": 0 },
+                { "transform": "translateY(110vh) scale(productData.items[productData.currentIndex].pScale)", "opacity": 1 }
+              ],
+              "fill": "both",
+              "iterations": "infinite",
+              "delay": "rand(0, 0.5s)"
+            },
+            {
+              "selector": "#particle-group circle",
+              "keyframes": [
+                { "fill": "productData.items[productData.currentIndex].pCol" },
+                { "fill": "productData.items[productData.currentIndex].pCol" }
+              ],
+              "fill": "both"
+            }
+          ]
+        }
+    </script>
+  </amp-animation>
 
 </body>
 </html>
