@@ -337,7 +337,7 @@
                     <img src="${s.img}">
                     <div class="card-info">
                         <div class="card-name">${s.name}</div>
-                        <div class="stock-tag">${s.isCS ? 'STAY TUNED' : 'SISA: ' + s.stock}</div>
+                        <div class="stock-tag">${s.isCS ? 'COMING SOON' : 'SISA: ' + s.stock}</div>
                         <div class="counter" style="${s.isCS ? 'visibility:hidden' : ''}">
                             <button class="btn-qty" onclick="changeQty(${s.id},-1)" ${soldOut ? 'disabled' : ''}>-</button>
                             <span id="qty-${s.id}" style="font-weight:900; min-width:20px;">0</span>
