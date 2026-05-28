@@ -374,11 +374,62 @@
 <!-- ========================================================================= -->
 <!-- MAINTENANCE LAYER (Cukup hapus/komentari blok ini jika toko buka kembali) -->
 <!-- ========================================================================= -->
-<div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 15, 29, 0.95); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(8px);">
-    <div style="font-size: 4em; margin-bottom: 10px;">❄️</div>
-    <h1 style="color: #f2a800; font-weight: 900; letter-spacing: 3px; margin: 0; font-size: 2em; text-transform: uppercase; text-shadow: 0 0 15px rgba(242,168,0,0.4);">UNDER MAINTENANCE</h1>
-    <p style="color: #ffffff; font-weight: 700; max-width: 80%; font-size: 1em; opacity: 0.8; margin-top: 10px; letter-spacing: 1px;">DIkarenakan CEO TERSNACKS sedang cuti ke KOHRONG . Sementara Order is closed.</p>
-    <div style="margin-top: 30px; font-size: 0.8em; font-weight: 900; color: #d90012; letter-spacing: 2px;">TERSNACKS.ID • ARMENIA 2026</div>
+<div id="maintenance-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 15, 29, 0.98); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(10px); overflow: hidden;">
+    
+    <canvas id="maintenanceSnow" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
+
+    <div style="position: relative; z-index: 100000; text-align: center;">
+        <div style="font-size: 5em; margin-bottom: 20px; filter: drop-shadow(0 0 20px #fff);">❄️</div>
+        <h1 style="color: #f2a800; font-weight: 900; letter-spacing: 5px; margin: 0; font-size: 2.5em; text-transform: uppercase; text-shadow: 0 0 20px rgba(242,168,0,0.6);">UNDER MAINTENANCE</h1>
+        <p style="color: #ffffff; font-weight: 700; max-width: 80%; font-size: 1.1em; opacity: 0.9; margin: 20px auto; letter-spacing: 1px; line-height: 1.5;">
+            CEO TERSNACKS LAGI CUTI KOHRONG .<br>
+            <span style="color: #f2a800;">SEMENTARA ORDER IS CLOSED , WE WILL BACK SOON !</span>
+        </p>
+        <div style="margin-top: 40px; font-size: 0.7em; font-weight: 900; color: #d90012; letter-spacing: 4px; opacity: 0.6;">TERSNACKS.ID • ARMENIA 2026</div>
+    </div>
+
+    <script>
+        (function() {
+            const mCanvas = document.getElementById('maintenanceSnow');
+            const mCtx = mCanvas.getContext('2d');
+            mCanvas.width = window.innerWidth;
+            mCanvas.height = window.innerHeight;
+
+            let mFlakes = [];
+            for (let i = 0; i < 150; i++) {
+                mFlakes.push({
+                    x: Math.random() * mCanvas.width,
+                    y: Math.random() * mCanvas.height,
+                    size: Math.random() * 3 + 1,
+                    opacity: Math.random() * 0.7 + 0.3,
+                    speed: Math.random() * 2 + 1,
+                    velX: Math.random() * 1 - 0.5
+                });
+            }
+
+            function animateM() {
+                mCtx.clearRect(0, 0, mCanvas.width, mCanvas.height);
+                mCtx.fillStyle = "white";
+                mFlakes.forEach(f => {
+                    mCtx.globalAlpha = f.opacity;
+                    mCtx.beginPath();
+                    mCtx.arc(f.x, f.y, f.size, 0, Math.PI * 2);
+                    mCtx.fill();
+                    f.y += f.speed;
+                    f.x += f.velX;
+                    if (f.y > mCanvas.height) { f.y = -10; f.x = Math.random() * mCanvas.width; }
+                });
+                if(document.getElementById('maintenance-screen')) {
+                    requestAnimationFrame(animateM);
+                }
+            }
+            animateM();
+            window.addEventListener('resize', () => {
+                mCanvas.width = window.innerWidth;
+                mCanvas.height = window.innerHeight;
+            });
+        })();
+    </script>
 </div>
 <!-- ========================================================================= -->
 
